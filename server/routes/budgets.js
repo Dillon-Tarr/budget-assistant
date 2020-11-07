@@ -15,12 +15,23 @@ router.post('/new-budget', auth, checkTokenBlacklist, async (req, res) => {
       viewers: [],
       income: [],
       outgo: [],
-      changeHistory: [ {user: req.user.loginName, description: "This budget was created." } ],
+      changeHistory: [ { user: req.user.loginName, description: "This budget was created." } ],
       requestedChanges: [],
     });
     await budget.save();
 
     return res.send({ status: `${budget.name} created successfully!`, budget: budget });
+
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+router.delete('/:id/delete-budget', auth, checkTokenBlacklist, async (req, res) => {
+  try {
+    const budget = await Budget.findByIdAndDelete(req.params.id);
+
+    return res.send({ status: `${budget.name} deleted successfully.` });
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
