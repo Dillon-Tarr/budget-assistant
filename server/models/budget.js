@@ -27,16 +27,27 @@ const outgoSchema = new mongoose.Schema({
   daysOfWeek: {type: Array, required: false }, // Contains strings (e.g. "Monday", "Thursday") for when occurrences are on specific days of the week.
   daysOfMonth: {type: Array, required: false }, // Contains numbers for when occurrences are on specific number days of the month.
 });
+const changeSchema = new mongoose.Schema({
+  user: { type: String, required: true },
+  date: { type: Date, default: Date.now },
+  description: { type: String, required: true },
+});
+const changeRequestSchema = new mongoose.Schema({
+  user: { type: String, required: true },
+  date: { type: Date, default: Date.now },
+  request: { type: String, required: true },
+});
 
 const budgetSchema = new mongoose.Schema({
   createdDate: { type: Date, default: Date.now },
+  lastChangedDate: { type: Date, default: Date.now },
+  name: { type: String, required: true, min: 1},
   managers: {type: Array, required: true },
   viewers: {type: Array, required: false },
   income: {type: [incomeSchema], required: false },
   outgo: {type: [outgoSchema], required: false },
-  lastChangedDate: { type: Date, required: false },
-  recentChanges: { type: Array, required: false },
-  requestedChanges: { type: Array, required: false }
+  changeHistory: { type: [changeSchema], required: false },
+  requestedChanges: { type: [changeRequestSchema], required: false }
 });
 
 const Budget = mongoose.model('Budget', budgetSchema);
