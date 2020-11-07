@@ -1,0 +1,318 @@
+{
+  "timeline": [
+    {
+      "day": "Tuesday, November 3",
+      "tasks": [
+        {
+        "description": "Brainstorm ideas for capstone until an idea is approved by the instructors.",
+        "isComplete": true
+        },
+        {
+        "description": "Plan the project out a bit mentally and on paper.",
+        "isComplete": true
+        },
+        {
+        "description": "Write user stories and submit them for approval.",
+        "isComplete": true
+        }
+      ]
+    },
+    {
+      "day": "Wednesday, November 4",
+      "tasks": [
+        {
+        "description": "Update user stories and work with instructors to finalize them.",
+        "isComplete": true
+        },
+        {
+        "description": "Create the project repository.",
+        "isComplete": true
+        },
+        {
+        "description": "Choose license (UNLICENSE) and write up a basic README.",
+        "isComplete": true
+        }
+      ]
+    },
+    {
+      "day": "Thursday, November 5",
+      "tasks": [
+        {
+        "description": "Create a wireframe.",
+        "isComplete": true
+        },
+        {
+        "description": "Set up client with create-react-app and install needed dependencies.",
+        "isComplete": true
+        },
+        {
+        "description": "Create a favicon and add it to the client.",
+        "isComplete": true
+        },
+        {
+        "description": "Set up server and connect it to MongoDB Atlas.",
+        "isComplete": true
+        },
+        {
+        "description": "Create Mongoose models and Express middleware and routes.",
+        "isComplete": true
+        }
+      ]
+    },
+    {
+      "day": "Friday, November 6",
+      "tasks": [
+        {
+        "description": "Create this timeline.",
+        "isComplete": true
+        },
+        {
+        "description": "Create Trello board and add tasks to it.",
+        "isComplete": true
+        },
+        {
+        "description": "Update Mongoose models.",
+        "isComplete": true
+        }
+      ]
+    },
+    {
+      "day": "Saturday, November 7",
+      "tasks": [
+        {
+        "description": "Add mandatory routes to the server.",
+        "isComplete": false
+        }
+      ]
+    },
+    {
+      "day": "Sunday, November 8",
+      "tasks": []
+    },
+    {
+      "day": "Monday, November 9",
+      "tasks": [
+        {
+        "description": "Set up Redux in the client.",
+        "isComplete": false
+        },
+        {
+        "description": "Get user account creation working in the client.",
+        "isComplete": false
+        },
+        {
+        "description": "Get user log-in working in the client.",
+        "isComplete": false
+        },
+        {
+        "description": "Get user log-out working in the client.",
+        "isComplete": false
+        }
+      ]
+    },
+    {
+      "day": "Tuesday, November 10",
+      "tasks": [
+        {
+        "description": "Create user's home page for after sign-in and populate it with helpful information/buttons.",
+        "isComplete": false
+        },
+        {
+        "description": "Add instructional material about budgeting/money management.",
+        "isComplete": false
+        },
+        {
+        "description": "Build components to hold coming features such as goals and budgets.",
+        "isComplete": false
+        }
+      ]
+    },
+    {
+      "days": "Wednesday, November 11 && Thursday, November 12",
+      "tasks": [
+        {
+        "description": "Let user create a budget.",
+        "isComplete": false
+        },
+        {
+        "description": "Let user add recurring income to a budget.",
+        "isComplete": false
+        },
+        {
+        "description": "Let user add single-occurrence income to a budget.",
+        "isComplete": false
+        },
+        {
+        "description": "Let user add recurring outgo to a budget.",
+        "isComplete": false
+        },
+        {
+        "description": "Let user add single-occurrence outgo to a budget.",
+        "isComplete": false
+        },
+        {
+        "description": "Let user view income and outgo added to a budget.",
+        "isComplete": false
+        },
+        {
+        "description": "Let user remove income and outgo entries from a budget.",
+        "isComplete": false
+        },
+        {
+        "description": "Let user modify income and outgo entries in a budget.",
+        "isComplete": false
+        },
+        {
+        "description": "Show user upcoming outgo reminders.",
+        "isComplete": false
+        },
+        {
+        "description": "Let user set and view financial/general goals and optionally include an estimated completion date.",
+        "isComplete": false
+        },
+        {
+        "description": "Let user mark financial/general goals as complete and manually modify the completion date if so desired.",
+        "isComplete": false
+        },
+        {
+        "description": "Let user undo marking financial/general goals as complete.",
+        "isComplete": false
+        }
+      ]
+    },
+    {
+      "day": "Thursday, November 12",
+      "tasks": [
+        {
+        "description": "Let user set and view financial/general goals and optionally include an estimated completion date.",
+        "isComplete": false
+        },
+        {
+        "description": "Let user mark financial/general goals as complete and manually modify the completion date if so desired.",
+        "isComplete": false
+        },
+        {
+        "description": "Let user undo marking financial/general goals as complete.",
+        "isComplete": false
+        }
+      ]
+    },
+    {
+      "day": "Friday, November 13",
+      "tasks": [
+        {
+        "description": "Let user view all income and outgo between a start and end date.",
+        "isComplete": false
+        },
+        {
+        "description": "Let user see a simulation of the number of dollars left on an end date (considering planned income and outgo between now and then) given a start date and a start amount.",
+        "isComplete": false
+        }
+      ]
+    },
+    {
+      "day": "Saturday, November 14",
+      "tasks": [
+        {
+        "description": "Let user view a breakdown of outgo by category.",
+        "isComplete": false
+        }
+      ]
+    },
+    {
+      "day": "Sunday, November 15",
+      "tasks": []
+    },
+    {
+      "day": "Monday, November 16",
+      "tasks": [
+        {
+        "description": "Add suggested budget categories so the user can start a budget without having to manually type category names.",
+        "isComplete": false
+        }
+      ]
+    },
+    {
+      "day": "Tuesday, November 17",
+      "tasks": [
+        {
+        "description": "Allow user to add other budget managers or budget viewers to a budget.",
+        "isComplete": false
+        },
+        {
+        "description": "Cause budgets to not allow editing if the user is only a viewer (not manager) of a budget.",
+        "isComplete": false
+        }
+      ]
+    },
+    {
+      "day": "Wednesday, November 18",
+      "tasks": [
+        {
+        "description": "Allow a budget viewer to submit a request for modification of a budget.",
+        "isComplete": false
+        },
+        {
+        "description": "Allow a budget manager to view budget modification requests.",
+        "isComplete": false
+        },
+        {
+        "description": "Allow a budget manager to delete budget modification requests.",
+        "isComplete": false
+        }
+      ]
+    },
+    {
+      "day": "Thursday, November 19",
+      "tasks": [
+        {
+        "description": "Set up recording of previous changes to a budget",
+        "isComplete": false
+        },
+        {
+        "description": "Allow budget managers to view the list of previous changes to a budget",
+        "isComplete": false
+        }
+      ]
+    },
+    {
+      "day": "Friday, November 20",
+      "tasks": [
+        {
+        "description": "Complete unfinished tasks if there are any.",
+        "isComplete": false
+        },
+        {
+        "description": "Deploy to an AWS hosted domain.",
+        "isComplete": false
+        },
+        {
+        "description": "Test the application with others.",
+        "isComplete": false
+        }
+      ]
+    },
+    {
+      "day": "Saturday, November 21",
+      "tasks": [
+        {
+        "description": "Continue testing with others.",
+        "isComplete": false
+        }
+      ]
+    },
+    {
+      "day": "Sunday, November 22",
+      "tasks": []
+    },
+    {
+      "day": "Monday, November 23",
+      "tasks": [
+        {
+        "description": "Complete project by this day.",
+        "isComplete": false
+        }
+      ]
+    }
+  ]
+}
