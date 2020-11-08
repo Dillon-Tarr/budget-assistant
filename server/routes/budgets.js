@@ -41,8 +41,8 @@ router.delete('/:id/delete-budget', auth, checkTokenBlacklist, async (req, res) 
 router.post('/:id/add-income', auth, checkTokenBlacklist, async (req, res) => {
   try {
     if (!(req.body.name && req.body.startDate && req.body.dollarsPerOccurrence)) return res.status(400).send('name, startDate, and dollarsPerOccurrence must be supplied in the request body.');
-    if (!typeof req.body.startDate === "string") return res.status(400).send('startDate must be a string representing Unix time.');
-    if (! typeof req.body.dollarsPerOccurrence === "number") return res.status(400).send('dollarsPerOccurrence must be a number.');
+    if (typeof req.body.startDate !== "string") return res.status(400).send('startDate must be a string representing Unix time.');
+    if (typeof req.body.dollarsPerOccurrence !== "number") return res.status(400).send('dollarsPerOccurrence must be a number.');
     const name = req.body.name,
           startDate = new Date(parseInt(req.body.startDate)),
           dollarsPerOccurrence = parseFloat(req.body.dollarsPerOccurrence.toFixed(2));
@@ -50,12 +50,12 @@ router.post('/:id/add-income', auth, checkTokenBlacklist, async (req, res) => {
     
     if (req.body.isRecurring) {
       if (!(req.body.inclusiveEndDate && req.body.referencePeriod && req.body.multiplesOfPeriod && req.body.weekOfMonthText && req.body.daysOfWeek && req.body.daysOfMonth)) return res.status(400).send('If isRecurring is true... inclusiveEndDate, referencePeriod, multiplesOfPeriod, weekOfMonthText, daysOfWeek, and daysOfMonth must be supplied in the request body. For properties that do not apply to the recurring event, supply the value "N/A" (for strings) or ["N/A"] (for arrays).');
-      if (!typeof req.body.inclusiveEndDate === "string") return res.status(400).send('inclusiveEndDate must be a string representing Unix time.');
+      if (typeof req.body.inclusiveEndDate !== "string") return res.status(400).send('inclusiveEndDate must be a string representing Unix time.');
       inclusiveEndDate = new Date(parseInt(req.body.inclusiveEndDate));
       if (req.body.inclusiveEndDate < req.body.startDate) return res.status(400).send('inclusiveEndDate must be a later date than startDate.');
-      if (! typeof req.body.referencePeriod === "string") return res.status(400).send('referencePeriod must be a string.');
-      if (! typeof req.body.multiplesOfPeriod === "string") return res.status(400).send('multiplesOfPeriod must be a string.');
-      if (! typeof req.body.weekOfMonthText === "string") return res.status(400).send('weekOfMonthText must be a string.');
+      if (typeof req.body.referencePeriod !== "string") return res.status(400).send('referencePeriod must be a string.');
+      if (typeof req.body.multiplesOfPeriod !== "string") return res.status(400).send('multiplesOfPeriod must be a string.');
+      if (typeof req.body.weekOfMonthText !== "string") return res.status(400).send('weekOfMonthText must be a string.');
       let isArray = Array.isArray(req.body.daysOfWeek);
       if (!isArray) return res.status(400).send('daysOfWeek must be an array.');
       isArray = Array.isArray(req.body.daysOfMonth);
@@ -118,8 +118,8 @@ router.post('/:id/add-income', auth, checkTokenBlacklist, async (req, res) => {
 router.post('/:id/add-outgo', auth, checkTokenBlacklist, async (req, res) => {
   try {
     if (!(req.body.name && req.body.startDate && req.body.dollarsPerOccurrence)) return res.status(400).send('name, startDate, and dollarsPerOccurrence must be supplied in the request body.');
-    if (!typeof req.body.startDate === "string") return res.status(400).send('startDate must be a string representing Unix time.');
-    if (! typeof req.body.dollarsPerOccurrence === "number") return res.status(400).send('dollarsPerOccurrence must be a number.');
+    if (typeof req.body.startDate !== "string") return res.status(400).send('startDate must be a string representing Unix time.');
+    if (typeof req.body.dollarsPerOccurrence !== "number") return res.status(400).send('dollarsPerOccurrence must be a number.');
     const name = req.body.name,
           startDate = new Date(parseInt(req.body.startDate)),
           dollarsPerOccurrence = parseFloat(req.body.dollarsPerOccurrence.toFixed(2)),
@@ -128,12 +128,12 @@ router.post('/:id/add-outgo', auth, checkTokenBlacklist, async (req, res) => {
     
     if (req.body.isRecurring) {
       if (!(req.body.inclusiveEndDate && req.body.referencePeriod && req.body.multiplesOfPeriod && req.body.weekOfMonthText && req.body.daysOfWeek && req.body.daysOfMonth)) return res.status(400).send('If isRecurring is true... inclusiveEndDate, referencePeriod, multiplesOfPeriod, weekOfMonthText, daysOfWeek, and daysOfMonth must be supplied in the request body. For properties that do not apply to the recurring event, supply the value "N/A" (for strings) or ["N/A"] (for arrays).');
-      if (!typeof req.body.inclusiveEndDate === "string") return res.status(400).send('inclusiveEndDate must be a string representing Unix time.');
+      if (typeof req.body.inclusiveEndDate !== "string") return res.status(400).send('inclusiveEndDate must be a string representing Unix time.');
       inclusiveEndDate = new Date(parseInt(req.body.inclusiveEndDate));
       if (req.body.inclusiveEndDate < req.body.startDate) return res.status(400).send('inclusiveEndDate must be a later date than startDate.');
-      if (! typeof req.body.referencePeriod === "string") return res.status(400).send('referencePeriod must be a string.');
-      if (! typeof req.body.multiplesOfPeriod === "string") return res.status(400).send('multiplesOfPeriod must be a string.');
-      if (! typeof req.body.weekOfMonthText === "string") return res.status(400).send('weekOfMonthText must be a string.');
+      if (typeof req.body.referencePeriod !== "string") return res.status(400).send('referencePeriod must be a string.');
+      if (typeof req.body.multiplesOfPeriod !== "string") return res.status(400).send('multiplesOfPeriod must be a string.');
+      if (typeof req.body.weekOfMonthText !== "string") return res.status(400).send('weekOfMonthText must be a string.');
       let isArray = Array.isArray(req.body.daysOfWeek);
       if (!isArray) return res.status(400).send('daysOfWeek must be an array.');
       isArray = Array.isArray(req.body.daysOfMonth);
@@ -200,6 +200,40 @@ router.post('/:id/add-outgo', auth, checkTokenBlacklist, async (req, res) => {
     sameBudget.save();
 
     return res.send({ status: `${budget.name} updated successfully.`, newOutgo: outgo[0] });
+
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+router.delete('/:id/remove-income', auth, checkTokenBlacklist, async (req, res) => {
+  try {
+    if (!req.body.incomeId) return res.status(400).send('incomeId must be supplied in the request body.');
+    if (typeof req.body.incomeId !== "string") return res.status(400).send('The value of incomeId must be a string.');
+    
+    const budget = await Budget.findById(req.params.id);
+    const incomeIndex = budget.income.findIndex((income) => income._id == req.body.incomeId);
+    if (incomeIndex === -1) return res.status(400).send(`Budget "${req.budget.loginName}" has no income to delete with _id "${req.body.incomeId}".`);
+    budget.income.splice(incomeIndex, 1);
+    budget.save();
+    return res.send( `Income with _id ${req.body.incomeId} deleted successfully.` );
+
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+router.delete('/:id/remove-outgo', auth, checkTokenBlacklist, async (req, res) => {
+  try {
+    if (!req.body.outgoId) return res.status(400).send('outgoId must be supplied in the request body.');
+    if (typeof req.body.outgoId !== "string") return res.status(400).send('The value of outgoId must be a string.');
+    
+    const budget = await Budget.findById(req.params.id);
+    const outgoIndex = budget.outgo.findIndex((outgo) => outgo._id == req.body.outgoId);
+    if (outgoIndex === -1) return res.status(400).send(`Budget "${req.budget.loginName}" has no outgo to delete with _id "${req.body.outgoId}".`);
+    budget.outgo.splice(outgoIndex, 1);
+    budget.save();
+    return res.send( `Outgo with _id ${req.body.outgoId} deleted successfully.` );
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
