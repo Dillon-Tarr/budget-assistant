@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const incomeSchema = new mongoose.Schema({
   name: { type: String, required: true, min: 1},
-  startDate: { type: Date, required: true }, // in Unix time
+  startDate: { type: Date, required: true },
   dollarsPerOccurrence: { type: Number, required: true },
   isRecurring: { type: Boolean, required: true },
-  inclusiveEndDate: { type: Date, required: false }, // in Unix time
+  inclusiveEndDate: { type: Date, required: false },
   referencePeriod: { type: String, required: false }, // day, week, month, or year
   multiplesOfPeriod: { type: String, required: false }, // e.g. "3" (along with month) for the period to be every three months
   weekOfMonthText: { type: String, required: false }, // first, second, third, fourth, last
@@ -14,13 +14,13 @@ const incomeSchema = new mongoose.Schema({
 });
 const outgoSchema = new mongoose.Schema({
   name: { type: String, required: true, min: 1},
-  startDate: { type: Date, required: true }, // in Unix time
+  startDate: { type: Date, required: true },
   dollarsPerOccurrence: { type: Number, required: true },
   doRemind: { type: Boolean, required: true, default: false },
   remindThisManyDaysBefore: { type: String, required: false },
   muteRemindersUntil: { type: Date, required: false },
   isRecurring: { type: Boolean, required: true },
-  inclusiveEndDate: { type: Date, required: false }, // in Unix time
+  inclusiveEndDate: { type: Date, required: false },
   referencePeriod: { type: String, required: false }, // day, week, month, or year
   multiplesOfPeriod: { type: String, required: false }, // e.g. "3" (along with month) for the period to be every three months
   weekOfMonthText: { type: String, required: false }, // first, second, third, fourth, last

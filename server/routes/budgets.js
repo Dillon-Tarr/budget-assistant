@@ -41,7 +41,7 @@ router.delete('/:id/delete-budget', auth, checkTokenBlacklist, async (req, res) 
 router.post('/:id/add-income', auth, checkTokenBlacklist, async (req, res) => {
   try {
     if (!(req.body.name && req.body.startDate && req.body.dollarsPerOccurrence)) return res.status(400).send('name, startDate, and dollarsPerOccurrence must be supplied in the request body.');
-    if (typeof req.body.startDate !== "string") return res.status(400).send('startDate must be a string representing Unix time.');
+    if (typeof req.body.startDate !== "string" || req.body.startDate.length < 13) return res.status(400).send('startDate must be a string representing Unix time in milliseconds.');
     if (typeof req.body.dollarsPerOccurrence !== "number") return res.status(400).send('dollarsPerOccurrence must be a number.');
     const name = req.body.name;
     const startDate = new Date(parseInt(req.body.startDate));
@@ -50,7 +50,7 @@ router.post('/:id/add-income', auth, checkTokenBlacklist, async (req, res) => {
     
     if (req.body.isRecurring) {
       if (!(req.body.inclusiveEndDate && req.body.referencePeriod && req.body.multiplesOfPeriod && req.body.weekOfMonthText && req.body.daysOfWeek && req.body.daysOfMonth)) return res.status(400).send('If isRecurring is true... inclusiveEndDate, referencePeriod, multiplesOfPeriod, weekOfMonthText, daysOfWeek, and daysOfMonth must be supplied in the request body. For properties that do not apply to the recurring event, supply the value "N/A" (for strings) or ["N/A"] (for arrays).');
-      if (typeof req.body.inclusiveEndDate !== "string") return res.status(400).send('inclusiveEndDate must be a string representing Unix time.');
+      if (typeof req.body.inclusiveEndDate !== "string" || req.body.inclusiveEndDate.length < 13) return res.status(400).send('inclusiveEndDate must be a string representing Unix time in milliseconds.');
       if (req.body.inclusiveEndDate < req.body.startDate) return res.status(400).send('inclusiveEndDate must be a later date than startDate.');
       if (typeof req.body.referencePeriod !== "string") return res.status(400).send('referencePeriod must be a string.');
       if (typeof req.body.multiplesOfPeriod !== "string") return res.status(400).send('multiplesOfPeriod must be a string.');
@@ -118,7 +118,7 @@ router.post('/:id/add-income', auth, checkTokenBlacklist, async (req, res) => {
 router.post('/:id/add-outgo', auth, checkTokenBlacklist, async (req, res) => {
   try {
     if (!(req.body.name && req.body.startDate && req.body.dollarsPerOccurrence)) return res.status(400).send('name, startDate, and dollarsPerOccurrence must be supplied in the request body.');
-    if (typeof req.body.startDate !== "string") return res.status(400).send('startDate must be a string representing Unix time.');
+    if (typeof req.body.startDate !== "string" || req.body.startDate.length < 13) return res.status(400).send('startDate must be a string representing Unix time in milliseconds.');
     if (typeof req.body.dollarsPerOccurrence !== "number") return res.status(400).send('dollarsPerOccurrence must be a number.');
     const name = req.body.name;
     const startDate = new Date(parseInt(req.body.startDate));
@@ -128,7 +128,7 @@ router.post('/:id/add-outgo', auth, checkTokenBlacklist, async (req, res) => {
     
     if (req.body.isRecurring) {
       if (!(req.body.inclusiveEndDate && req.body.referencePeriod && req.body.multiplesOfPeriod && req.body.weekOfMonthText && req.body.daysOfWeek && req.body.daysOfMonth)) return res.status(400).send('If isRecurring is true... inclusiveEndDate, referencePeriod, multiplesOfPeriod, weekOfMonthText, daysOfWeek, and daysOfMonth must be supplied in the request body. For properties that do not apply to the recurring event, supply the value "N/A" (for strings) or ["N/A"] (for arrays).');
-      if (typeof req.body.inclusiveEndDate !== "string") return res.status(400).send('inclusiveEndDate must be a string representing Unix time.');
+      if (typeof req.body.inclusiveEndDate !== "string" || req.body.inclusiveEndDate.length < 13) return res.status(400).send('inclusiveEndDate must be a string representing Unix time in milliseconds.');
       if (req.body.inclusiveEndDate < req.body.startDate) return res.status(400).send('inclusiveEndDate must be a later date than startDate.');
       if (typeof req.body.referencePeriod !== "string") return res.status(400).send('referencePeriod must be a string.');
       if (typeof req.body.multiplesOfPeriod !== "string") return res.status(400).send('multiplesOfPeriod must be a string.');
@@ -251,7 +251,7 @@ router.put('/:id/modify-income', auth, checkTokenBlacklist, async (req, res) => 
     
     if (req.body.name) budget.income[incomeIndex].name = req.body.name;
     if (req.body.startDate){
-      if (typeof req.body.startDate !== "string") return res.status(400).send('startDate must be a string representing Unix time.');
+      if (typeof req.body.startDate !== "string" || req.body.startDate.length < 13) return res.status(400).send('startDate must be a string representing Unix time in milliseconds.');
       budget.income[incomeIndex].startDate = new Date(parseInt(req.body.startDate));
     }
     if (req.body.dollarsPerOccurrence){
@@ -271,7 +271,7 @@ router.put('/:id/modify-income', auth, checkTokenBlacklist, async (req, res) => 
     else { // req.body.isRecurring === true
       if (budget.income[incomeIndex].isRecurring === false) { // was not recurring before
         if (!(req.body.inclusiveEndDate && req.body.referencePeriod && req.body.multiplesOfPeriod && req.body.weekOfMonthText && req.body.daysOfWeek && req.body.daysOfMonth)) return res.status(400).send('If changing isRecurring to true... inclusiveEndDate, referencePeriod, multiplesOfPeriod, weekOfMonthText, daysOfWeek, and daysOfMonth must be supplied in the request body. For properties that do not apply to the recurring event, supply the value "N/A" (for strings) or ["N/A"] (for arrays).');
-        if (typeof req.body.inclusiveEndDate !== "string") return res.status(400).send('inclusiveEndDate must be a string representing Unix time.');
+        if (typeof req.body.inclusiveEndDate !== "string" || req.body.inclusiveEndDate.length < 13) return res.status(400).send('inclusiveEndDate must be a string representing Unix time in milliseconds.');
         inclusiveEndDate = new Date(parseInt(req.body.inclusiveEndDate));
         if (req.body.inclusiveEndDate < req.body.startDate) return res.status(400).send('inclusiveEndDate must be a later date than startDate.');
         if (typeof req.body.referencePeriod !== "string") return res.status(400).send('referencePeriod must be a string.');
@@ -291,7 +291,7 @@ router.put('/:id/modify-income', auth, checkTokenBlacklist, async (req, res) => 
       }
       else { // already was recurring
         if (req.body.inclusiveEndDate){
-          if (typeof req.body.inclusiveEndDate !== "string") return res.status(400).send('inclusiveEndDate must be a string representing Unix time.');
+          if (typeof req.body.inclusiveEndDate !== "string" || req.body.inclusiveEndDate.length < 13) return res.status(400).send('inclusiveEndDate must be a string representing Unix time in milliseconds.');
           budget.income[incomeIndex].inclusiveEndDate = new Date(parseInt(req.body.inclusiveEndDate));
         }
         if (req.body.referencePeriod){
@@ -327,6 +327,119 @@ router.put('/:id/modify-income', auth, checkTokenBlacklist, async (req, res) => 
     budget.save();
 
     return res.send({ status: `${budget.name} updated successfully.`, updatedIncome: budget.income[incomeIndex] });
+
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+router.put('/:id/modify-outgo', auth, checkTokenBlacklist, async (req, res) => {
+  try {
+    if (!req.body.outgoId) return res.status(400).send('outgoId must be supplied in the request body.');
+    if (typeof req.body.outgoId !== "string") return res.status(400).send('The value of outgoId must be a string.');
+
+    const budget = await Budget.findById(req.params.id);
+    const outgoIndex = budget.outgo.findIndex((outgo) => outgo._id == req.body.outgoId);
+    if (outgoIndex === -1) return res.status(404).send(`Outgo with outgoId "${req.body.outgoId}" was not found in ${budget.name}.`);
+    
+    if (req.body.name) budget.outgo[outgoIndex].name = req.body.name;
+    if (req.body.startDate){
+      if (typeof req.body.startDate !== "string" || req.body.startDate.length < 13) return res.status(400).send('startDate must be a string representing Unix time in milliseconds.');
+      budget.outgo[outgoIndex].startDate = new Date(parseInt(req.body.startDate));
+    }
+    if (req.body.dollarsPerOccurrence){
+      if (typeof req.body.dollarsPerOccurrence !== "number") return res.status(400).send('dollarsPerOccurrence must be a number.');
+      budget.outgo[outgoIndex].dollarsPerOccurrence = parseFloat(req.body.dollarsPerOccurrence.toFixed(2));
+    }
+    
+    if (req.body.isRecurring === false) {
+      budget.outgo[outgoIndex].isRecurring = false;
+      budget.outgo[outgoIndex].inclusiveEndDate = new Date(parseInt(req.body.startDate));
+      budget.outgo[outgoIndex].referencePeriod = "N/A";
+      budget.outgo[outgoIndex].multiplesOfPeriod = "N/A";
+      budget.outgo[outgoIndex].weekOfMonthText = "N/A";
+      budget.outgo[outgoIndex].daysOfWeek = ["N/A"];
+      budget.outgo[outgoIndex].daysOfMonth = ["N/A"];
+    }
+    else { // req.body.isRecurring === true
+      if (budget.outgo[outgoIndex].isRecurring === false) { // was not recurring before
+        if (!(req.body.inclusiveEndDate && req.body.referencePeriod && req.body.multiplesOfPeriod && req.body.weekOfMonthText && req.body.daysOfWeek && req.body.daysOfMonth)) return res.status(400).send('If changing isRecurring to true... inclusiveEndDate, referencePeriod, multiplesOfPeriod, weekOfMonthText, daysOfWeek, and daysOfMonth must be supplied in the request body. For properties that do not apply to the recurring event, supply the value "N/A" (for strings) or ["N/A"] (for arrays).');
+        if (typeof req.body.inclusiveEndDate !== "string" || req.body.inclusiveEndDate.length < 13) return res.status(400).send('inclusiveEndDate must be a string representing Unix time in milliseconds.');
+        inclusiveEndDate = new Date(parseInt(req.body.inclusiveEndDate));
+        if (req.body.inclusiveEndDate < req.body.startDate) return res.status(400).send('inclusiveEndDate must be a later date than startDate.');
+        if (typeof req.body.referencePeriod !== "string") return res.status(400).send('referencePeriod must be a string.');
+        if (typeof req.body.multiplesOfPeriod !== "string") return res.status(400).send('multiplesOfPeriod must be a string.');
+        if (typeof req.body.weekOfMonthText !== "string") return res.status(400).send('weekOfMonthText must be a string.');
+        let isArray = Array.isArray(req.body.daysOfWeek);
+        if (!isArray) return res.status(400).send('daysOfWeek must be an array.');
+        isArray = Array.isArray(req.body.daysOfMonth);
+        if (!isArray) return res.status(400).send('daysOfMonth must be an array.');
+        budget.outgo[outgoIndex].isRecurring = true;
+        budget.outgo[outgoIndex].inclusiveEndDate = new Date(parseInt(req.body.inclusiveEndDate));
+        budget.outgo[outgoIndex].referencePeriod = req.body.referencePeriod;
+        budget.outgo[outgoIndex].multiplesOfPeriod = req.body.multiplesOfPeriod;
+        budget.outgo[outgoIndex].weekOfMonthText = req.body.weekOfMonthText;
+        budget.outgo[outgoIndex].daysOfWeek = req.body.daysOfWeek;
+        budget.outgo[outgoIndex].daysOfMonth = req.body.daysOfMonth;
+      }
+      else { // already was recurring
+        if (req.body.inclusiveEndDate){
+          if (typeof req.body.inclusiveEndDate !== "string" || req.body.inclusiveEndDate.length < 13) return res.status(400).send('inclusiveEndDate must be a string representing Unix time in milliseconds.');
+          budget.outgo[outgoIndex].inclusiveEndDate = new Date(parseInt(req.body.inclusiveEndDate));
+        }
+        if (req.body.referencePeriod){
+          if (typeof req.body.referencePeriod !== "string") return res.status(400).send('referencePeriod must be a string.');
+          budget.outgo[outgoIndex].referencePeriod = req.body.referencePeriod;
+        }
+        if (req.body.multiplesOfPeriod){
+          if (typeof req.body.multiplesOfPeriod !== "string") return res.status(400).send('multiplesOfPeriod must be a string.');
+          budget.outgo[outgoIndex].multiplesOfPeriod = req.body.multiplesOfPeriod;
+        }
+        if (req.body.weekOfMonthText){
+          if (typeof req.body.weekOfMonthText !== "string") return res.status(400).send('weekOfMonthText must be a string.');
+          budget.outgo[outgoIndex].weekOfMonthText = req.body.weekOfMonthText;
+        }
+        if (req.body.daysOfWeek){
+          const isArray = Array.isArray(req.body.daysOfWeek);
+          if (!isArray) return res.status(400).send('daysOfWeek must be an array.');
+          budget.outgo[outgoIndex].daysOfWeek = req.body.daysOfWeek;
+        }
+        if (req.body.daysOfMonth){
+          const isArray = Array.isArray(req.body.daysOfMonth);
+          if (!isArray) return res.status(400).send('daysOfMonth must be an array.');
+          budget.outgo[outgoIndex].daysOfMonth = req.body.daysOfMonth;
+        }
+      }
+    }
+    if (req.body.doRemind === false){
+      budget.outgo[outgoIndex].doRemind = false;
+      budget.outgo[outgoIndex].remindThisManyDaysBefore = "N/A";
+      budget.outgo[outgoIndex].muteRemindersUntil = new Date(1577836800000);
+    }
+    else { // req.body.doRemind === true
+      if (budget.outgo[outgoIndex].doRemind === false) { // was not reminding before
+        if (!(req.body.remindThisManyDaysBefore && (req.body.muteRemindersUntil || req.body.muteRemindersUntil === false))) return res.status(400).send('If doRemind is changed to true... remindThisManyDaysBefore and muteRemindersUntil must be included in the request body.');
+        if (typeof req.body.remindThisManyDaysBefore !== "string") return res.status(400).send('remindThisManyDaysBefore must be a string.');
+        if (!(typeof req.body.muteRemindersUntil === "boolean" && req.body.muteRemindersUntil === false) && !(typeof req.body.muteRemindersUntil === "string" && req.body.muteRemindersUntil.length >= 13)) return res.status(400).send(`muteRemindersUntil must be the Boolean 'false' or a string representing Unix time in milliseconds.`);
+        budget.outgo[outgoIndex].doRemind = true;
+        budget.outgo[outgoIndex].remindThisManyDaysBefore = req.body.remindThisManyDaysBefore;
+        if (req.body.muteRemindersUntil == false) {
+          budget.outgo[outgoIndex].muteRemindersUntil = new Date(1577836800000);
+        }
+        else {
+          budget.outgo[outgoIndex].muteRemindersUntil = req.body.muteRemindersUntil;
+        }
+      }
+    }
+    const change = {
+      user: req.user.loginName,
+      description: `"${budget.outgo[outgoIndex].name}" outgo was modified.`,
+      referenceId: `${budget.outgo[outgoIndex]._id}`
+    }
+    budget.changeHistory.push(change);
+    budget.save();
+
+    return res.send({ status: `${budget.name} updated successfully.`, updatedOutgo: budget.outgo[outgoIndex] });
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
