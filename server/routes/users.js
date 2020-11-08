@@ -63,8 +63,7 @@ router.put('/update-login-name', auth, checkTokenBlacklist, async (req, res) => 
   
   const user = await User.findByIdAndUpdate(req.user._id,
     { loginName: req.body.loginName },
-    { new: true }
-    );
+    { new: true });
   user.save();
 
   const oldToken = req.header('x-auth-token');
@@ -90,8 +89,7 @@ router.put('/update-display-name', auth, checkTokenBlacklist, async (req, res) =
     if (!req.body.displayName) return res.status(400).send(`You must include "displayName" (the new display name) in the request body.`);
   const user = await User.findByIdAndUpdate(req.user._id,
     { password: req.body.displayName },
-    { new: true }
-    );
+    { new: true });
   user.save();
 
   return res.send( { status: "Display name updated successfully.", newDisplayName: user.displayName } );
@@ -106,9 +104,7 @@ router.put('/update-password', auth, checkTokenBlacklist, async (req, res) => {
     if (!req.body.password) return res.status(400).send(`You must include "password" (the new password) in the request body.`);
   const salt = await bcrypt.genSalt(10);
   const user = await User.findByIdAndUpdate(req.user._id,
-    { password: await bcrypt.hash(req.body.password, salt) },
-    { new: true }
-    );
+    { password: await bcrypt.hash(req.body.password, salt) });
   user.save();
 
   return res.send( `Password updated successfully.` );
@@ -126,8 +122,7 @@ router.put('/update-email-address', auth, checkTokenBlacklist, async (req, res) 
 
   const user = await User.findByIdAndUpdate(req.user._id,
     { emailAddress: req.body.emailAddress },
-    { new: true }
-    );
+    { new: true });
   user.save();
 
   return res.send({ status: 'Email address updated successfully.', newEmailAddress: user.emailAddress });
