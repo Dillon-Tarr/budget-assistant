@@ -77,20 +77,16 @@
       ]
     },
     {
-      "day": "Saturday, November 7",
+      "days": "Saturday, November 7 && Sunday, November 8 && Monday, November 9",
       "tasks": [
         {
-        "description": "Add mandatory routes to the server.",
+        "description": "Add mandatory routes (and helper functions) to the server.",
         "isComplete": false
         }
       ]
     },
     {
-      "day": "Sunday, November 8",
-      "tasks": []
-    },
-    {
-      "day": "Monday, November 9",
+      "day": "Tuesday, November 10",
       "tasks": [
         {
         "description": "Set up Redux in the client.",
@@ -107,12 +103,7 @@
         {
         "description": "Get user log-out working in the client.",
         "isComplete": false
-        }
-      ]
-    },
-    {
-      "day": "Tuesday, November 10",
-      "tasks": [
+        },
         {
         "description": "Create user's home page for after sign-in and populate it with helpful information/buttons.",
         "isComplete": false

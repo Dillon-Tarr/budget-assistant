@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const incomeSchema = new mongoose.Schema({
+const incomeSchema = new mongoose.Schema({ //must add category later
   name: { type: String, required: true, min: 1},
   startDate: { type: Date, required: true },
   dollarsPerOccurrence: { type: Number, required: true },
@@ -12,7 +12,7 @@ const incomeSchema = new mongoose.Schema({
   daysOfWeek: {type: Array, required: false }, // Contains strings (e.g. "Monday", "Thursday") for when occurrences are on specific days of the week.
   daysOfMonth: {type: Array, required: false } // Contains numbers for when occurrences are on specific number days of the month.
 });
-const outgoSchema = new mongoose.Schema({
+const outgoSchema = new mongoose.Schema({ //must add category later
   name: { type: String, required: true, min: 1},
   startDate: { type: Date, required: true },
   dollarsPerOccurrence: { type: Number, required: true },
