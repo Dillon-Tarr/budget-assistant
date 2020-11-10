@@ -14,18 +14,19 @@ router.post('/new-user', async (req, res) => {
 
     let user = await User.findOne({ loginName: req.body.loginName });
     if (user) return res.status(400).send('Someone is already registered with that loginName.');
-    if (req.body.emailAddress.length > 0){
-      user = await User.findOne({ emailAddress: req.body.emailAddress });
-      if (user) return res.status(400).send('Someone is already registered with that email address.');
-    }
-
     const salt = await bcrypt.genSalt(10);
-    user = new User({
+    const userInfo = {
       loginName: req.body.loginName,
       displayName: req.body.displayName,
       password: await bcrypt.hash(req.body.password, salt),
-      emailAddress: req.body.emailAddress
-    });
+    };
+    if (req.body.emailAddress && req.body.emailAddress.length > 0){
+      user = await User.findOne({ emailAddress: req.body.emailAddress });
+      if (user) return res.status(400).send('Someone is already registered with that email address.');
+      userInfo.emailAddress = req.body.emailAddress;
+    }
+
+    user = new User(userInfo);
     await user.save();
 
     const token = user.generateAuthToken();
@@ -80,6 +81,28 @@ router.delete('/delete-account', auth, checkTokenBlacklist, async (req, res) => 
     userToDelete.deleteOne((err, results) => { if (err) return res.status(404).send(`The following error occurred when trying to delete user "${req.user.loginName}": ${err}`);} );
 
     return res.send( `User account deleted successfully.` );
+
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+router.post('/new-goal', auth, checkTokenBlacklist, async (req, res) => {
+  try {
+    if (!req.body.text) return res.status(400).send(`You must include "text" (the text describing the goal) in the request body.`);
+    const goal = {
+      text: req.body.text
+    };
+    if (req.body.estimatedCompletionDate) goal.estimatedCompletionDate = req.body.estimatedCompletionDate;
+    
+    const user = await User.findByIdAndUpdate(req.user._id,
+    {
+      $push: { goals: goal }
+    },
+    { new: true });
+    user.save();
+
+    return res.send( { status: "Goal added successfully.", goal: goal } );
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);

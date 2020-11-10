@@ -129,12 +129,10 @@ router.post('/:id/add-income', auth, checkTokenBlacklist, async (req, res) => {
       { new: true });
     budget.save();
 
-    const income = [...budget.income];
-    income.reverse();
     const change = {
       user: req.user.loginName,
-      description: `"${income[0].name}" income was added.`,
-      referenceId: `${income[0]._id}`
+      description: `"${budget.income[budget.income.length - 1].name}" income was added.`,
+      referenceId: `${budget.income[budget.income.length - 1]._id}`
     }
     
     const sameBudget = await Budget.findByIdAndUpdate(req.params.id,
@@ -220,12 +218,10 @@ router.post('/:id/add-outgo', auth, checkTokenBlacklist, async (req, res) => {
       { new: true });
     budget.save();
 
-    const outgo = [...budget.outgo];
-    outgo.reverse();
     const change = {
       user: req.user.loginName,
-      description: `"${outgo[0].name}" outgo was added.`,
-      referenceId: `${outgo[0]._id}`
+      description: `"${budget.outgo[budget.outgo.length - 1].name}" outgo was added.`,
+      referenceId: `${budget.outgo[budget.outgo.length - 1]._id}`
     }
     
     const sameBudget = await Budget.findByIdAndUpdate(req.params.id,
