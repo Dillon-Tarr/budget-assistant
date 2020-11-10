@@ -1,26 +1,25 @@
 const { setDateToMidday, convertDaysOfWeekFromNameToNumber, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName, checkIfLeapYear } = require('./manipulate-dates');
 const { getOrdinalAbbreviationSuffix } = require('./manipulate-numbers');
 
-function getAllOccurrences(outgoObject){
+function getAllOccurrences(incomeOrOutgoObject){
   const occurrences = [];
-  const startDate = setDateToMidday(outgoObject.startDate.getTime());
-  if (outgoObject.isRecurring === false) occurrences.push(startDate); //type: single-occurrence
-  // else: recurring types
-  const inclusiveEndDate = setDateToMidday(outgoObject.inclusiveEndDate);
-  const dateToCheckAfter = new Date(startDate.getTime() - 86400000);
-  
-  if (outgoObject.weekOfMonthText !== "N/A" && outgoObject.daysOfWeek !== "N/A" && outgoObject.daysOfWeek.length === 1){ //type: occurring once per month on a certain day of week and week of month
-    const weekOfMonth = outgoObject.weekOfMonthText;
-    const daysOfWeek = convertDaysOfWeekFromNameToNumber(outgoObject.daysOfWeek);
-    if (!daysOfWeek) return occurrences;
+  let day = setDateToMidday(incomeOrOutgoObject.startDate.getTime());
+  if (incomeOrOutgoObject.isRecurring === false){ //type: single-occurrence
+    occurrences.push(day);
+    return occurrences;
+  }
+  const inclusiveEndDate = setDateToMidday(incomeOrOutgoObject.inclusiveEndDate);
+  if (incomeOrOutgoObject.weekOfMonthText !== "N/A" && incomeOrOutgoObject.daysOfWeek !== "N/A" && incomeOrOutgoObject.daysOfWeek.length === 1){ //type: occurring once per month on a certain day of week and week of month
+    const weekOfMonth = incomeOrOutgoObject.weekOfMonthText;
+    const daysOfWeek = convertDaysOfWeekFromNameToNumber(incomeOrOutgoObject.daysOfWeek);
+    if (!daysOfWeek) return [`!!!ERROR!!! if (incomeOrOutgoObject.weekOfMonthText !== "N/A" && incomeOrOutgoObject.daysOfWeek !== "N/A" && incomeOrOutgoObject.daysOfWeek.length === 1) { daysOfWeek must include exactly one day of the week. } Example: ["Wednesday"]`];
     const dayOfWeek = daysOfWeek[0];
   
-    let day = new Date(dateToCheckAfter.getTime() + 86400000);
     let month = day.getMonth();
     let numberOfDaysInMonth = getNumberOfDaysInMonth(day);
     let acceptableDaysOfMonth = setAcceptableDaysOfMonth(numberOfDaysInMonth, weekOfMonth);
     while (day.getTime() <= inclusiveEndDate.getTime()){
-      const newMonth = new Date(day.getMonth());
+      const newMonth = day.getMonth();
       if (newMonth !== month){
         month = newMonth;
         numberOfDaysInMonth = getNumberOfDaysInMonth(day);
@@ -34,19 +33,13 @@ function getAllOccurrences(outgoObject){
     return occurrences;
   }
   else{ // all other recurring types
-    if (outgoObject.referencePeriod === "N/A" || outgoObject.multiplesOfPeriod === "N/A") return occurrences;
-    const multiplesOfPeriod = parseInt(outgoObject.multiplesOfPeriod);
-    if (multiplesOfPeriod < 1) return occurrences;
-    const referencePeriod = outgoObject.referencePeriod;
-    const daysOfWeek = outgoObject.daysOfWeek;
-    const daysOfMonth = outgoObject.daysOfMonth;
-    if (!daysOfWeek.includes("N/A")){
-      daysOfWeek = convertDaysOfWeekFromNameToNumber(daysOfWeek);
-      if (!daysOfWeek) return occurrences;
-    }
-    let day = new Date(dateToCheckAfter.getTime() + 86400000);
+    if (incomeOrOutgoObject.referencePeriod === "N/A" || incomeOrOutgoObject.multiplesOfPeriod === "N/A") return [`!!!ERROR!!! If something is recurring, it must have a reference period (i.e. "month", "week", "day", or "year") and the multiples of that period ("1" for "every", "2" for "every other", etc.).`];
+    const multiplesOfPeriod = parseInt(incomeOrOutgoObject.multiplesOfPeriod);
+    if (multiplesOfPeriod < 1) return [`!!!ERROR!!! multiplesOfPeriod must be a string representing an integer greater than or equal to 1.`];
+    const referencePeriod = incomeOrOutgoObject.referencePeriod;
     switch(referencePeriod){
       case "month":
+        const daysOfMonth = incomeOrOutgoObject.daysOfMonth;
         let dayOfMonthOfDay = day.getDate();
         while (day.getTime() <= inclusiveEndDate.getTime()){
           if (daysOfMonth.includes(dayOfMonthOfDay)) occurrences.push(day);
@@ -60,8 +53,10 @@ function getAllOccurrences(outgoObject){
             dayOfMonthOfDay = day.getDate();
           }
         }
-        return occurrences;
+        break;
       case "week":
+        const daysOfWeek = convertDaysOfWeekFromNameToNumber(incomeOrOutgoObject.daysOfWeek);
+        if (!daysOfWeek) return [`!!!ERROR!!! The only values allowed in daysOfWeek (besides "N/A") are "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", and "Saturday".`];
         let dayOfWeekOfDay = day.getDay();
         while (day.getTime() <= inclusiveEndDate.getTime()){
           for (let i = 1; i <= 7; i++){
@@ -76,13 +71,13 @@ function getAllOccurrences(outgoObject){
             dayOfWeekOfDay = day.getDay();
           }
         }
-        return occurrences;
+        break;
       case "day":
         while (day.getTime() <= inclusiveEndDate.getTime()){
           occurrences.push(day);
           day = new Date(day.getTime() + (multiplesOfPeriod*86400000));
         }
-        return occurrences;
+        break;
       case "year":
         if (day.getMonth() >= 2 || (day.getDate() === 29 && day.getMonth() === 1)){
           while (day.getTime() <= inclusiveEndDate.getTime()){
@@ -94,7 +89,7 @@ function getAllOccurrences(outgoObject){
               day = new Date(day.getTime() + (365 + extraDay)*86400000);
             }
           }
-          return occurrences;
+          break;
         }
         else {
           while (day.getTime() <= inclusiveEndDate.getTime()){
@@ -106,11 +101,12 @@ function getAllOccurrences(outgoObject){
               day = new Date(day.getTime() + (365 + extraDay)*86400000);
             }
           }
-          return occurrences;
+          break;
         }
       default:
-        return occurrences;
+        break;
     }
+    return occurrences;
   }
 }
 

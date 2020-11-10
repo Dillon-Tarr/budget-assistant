@@ -17,7 +17,7 @@ router.post('/new-user', async (req, res) => {
     if (req.body.emailAddress.length > 0){
       user = await User.findOne({ emailAddress: req.body.emailAddress });
       if (user) return res.status(400).send('Someone is already registered with that email address.');
-    } 
+    }
 
     const salt = await bcrypt.genSalt(10);
     user = new User({
