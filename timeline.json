@@ -80,14 +80,18 @@
       "days": "Saturday, November 7 && Sunday, November 8 && Monday, November 9",
       "tasks": [
         {
-        "description": "Add mandatory routes (and helper functions) to the server.",
-        "isComplete": false
+        "description": "Add mandatory routes except goal routes (and helper functions) to the server.",
+        "isComplete": true
         }
       ]
     },
     {
       "day": "Tuesday, November 10",
       "tasks": [
+        {
+        "description": "Add goal routes to the server.",
+        "isComplete": false
+        },
         {
         "description": "Set up Redux in the client.",
         "isComplete": false

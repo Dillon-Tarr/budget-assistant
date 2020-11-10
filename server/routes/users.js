@@ -40,6 +40,52 @@ router.post('/new-user', async (req, res) => {
   }
 });
 
+router.delete('/delete-account', auth, checkTokenBlacklist, async (req, res) => {
+  try {
+    const userToDelete = await User.findById(req.user._id);
+    if (!userToDelete) return res.status(404).send( `User "${req.user.loginName}" not found.` );
+    
+    const managedBudgets = await Budget.find( { managers: req.user.loginName }, { managers: 1 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find managed budgets: ${err}`);} );
+    if (managedBudgets) {
+      for (let i = 0; i < managedBudgets.length; i++){
+        if (managedBudgets[i].managers.length > 1){
+          const budget = await Budget.findByIdAndUpdate(managedBudgets[i]._id,
+          {
+            $pullAll: { managers: [req.user.loginName] }
+          });
+          budget.save();
+        }
+        else {
+          await Budget.findByIdAndDelete(managedBudgets[i]._id);
+        }
+      }
+    }
+    const viewedBudgets = await Budget.find( { viewers: req.user.loginName }, { _id: 1 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find managed budgets: ${err}`);} );
+    if (viewedBudgets) {
+      for (let i = 0; i < viewedBudgets.length; i++){
+        const budget = await Budget.findByIdAndUpdate(viewedBudgets[i]._id,
+        {
+          $pullAll: { viewers: [req.user.loginName] }
+        });
+        budget.save();
+      }
+    }
+
+    const oldToken = req.header('x-auth-token');
+    const blacklistedToken = new BlacklistedToken({
+      string: oldToken
+    });
+    await blacklistedToken.save();
+
+    userToDelete.deleteOne((err, results) => { if (err) return res.status(404).send(`The following error occurred when trying to delete user "${req.user.loginName}": ${err}`);} );
+
+    return res.send( `User account deleted successfully.` );
+
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
 router.post('/log-out', auth, async (req, res) => {
   try {
     const oldToken = req.header('x-auth-token');
@@ -66,6 +112,61 @@ router.put('/update-login-name', auth, checkTokenBlacklist, async (req, res) => 
     { new: true });
   user.save();
 
+  const managedBudgets = await Budget.find( { managers: req.user.loginName }, { _id: 1 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find managed budgets: ${err}`);} );
+  if (managedBudgets) {
+    for (let i = 0; i < managedBudgets.length; i++){
+      const budget = await Budget.findByIdAndUpdate(managedBudgets[i]._id,
+      {
+        $pullAll: { managers: [req.user.loginName] }
+      });
+      budget.save();
+    }
+    for (let i = 0; i < managedBudgets.length; i++){
+      const budget = await Budget.findByIdAndUpdate(managedBudgets[i]._id,
+      {
+        $push: { managers: req.body.loginName }
+      });
+      budget.save();
+    }
+  }
+  const viewedBudgets = await Budget.find( { viewers: req.user.loginName }, { _id: 1 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find managed budgets: ${err}`);} );
+  if (viewedBudgets) {
+    for (let i = 0; i < viewedBudgets.length; i++){
+      const budget = await Budget.findByIdAndUpdate(viewedBudgets[i]._id,
+      {
+        $pullAll: { viewers: [req.user.loginName] }
+      });
+      budget.save();
+    }
+    for (let i = 0; i < viewedBudgets.length; i++){
+      const budget = await Budget.findByIdAndUpdate(viewedBudgets[i]._id,
+      {
+        $push: { viewers: req.body.loginName }
+      });
+      budget.save();
+    }
+  }
+  const changedBudgets = await Budget.find( { "changeHistory.user": req.user.loginName }, { _id: 1 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find changed budgets: ${err}`);} );
+  if (changedBudgets) {
+    for (let i = 0; i < changedBudgets.length; i++){
+      const budget = await Budget.findById(changedBudgets[i]._id);
+      for (let j = 0; j < budget.changeHistory.length; j++){
+        if (budget.changeHistory[j].user === req.user.loginName) budget.changeHistory[j].user = req.body.loginName;
+      }
+      budget.save();
+    }
+  }
+  const changeRequestedBudgets = await Budget.find( { "requestedChanges.user": req.user.loginName }, { _id: 1 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find "changeRequested" budgets: ${err}`);} );
+  if (changeRequestedBudgets) {
+    for (let i = 0; i < changeRequestedBudgets.length; i++){
+      const budget = await Budget.findById(changeRequestedBudgets[i]._id);
+      for (let j = 0; j < budget.requestedChanges.length; j++){
+        if (budget.requestedChanges[j].user === req.user.loginName) budget.requestedChanges[j].user = req.body.loginName;
+      }
+      budget.save();
+    }
+  }
+  
   const oldToken = req.header('x-auth-token');
   const blacklistedToken = new BlacklistedToken({
     string: oldToken
