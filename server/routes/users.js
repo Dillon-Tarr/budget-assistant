@@ -87,6 +87,21 @@ router.delete('/delete-account', auth, checkTokenBlacklist, async (req, res) => 
   }
 });
 
+router.post('/log-out', auth, async (req, res) => {
+  try {
+    const oldToken = req.header('x-auth-token');
+    const blacklistedToken = new BlacklistedToken({
+      string: oldToken
+    });
+    await blacklistedToken.save();
+
+    return res.send( `${req.user.loginName} logged out successfully.` );
+
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
 router.post('/new-goal', auth, checkTokenBlacklist, async (req, res) => {
   try {
     if (!req.body.text) return res.status(400).send(`You must include "text" (the text describing the goal) in the request body.`);
@@ -109,15 +124,17 @@ router.post('/new-goal', auth, checkTokenBlacklist, async (req, res) => {
   }
 });
 
-router.post('/log-out', auth, async (req, res) => {
+router.delete('/delete-goal', auth, checkTokenBlacklist, async (req, res) => {
   try {
-    const oldToken = req.header('x-auth-token');
-    const blacklistedToken = new BlacklistedToken({
-      string: oldToken
-    });
-    await blacklistedToken.save();
+    if (!req.body.goalId) return res.status(400).send(`You must include "goalId" (the _id of the goal to delete) in the request body.`);
+    const user = await User.findByIdAndUpdate(req.user._id,
+      {
+        $pull: { goals: { _id: req.body.goalId } }
+      },
+      { new: true });
+    user.save();
 
-    return res.send( `${req.user.loginName} logged out successfully.` );
+    return res.send({ status: `Goal with _id ${req.body.goalId} deleted successfully.` });
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
