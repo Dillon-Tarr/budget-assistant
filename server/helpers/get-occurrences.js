@@ -1,4 +1,4 @@
-const { setDateToMidday, convertDaysOfWeekFromNameToNumber, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName } = require('./manipulate-dates');
+const { setDateToMidday, convertDaysOfWeekFromNameToNumber, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName, checkIfLeapYear } = require('./manipulate-dates');
 const { getOrdinalAbbreviationSuffix } = require('./manipulate-numbers');
 
 function getAllOccurrences(outgoObject){
@@ -16,11 +16,10 @@ function getAllOccurrences(outgoObject){
     const dayOfWeek = daysOfWeek[0];
   
     let day = new Date(dateToCheckAfter.getTime() + 86400000);
-    console.log('We got this far.');
     let month = day.getMonth();
     let numberOfDaysInMonth = getNumberOfDaysInMonth(day);
     let acceptableDaysOfMonth = setAcceptableDaysOfMonth(numberOfDaysInMonth, weekOfMonth);
-    while (day <= inclusiveEndDate){
+    while (day.getTime() <= inclusiveEndDate.getTime()){
       const newMonth = new Date(day.getMonth());
       if (newMonth !== month){
         month = newMonth;
@@ -49,14 +48,14 @@ function getAllOccurrences(outgoObject){
     switch(referencePeriod){
       case "month":
         let dayOfMonthOfDay = day.getDate();
-        while (day <= inclusiveEndDate){
+        while (day.getTime() <= inclusiveEndDate.getTime()){
           if (daysOfMonth.includes(dayOfMonthOfDay)) occurrences.push(day);
           day = new Date(day.getTime() + 86400000);
           dayOfMonthOfDay = day.getDate();
-          if (multiplesOfPeriod > 1 && dayOfMonthOfDay === 1){
+          if (dayOfMonthOfDay === 1 && multiplesOfPeriod > 1){
             for (let i = 1; i < multiplesOfPeriod; i++){
               let numberOfDaysInMonth = getNumberOfDaysInMonth(day);
-              day = new Date(day.getTime() + (numberOfDaysInMonth * 86400000));
+              day = new Date(day.getTime() + numberOfDaysInMonth*86400000);
             }
             dayOfMonthOfDay = day.getDate();
           }
@@ -64,24 +63,51 @@ function getAllOccurrences(outgoObject){
         return occurrences;
       case "week":
         let dayOfWeekOfDay = day.getDay();
-        while (day <= inclusiveEndDate){
+        while (day.getTime() <= inclusiveEndDate.getTime()){
           for (let i = 1; i <= 7; i++){
-            while (day <= inclusiveEndDate){
+            while (day.getTime() <= inclusiveEndDate.getTime()){
               if (daysOfWeek.includes(dayOfWeekOfDay)) occurrences.push(day);
               day = new Date(day.getTime() + 86400000);
               dayOfWeekOfDay = day.getDay();
             }
           }
           if (multiplesOfPeriod > 1) {
-            day = new Date(day.getTime() + ((multiplesOfPeriod - 1) * 7 * 86400000));
+            day = new Date(day.getTime() + ((multiplesOfPeriod - 1)*7*86400000));
             dayOfWeekOfDay = day.getDay();
           }
         }
         return occurrences;
       case "day":
+        while (day.getTime() <= inclusiveEndDate.getTime()){
+          occurrences.push(day);
+          day = new Date(day.getTime() + (multiplesOfPeriod*86400000));
+        }
         return occurrences;
       case "year":
-        return occurrences;
+        if (day.getMonth() >= 2 || (day.getDate() === 29 && day.getMonth() === 1)){
+          while (day.getTime() <= inclusiveEndDate.getTime()){
+            occurrences.push(day);
+            for (let i = 1; i <= multiplesOfPeriod; i++){
+              let extraDay = 0;
+              const nextYearIsLeapYear = checkIfLeapYear(day.getFullYear() + 1);
+              if (nextYearIsLeapYear) extraDay = 1;
+              day = new Date(day.getTime() + (365 + extraDay)*86400000);
+            }
+          }
+          return occurrences;
+        }
+        else {
+          while (day.getTime() <= inclusiveEndDate.getTime()){
+            occurrences.push(day);
+            for (let i = 1; i <= multiplesOfPeriod; i++){
+              let extraDay = 0;
+              const thisYearIsLeapYear = checkIfLeapYear(day.getFullYear());
+              if (thisYearIsLeapYear) extraDay = 1;
+              day = new Date(day.getTime() + (365 + extraDay)*86400000);
+            }
+          }
+          return occurrences;
+        }
       default:
         return occurrences;
     }
@@ -90,13 +116,13 @@ function getAllOccurrences(outgoObject){
 
 function getReminders(budget){
   const reminders = [];
-  const today = setDateToMidday(Date.now);
+  const today = setDateToMidday(Date.now());
   for (let i = 0; i < budget.outgo.length; i++){
     const dayToUnmuteReminders = setDateToMidday(budget.outgo[i].muteRemindersUntil);
     if (budget.outgo[i].doRemind === false || dayToUnmuteReminders.getTime() > today.getTime()) continue;
     const remindThisManyDaysBefore = parseInt(budget.outgo[i].remindThisManyDaysBefore);
     const occurrences = getAllOccurrences(budget.outgo[i]);
-    const nextOccurrence = occurrences.find((date) => date.getTime() >= today.getTime());
+    const nextOccurrence = occurrences.find(date => date.getTime() >= today.getTime());
     if ((nextOccurrence.getTime() - today.getTime()) / 86400000 > remindThisManyDaysBefore) continue;
     const dollarsPerOccurrence = budget.outgo[i].dollarsPerOccurrence.toString();
     const month = convertMonthFromNumberToName(nextOccurrence.getMonth());

@@ -6,18 +6,16 @@ const checkTokenBlacklist = require('../middleware/checkTokenBlacklist');
 const express = require('express');
 const router = express.Router();
 
-// NOT WORKING!!!
 router.get('/my-budgets', auth, checkTokenBlacklist, async (req, res) => {
   try {
     const managedBudgets = await Budget.find( { managers: req.user.loginName }, { name: 1 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find friends' posts: ${err}`);} );
     const viewedBudgets = await Budget.find( { viewers: req.user.loginName }, { name: 1 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find friends' posts: ${err}`);} );
     const managedBudgetsWithReminders = await Budget.find( { managers: req.user.loginName, "outgo.doRemind": true }, { outgo: 1, _id: 0 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find friends' posts: ${err}`);} );
-    const allOutgoReminders = [];
+    let allOutgoReminders = [];
     for (let i = 0; i < managedBudgetsWithReminders.length; i++){
       const outgoReminders = getReminders(managedBudgetsWithReminders[i]);
-      allOutgoReminders.concat(outgoReminders);
+      allOutgoReminders = allOutgoReminders.concat(outgoReminders);
     }
-
     return res.send({ status: `Successfully found ${req.user.loginName}'s managed budgets, viewed budgets, and outgo reminders.`, managedBudgets: managedBudgets, viewedBudgets: viewedBudgets, outgoReminders: allOutgoReminders });
 
   } catch (ex) {

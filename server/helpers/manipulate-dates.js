@@ -125,4 +125,4 @@ function setAcceptableDaysOfMonth(numberOfDaysInMonth, weekOfMonth){
   }
 }
 
-module.exports = { setDateToMidday, convertDaysOfWeekFromNameToNumber, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName }
+module.exports = { setDateToMidday, convertDaysOfWeekFromNameToNumber, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName, checkIfLeapYear }
