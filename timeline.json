@@ -90,7 +90,7 @@
       "tasks": [
         {
         "description": "Add goal routes to the server.",
-        "isComplete": false
+        "isComplete": true
         },
         {
         "description": "Set up Redux in the client.",

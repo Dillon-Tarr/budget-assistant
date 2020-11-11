@@ -1,6 +1,7 @@
 const { User } = require('../models/user');
 const { BlacklistedToken } = require('../models/blacklistedToken');
 const { Budget } = require('../models/budget');
+const { setDateToMidday } = require('../helpers/manipulate-dates');
 
 const bcrypt = require('bcrypt');
 const auth = require('../middleware/auth');
@@ -135,6 +136,43 @@ router.delete('/delete-goal', auth, checkTokenBlacklist, async (req, res) => {
     user.save();
 
     return res.send({ status: `Goal with _id ${req.body.goalId} deleted successfully.` });
+
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+router.put('/modify-goal', auth, checkTokenBlacklist, async (req, res) => {
+  try {
+    if (!req.body.goalId) return res.status(400).send(`You must include "goalId" (the _id of the goal to modify) in the request body.`);
+    const user = await User.findById(req.user._id);
+    const goalIndex = user.goals.findIndex(goal => goal._id == req.body.goalId);
+    if (goalIndex === -1) return res.status(400).send(`Goal with _id ${req.body.goalId} not found.`);
+    if (req.body.text) user.goals[goalIndex].text = req.body.text;
+    let isComplete = user.goals[goalIndex].isComplete;
+    if (req.body.isComplete === true && !isComplete){
+      isComplete = true;
+      user.goals[goalIndex].isComplete = true;
+      user.goals[goalIndex].completedDate = setDateToMidday(Date.now());
+      await User.findOneAndUpdate({ "_id": req.user._id, "goals._id": req.body.goalId },
+        { $unset: { "goals.$.estimatedCompletionDate": "" } });
+    }
+    if (req.body.isComplete === false && isComplete){
+      isComplete = false;
+      user.goals[goalIndex].isComplete = false;
+      await User.findOneAndUpdate({ "_id": req.user._id, "goals._id": req.body.goalId },
+        { $unset: { "goals.$.completedDate": "" } });
+    }
+    if (req.body.estimatedCompletionDate && !isComplete) user.goals[goalIndex].estimatedCompletionDate = setDateToMidday(req.body.estimatedCompletionDate);
+    if (req.body.estimatedCompletionDate === false){
+      await User.findOneAndUpdate({ "_id": req.user._id, "goals._id": req.body.goalId },
+      { $unset: { "goals.$.estimatedCompletionDate": "" } });
+    }
+    if (req.body.completedDate && setDateToMidday(req.body.completedDate).getTime() <= setDateToMidday(Date.now()).getTime() && isComplete) user.goals[goalIndex].completedDate = setDateToMidday(req.body.completedDate);
+      
+    user.save();
+
+    return res.send({ status: `Goal with _id ${req.body.goalId} modified successfully.` });
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);

@@ -153,6 +153,8 @@ router.post('/:id/add-outgo', auth, checkTokenBlacklist, async (req, res) => {
     if (typeof req.body.startDate !== "string" || req.body.startDate.length < 13) return res.status(400).send('startDate must be a string representing Unix time in milliseconds.');
     if (typeof req.body.dollarsPerOccurrence !== "number") return res.status(400).send('dollarsPerOccurrence must be a number.');
     const name = req.body.name;
+    let category = "Uncategorized";
+    if (req.body.category) category = req.body.category;
     const startDate = new Date(parseInt(req.body.startDate));
     const dollarsPerOccurrence = parseFloat(req.body.dollarsPerOccurrence.toFixed(2));
     const muteRemindersUntil = new Date(1577836800000);
@@ -199,6 +201,7 @@ router.post('/:id/add-outgo', auth, checkTokenBlacklist, async (req, res) => {
     
     const newOutgo = {
       name: name,
+      category: category,
       startDate: startDate,
       dollarsPerOccurrence: dollarsPerOccurrence,
       doRemind: doRemind,
@@ -373,6 +376,7 @@ router.put('/:id/modify-outgo', auth, checkTokenBlacklist, async (req, res) => {
     if (outgoIndex === -1) return res.status(404).send(`Outgo with outgoId "${req.body.outgoId}" was not found in ${budget.name}.`);
     
     if (req.body.name) budget.outgo[outgoIndex].name = req.body.name;
+    if (req.body.category) budget.outgo[outgoIndex].category = req.body.category;
     if (req.body.startDate){
       if (typeof req.body.startDate !== "string" || req.body.startDate.length < 13) return res.status(400).send('startDate must be a string representing Unix time in milliseconds.');
       budget.outgo[outgoIndex].startDate = new Date(parseInt(req.body.startDate));
