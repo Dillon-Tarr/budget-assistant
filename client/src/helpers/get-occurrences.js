@@ -1,5 +1,4 @@
 const { setDateToMidday, convertDaysOfWeekFromNameToNumber, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName, checkIfLeapYear } = require('./manipulate-dates');
-const { getOrdinalAbbreviationSuffix } = require('./manipulate-numbers');
 
 function getAllOccurrences(incomeOrOutgoObject){
   const occurrences = [];
@@ -110,24 +109,4 @@ function getAllOccurrences(incomeOrOutgoObject){
   }
 }
 
-function getReminders(budget){
-  const reminders = [];
-  const today = setDateToMidday(Date.now());
-  for (let i = 0; i < budget.outgo.length; i++){
-    const dayToUnmuteReminders = setDateToMidday(budget.outgo[i].muteRemindersUntil);
-    if (budget.outgo[i].doRemind === false || dayToUnmuteReminders.getTime() > today.getTime()) continue;
-    const remindThisManyDaysBefore = parseInt(budget.outgo[i].remindThisManyDaysBefore);
-    const occurrences = getAllOccurrences(budget.outgo[i]);
-    const nextOccurrence = occurrences.find(date => date.getTime() >= today.getTime());
-    if (!nextOccurrence || ((nextOccurrence.getTime() - today.getTime()) / 86400000 > remindThisManyDaysBefore)) continue;
-    const dollarsPerOccurrence = budget.outgo[i].dollarsPerOccurrence.toString();
-    const month = convertMonthFromNumberToName(nextOccurrence.getMonth());
-    const day = nextOccurrence.getDate().toString();
-    const suffix = getOrdinalAbbreviationSuffix(day);
-    const year = nextOccurrence.getFullYear();
-    reminders.push(`${budget.outgo[i].name} | $${dollarsPerOccurrence} on ${month} ${day}${suffix}, ${year}`);
-  }
-  return reminders;
-}
-
-module.exports = { getAllOccurrences, getReminders };
+module.exports = { getAllOccurrences };

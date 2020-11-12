@@ -1,6 +1,7 @@
 const { User } = require('../models/user');
 const { BlacklistedToken } = require('../models/blacklistedToken');
 const { Budget } = require('../models/budget');
+const { getReminders } = require('../helpers/get-occurrences');
 const { setDateToMidday } = require('../helpers/manipulate-dates');
 
 const bcrypt = require('bcrypt');
@@ -9,7 +10,7 @@ const checkTokenBlacklist = require('../middleware/checkTokenBlacklist');
 const express = require('express');
 const router = express.Router();
 
-router.post('/new-user', async (req, res) => {
+router.post('/create-account', async (req, res) => {
   try {
     if (!(req.body.loginName && req.body.displayName && req.body.password)) return res.status(400).send('loginName, displayName, and password must be supplied in the request body.');
 
@@ -82,6 +83,34 @@ router.delete('/delete-account', auth, checkTokenBlacklist, async (req, res) => 
     userToDelete.deleteOne((err, results) => { if (err) return res.status(404).send(`The following error occurred when trying to delete user "${req.user.loginName}": ${err}`);} );
 
     return res.send( `User account deleted successfully.` );
+
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+router.get('/user-details', auth, checkTokenBlacklist, async (req, res) => {
+  try {
+    const account = await User.findById( req.user._id, { password: 0, joinedDate: 0, loginCount: 0, lastLoginDate: 0, _id: 0, __v: 0 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find the user's account: ${err}`);} );
+    const managedBudgets = await Budget.find( { managers: req.user.loginName }, { name: 1 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find managed budgets: ${err}`);} );
+    const viewedBudgets = await Budget.find( { viewers: req.user.loginName }, { name: 1 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find viewed budgets: ${err}`);} );
+    const managedBudgetsWithReminders = await Budget.find( { managers: req.user.loginName, "outgo.doRemind": true }, { outgo: 1, _id: 0 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find managed budgets with reminders: ${err}`);} );
+    let allOutgoReminders = [];
+    for (let i = 0; i < managedBudgetsWithReminders.length; i++){
+      const outgoReminders = getReminders(managedBudgetsWithReminders[i]);
+      allOutgoReminders = allOutgoReminders.concat(outgoReminders);
+    }
+    const userDetails = {
+      loginName: account.loginName,
+      displayName: account.displayName,
+      emailAddress: account.emailAddress,
+      goals: account.goals,
+      managedBudgets: [...managedBudgets],
+      viewedBudgets: [...viewedBudgets],
+      outgoReminders: [...allOutgoReminders]
+    }
+
+    return res.send({ status: `Successfully found ${req.user.loginName}'s details`, userDetails: userDetails });
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);

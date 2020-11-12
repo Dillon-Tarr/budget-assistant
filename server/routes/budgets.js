@@ -1,27 +1,10 @@
 const { Budget } = require('../models/budget');
-const { getReminders, getAllOccurrences } = require('../helpers/get-occurrences');
+const { getAllOccurrences } = require('../helpers/get-occurrences');
 
 const auth = require('../middleware/auth');
 const checkTokenBlacklist = require('../middleware/checkTokenBlacklist');
 const express = require('express');
 const router = express.Router();
-
-router.get('/my-budgets', auth, checkTokenBlacklist, async (req, res) => {
-  try {
-    const managedBudgets = await Budget.find( { managers: req.user.loginName }, { name: 1 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find managed budgets: ${err}`);} );
-    const viewedBudgets = await Budget.find( { viewers: req.user.loginName }, { name: 1 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find viewed budgets: ${err}`);} );
-    const managedBudgetsWithReminders = await Budget.find( { managers: req.user.loginName, "outgo.doRemind": true }, { outgo: 1, _id: 0 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find managed budgets with reminders: ${err}`);} );
-    let allOutgoReminders = [];
-    for (let i = 0; i < managedBudgetsWithReminders.length; i++){
-      const outgoReminders = getReminders(managedBudgetsWithReminders[i]);
-      allOutgoReminders = allOutgoReminders.concat(outgoReminders);
-    }
-    return res.send({ status: `Successfully found ${req.user.loginName}'s managed budgets, viewed budgets, and outgo reminders.`, managedBudgets: managedBudgets, viewedBudgets: viewedBudgets, outgoReminders: allOutgoReminders });
-
-  } catch (ex) {
-    return res.status(500).send(`Internal Server Error: ${ex}`);
-  }
-});
 
 router.get('/:id', auth, checkTokenBlacklist, async (req, res) => {
   try {

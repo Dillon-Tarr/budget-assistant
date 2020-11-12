@@ -94,19 +94,24 @@
         },
         {
         "description": "Set up Redux in the client.",
-        "isComplete": false
-        },
+        "isComplete": true
+        }
+      ]
+    },
+    {
+      "days": "Wednesday, November 11 && Thursday, November 12",
+      "tasks": [
         {
         "description": "Get user account creation working in the client.",
         "isComplete": false
         },
         {
         "description": "Get user log-in working in the client.",
-        "isComplete": false
+        "isComplete": true
         },
         {
         "description": "Get user log-out working in the client.",
-        "isComplete": false
+        "isComplete": true
         },
         {
         "description": "Create user's home page for after sign-in and populate it with helpful information/buttons.",
@@ -116,15 +121,6 @@
         "description": "Add instructional material about budgeting/money management.",
         "isComplete": false
         },
-        {
-        "description": "Build components to hold coming features such as goals and budgets.",
-        "isComplete": false
-        }
-      ]
-    },
-    {
-      "days": "Wednesday, November 11 && Thursday, November 12",
-      "tasks": [
         {
         "description": "Let user create a budget.",
         "isComplete": false
@@ -161,23 +157,6 @@
         "description": "Show user upcoming outgo reminders.",
         "isComplete": false
         },
-        {
-        "description": "Let user set and view financial/general goals and optionally include an estimated completion date.",
-        "isComplete": false
-        },
-        {
-        "description": "Let user mark financial/general goals as complete and manually modify the completion date if so desired.",
-        "isComplete": false
-        },
-        {
-        "description": "Let user undo marking financial/general goals as complete.",
-        "isComplete": false
-        }
-      ]
-    },
-    {
-      "day": "Thursday, November 12",
-      "tasks": [
         {
         "description": "Let user set and view financial/general goals and optionally include an estimated completion date.",
         "isComplete": false
