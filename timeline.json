@@ -112,7 +112,12 @@
         {
         "description": "Get user log-out working in the client.",
         "isComplete": true
-        },
+        }
+      ]
+    },
+    {
+      "day": "Friday, November 13, Saturday, November 14, && Sunday, November 15",
+      "tasks": [
         {
         "description": "Create user's home page for after sign-in and populate it with helpful information/buttons.",
         "isComplete": false
@@ -168,12 +173,7 @@
         {
         "description": "Let user undo marking financial/general goals as complete.",
         "isComplete": false
-        }
-      ]
-    },
-    {
-      "day": "Friday, November 13",
-      "tasks": [
+        },
         {
         "description": "Let user view all income and outgo between a start and end date.",
         "isComplete": false
@@ -181,21 +181,12 @@
         {
         "description": "Let user see a simulation of the number of dollars left on an end date (considering planned income and outgo between now and then) given a start date and a start amount.",
         "isComplete": false
-        }
-      ]
-    },
-    {
-      "day": "Saturday, November 14",
-      "tasks": [
+        },
         {
-        "description": "Let user view a breakdown of outgo by category.",
-        "isComplete": false
+          "description": "Let user view a breakdown of outgo by category.",
+          "isComplete": false
         }
       ]
-    },
-    {
-      "day": "Sunday, November 15",
-      "tasks": []
     },
     {
       "day": "Monday, November 16",

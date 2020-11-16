@@ -1,5 +1,6 @@
 import { LOG_IN, LOG_OUT } from './types';
 import axios from 'axios'
+import $ from 'jquery'
 
 export const createAccount = submission => dispatch => {
   let config = {
@@ -54,6 +55,8 @@ export const logIn = submission => dispatch => {
 }
 
 export const logOut = () => dispatch => {
+  $(".menu").css('right', 'initial');
+  $("main").css('filter', 'brightness(100%)');
   const token = localStorage.getItem("JWT");
   const config = {
     method: 'post',
