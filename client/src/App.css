@@ -38,38 +38,44 @@ h1 {
 h2 {
   font-size: 1.5rem;
 }
+header {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 2.4rem;
+}
 #welcome {
+  position: sticky;
+  top: 1rem;
   font-size: 1rem;
   margin-block-start: 0px;
   margin-block-end: 0px;
-  padding: 8px 0px 8px 8px;
+  padding: 0px 0px 0px 8px;
   text-align: left;
 }
-
-.menu-toggle-container {
-  position: absolute;
-  width: 0px;
-  height: 0px;
-  top: 0px;
-  right: 48px;
+hr {
+  margin-top: 0px;
+  border: rgb(164, 199, 111) solid 1px;
+  background-color: rgb(164, 199, 111);
 }
+
 .menu-toggle {
-  background-color: black;
-  position: sticky;
-  top: 0px;
-  right: 0px;
+  background-color: rgb(52, 104, 59);
+  margin-right: 8px;
   width: 48px;
   height: 48px;
   border: 0px;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 .hamburger {
-  background-color: white;
+  background-color: rgb(73, 177, 70);
   width: 48px;
-  height: 6px;
+  height: 5px;
 }
 .menu-close {
   font-size: 48px;
@@ -88,9 +94,11 @@ h2 {
   height: 0px;
 }
 .menu {
+  position: absolute;
   display: none;
   flex-flow: column nowrap;
   align-items: center;
+  justify-content: space-between;
   background-color: rgb(105, 109, 49);
   z-index: 2;
   width: 240px;
@@ -102,7 +110,6 @@ h2 {
   -o-transition: all 1s ease-in-out;
   transition: 1s ease-in-out;
 }
-
 .menu-button {
   width: 100%;
   margin: 0px;
@@ -117,7 +124,6 @@ h2 {
   border: solid 1px greenyellow;
   z-index: inherit;
 }
-
 .main-button {
   background-color: rgb(0, 185, 25);
   color: rgb(255, 255, 255);
@@ -135,4 +141,8 @@ h2 {
   display: none;
   color: rgb(255, 152, 152);
   font-weight: bold;
+}
+
+.reminder {
+  font-size: .9rem;
 }

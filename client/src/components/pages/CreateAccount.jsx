@@ -53,7 +53,7 @@ function CreateAccount(props) {
       <button className="main-button" type="button" onClick={handleSubmit}>Create account</button><br/><br/>
     </form>
     or...<br/><br/>
-    <button className="main-button" type="button" onClick={() => props.goToPage("Login")}>I already have an account.</button>
+    <button className="main-button" type="button" onClick={() => props.goToPage("Login")}>I already have an account.</button><br/><br/>
     </>
   )
 }

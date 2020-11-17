@@ -2,7 +2,7 @@ import './App.css';
 import { useSelector } from 'react-redux'
 import Login from './components/pages/Login';
 import CreateAccount from './components/pages/CreateAccount';
-import Home from './components/pages/Home';
+import Main from './components/Main';
 
 export default function App() {
   const page = useSelector(state => state.view.page);
@@ -13,7 +13,7 @@ export default function App() {
     case "CreateAccount":
       return <CreateAccount/>;
     case "Home":
-      return <Home/>;
+      return <Main/>;
     default:
       return <Login/>;
   }

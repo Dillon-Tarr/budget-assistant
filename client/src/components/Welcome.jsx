@@ -28,6 +28,7 @@ export default function Welcome(props) {
       messages.push(`Good morning, ${props.displayName}.`);
       messages.push(`Good morning, ${props.displayName}.`);
       messages.push(`Good morning, ${props.displayName}.`);
+      break;
     case 10:
     case 11:
       messages.push(`Good day, ${props.displayName}.`);
