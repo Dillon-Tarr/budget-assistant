@@ -90,6 +90,8 @@ function getNumberOfDaysInMonth(date){
       return 30;
     case 11:
       return 31;
+    default:
+      return 0;
   }
 }
 

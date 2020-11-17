@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('/:id', auth, checkTokenBlacklist, async (req, res) => {
   try {
-    const budget = await Budget.findById(req.params.id);
+    const budget = await Budget.findById(req.params.id, { createdDate: 0, __v: 0 }, function(err, results){ if (err) return res.status(404).send(`The following error occurred when trying to find managed budgets: ${err}`);} );
     for (let i = 0; i < budget.income.length; i++){
       budget.income[i].occurrences = getAllOccurrences(budget.income[i]);
     }

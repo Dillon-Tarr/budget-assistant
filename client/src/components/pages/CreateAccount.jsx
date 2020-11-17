@@ -50,7 +50,7 @@ function CreateAccount(props) {
         value={values.password2 || ""} type="password" minLength="8" maxLength="50" size="30" required/>
       </label><br/>
       <p id="bad-passphrase"></p><br/>
-      <button className="main-button" type="button" onClick={handleSubmit}>Create account</button><br/><br/>
+      <button className="main-button" type="button" onClick={handleSubmit}>Create account</button><br/>
     </form>
     or...<br/><br/>
     <button className="main-button" type="button" onClick={() => props.goToPage("Login")}>I already have an account.</button><br/><br/>

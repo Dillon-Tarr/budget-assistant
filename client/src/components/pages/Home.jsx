@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, useSelector } from 'react-redux';
 
-import { openMenu, closeMenu } from '../../actions/viewActions';
+import { goToPage } from '../../actions/viewActions';
 
-import Welcome from '../Welcome';
 import Header from '../Header';
 
 function Home(props) {
@@ -21,27 +20,23 @@ function Home(props) {
     return reminders;
   }
 
-  if (userDetails.managedBudgets.length + userDetails.viewedBudgets.length < 1) {
+  if (userDetails.managedBudgets.length/* + userDetails.viewedBudgets.length*/ < 1) {
     return (
-      <>
-        <Header/>
-        <div className="home">
-          <p>Get started by...</p>
-          <button className="main-button">Creating a budget</button><br/><br/>
-          <button className="main-button">Learning about budgeting</button>
-        </div>
-      </>
+      <div className="home">
+        <p>Get started by...</p>
+        <button className="main-button">Creating a budget</button><br/>
+        <button className="main-button">Learning about budgeting</button>
+      </div>
     )
   }
 else return (
     <>
-      <Header/>
       <div className="home">
         <div>
           <p>What's next?</p>
-          <button className="main-button">Budgets</button><br/><br/>
-          <button className="main-button">Goals</button><br/><br/>
-          <button className="main-button">Learn</button>
+          <button className="main-button" onClick={() => props.goToPage("Budgets")}>Budgets</button><br/>
+          <button className="main-button" onClick={() => props.goToPage("Goals")}>Goals</button><br/>
+          <button className="main-button" onClick={() => props.goToPage("Learn")}>Learn</button>
         </div>
         <div className="reminders">
           <p>Outgo reminders:</p>
@@ -54,13 +49,11 @@ else return (
 }
 
 const mapDispatchToProps = {
-  openMenu,
-  closeMenu
+  goToPage
 }
 
 Home.propTypes = {
-  openMenu: PropTypes.func.isRequired,
-  closeMenu: PropTypes.func.isRequired
+  goToPage: PropTypes.func.isRequired
 };
 
 export default connect(null, mapDispatchToProps)(Home);

@@ -11,10 +11,8 @@ export default function App() {
     case "Login":
       return <Login/>;
     case "CreateAccount":
-      return <CreateAccount/>;
-    case "Home":
-      return <Main/>;
+      return <CreateAccount/>; 
     default:
-      return <Login/>;
+      return <Main/>;
   }
 }

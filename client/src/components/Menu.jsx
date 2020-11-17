@@ -25,6 +25,9 @@ function Menu(props) {
       <nav className="menu" ref={menuRef}>
         <div className="menu-close-container"><button className="menu-close" onClick={props.closeMenu}>✕</button></div>
         <button className="home menu-button" onClick={() => props.goToPage("Home")}>Home</button>
+        <button className="home menu-button" onClick={() => props.goToPage("Budgets")}>Budgets</button>
+        <button className="home menu-button" onClick={() => props.goToPage("Goals")}>Goals</button>
+        <button className="home menu-button" onClick={() => props.goToPage("Learn")}>Learn</button>
         <button type="button" className="menu-button" onClick={() => props.logOut()}>Log out</button>
       </nav>
     </div>

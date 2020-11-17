@@ -103,7 +103,7 @@
       "tasks": [
         {
         "description": "Get user account creation working in the client.",
-        "isComplete": false
+        "isComplete": true
         },
         {
         "description": "Get user log-in working in the client.",
@@ -120,8 +120,22 @@
       "tasks": [
         {
         "description": "Create user's home page for after sign-in and populate it with helpful information/buttons.",
-        "isComplete": false
-        },
+        "isComplete": true
+        }
+      ]
+    },
+    {
+      "day": "Monday, November 16",
+      "tasks": [
+        {
+        "description": "Set up Budgets and Budget pages that populate budget information.",
+        "isComplete": true
+        }
+      ]
+    },
+    {
+      "day": "Tuesday, November 17 && Wednesday, November 18",
+      "tasks": [
         {
         "description": "Add instructional material about budgeting/money management.",
         "isComplete": false
@@ -185,21 +199,11 @@
         {
           "description": "Let user view a breakdown of outgo by category.",
           "isComplete": false
-        }
-      ]
-    },
-    {
-      "day": "Monday, November 16",
-      "tasks": [
+        },
         {
         "description": "Add suggested budget categories so the user can start a budget without having to manually type category names.",
         "isComplete": false
-        }
-      ]
-    },
-    {
-      "day": "Tuesday, November 17",
-      "tasks": [
+        },
         {
         "description": "Allow user to add other budget managers or budget viewers to a budget.",
         "isComplete": false
@@ -207,12 +211,7 @@
         {
         "description": "Cause budgets to not allow editing if the user is only a viewer (not manager) of a budget.",
         "isComplete": false
-        }
-      ]
-    },
-    {
-      "day": "Wednesday, November 18",
-      "tasks": [
+        },
         {
         "description": "Allow a budget viewer to submit a request for modification of a budget.",
         "isComplete": false
@@ -230,6 +229,7 @@
     {
       "day": "Thursday, November 19",
       "tasks": [
+        
         {
         "description": "Set up recording of previous changes to a budget",
         "isComplete": false

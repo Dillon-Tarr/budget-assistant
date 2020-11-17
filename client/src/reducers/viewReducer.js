@@ -1,4 +1,4 @@
-import { LOG_IN, LOG_OUT, GO_TO_PAGE, OPEN_MENU, CLOSE_MENU} from '../actions/types'
+import { LOG_IN, LOG_OUT, GO_TO_PAGE, OPEN_MENU, CLOSE_MENU, OPEN_BUDGET } from '../actions/types'
 
 const initialState = {
   page: "Login",
@@ -17,6 +17,8 @@ export default function viewReducer(state = initialState, action){
       return {...state, menuIsOpen: true};
     case CLOSE_MENU:
       return {...state, menuIsOpen: false};
+    case OPEN_BUDGET:
+      return {...state, page: "Budget"};
     default:
       return state;
   }

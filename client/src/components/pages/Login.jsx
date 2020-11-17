@@ -41,7 +41,7 @@ function Login(props) {
       <p id="forgot-passphrase">Forgot passphrase?<br/>
       Email me: dill.tarr@gmail.com<br/></p>
       <p id="invalid-login">Logging in...</p><br/><br/>
-      <button className="main-button" type="button" onClick={handleSubmit}>Log in</button><br/><br/>
+      <button className="main-button" type="button" onClick={handleSubmit}>Log in</button><br/>
     </form>
     or...<br/><br/>
     <button className="main-button" type="button" onClick={() => props.goToPage("CreateAccount")}>Create an account</button>

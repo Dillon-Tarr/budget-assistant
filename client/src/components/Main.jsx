@@ -2,7 +2,11 @@ import React from 'react';
 import { connect, useSelector } from 'react-redux';
 
 import Menu from './Menu';
+
 import Home from './pages/Home';
+import Budgets from './pages/Budgets';
+import Budget from './pages/Budget';
+import Header from './Header';
 
 function Main(props) {
   const page = useSelector(state => state.view.page);
@@ -10,6 +14,10 @@ function Main(props) {
     switch(page){
       case "Home":
         return <Home/>;
+      case "Budgets":
+        return <Budgets/>;
+      case "Budget":
+        return <Budget/>;
       default:
         return <Home/>;
     }
@@ -19,6 +27,7 @@ function Main(props) {
     <>
       <Menu/>
       <main>
+        <Header/>
         {renderPage(page)}
       </main>
     </>

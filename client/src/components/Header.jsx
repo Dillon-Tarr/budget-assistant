@@ -1,19 +1,30 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect, useSelector } from 'react-redux';
 
-import { openMenu, closeMenu } from '../actions/viewActions';
+import { generateWelcomeMessage } from '../helpers/message-generators';
 
-import Welcome from './Welcome';
 import MenuToggle from './MenuToggle';
 
 function Header(props) {
+  const page = useSelector(state => state.view.page);
   const userDetails = useSelector(state => state.userDetails);
-
+  const budget = useSelector(state => state.budget);
+  
+  const renderHeaderMessage = page => {
+    switch(page){
+      case "Home":
+        return (<p className="header-message">{generateWelcomeMessage(userDetails.displayName)}</p>);
+      case "Budget":
+        return <p className="header-message">{budget.name}</p>;
+      default:
+        return <p className="header-message">{generateWelcomeMessage(userDetails.displayName)}</p>;
+    }
+  }
+  
   return (
     <>
       <header>
-        <Welcome displayName={userDetails.displayName}/>
+        {renderHeaderMessage(page)}
         <MenuToggle/>
       </header>
       <hr/>
@@ -21,14 +32,4 @@ function Header(props) {
   )
 } 
 
-const mapDispatchToProps = {
-  openMenu,
-  closeMenu
-}
-
-Header.propTypes = {
-  openMenu: PropTypes.func.isRequired,
-  closeMenu: PropTypes.func.isRequired
-};
-
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(null, null)(Header);

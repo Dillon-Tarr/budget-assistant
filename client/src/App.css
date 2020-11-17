@@ -1,5 +1,5 @@
 html, body {
-  background-color: rgb(52, 104, 59);
+  background-color: rgb(0, 0, 80);
   width: 100%;
   height: 100vh;
   max-width: 100%;
@@ -15,15 +15,35 @@ html, body {
 .body::-webkit-scrollbar {
   display: none;
 }
+@media only screen and (min-width: 576px) {
+  html, body {font-size: 24px}
+}
 @media only screen and (min-width: 768px) {
-  body {font-size: 1rem}
+  html, body {font-size: 28px}
+}
+@media only screen and (min-width: 992px) {
+  html, body {font-size: 32px}
+}
+@media only screen and (min-width: 1200px) {
+  html, body {font-size: 36px}
 }
 
+.positive {
+  color: rgb(0, 255, 0);
+}
+.negative {
+  color: rgb(255, 0, 0);
+}
+
+p {
+  margin: .5rem;
+}
 main {
   width: 100%;
   height: 100vh;
 }
 input {
+  font-size: .8rem;
   border-radius: 3px;
 }
 h1 {
@@ -46,8 +66,7 @@ header {
   align-items: center;
   height: 2.4rem;
 }
-#welcome {
-  position: sticky;
+.header-message {
   top: 1rem;
   font-size: 1rem;
   margin-block-start: 0px;
@@ -57,15 +76,31 @@ header {
 }
 hr {
   margin-top: 0px;
-  border: rgb(164, 199, 111) solid 1px;
-  background-color: rgb(164, 199, 111);
+  border: rgb(207, 207, 0) solid 1px;
+  background-color: rgb(207, 207, 0);
+}
+.budget {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+.averages-container {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+.averages {
+  text-align: left;
+  font-size: .75rem;
+  display: flex;
+  flex-flow: column wrap;
 }
 
 .menu-toggle {
-  background-color: rgb(52, 104, 59);
-  margin-right: 8px;
-  width: 48px;
-  height: 48px;
+  background-color: rgb(0, 0, 80);
+  margin-right: .4rem;
+  width: 2.4rem;
+  height: 2.4rem;
   border: 0px;
   display: flex;
   flex-flow: column nowrap;
@@ -73,23 +108,23 @@ hr {
   justify-content: space-evenly;
 }
 .hamburger {
-  background-color: rgb(73, 177, 70);
-  width: 48px;
-  height: 5px;
+  background-color: rgb(207, 207, 0);
+  width: 2.4rem;
+  height: .25rem;
 }
 .menu-close {
-  font-size: 48px;
-  line-height: 48px;
+  font-size: 2.4rem;
+  line-height: 2.4rem;
   top: 0px;
   right: 0px;
   position: relative;
-  left: 92px;
+  left: 4.6rem;
   z-index: 9999;
 }
 .menu-container{
   position: absolute;
   top: 0px;
-  right: 240px;
+  right: 12rem;
   width: 0px;
   height: 0px;
 }
@@ -101,7 +136,7 @@ hr {
   justify-content: space-between;
   background-color: rgb(105, 109, 49);
   z-index: 2;
-  width: 240px;
+  width: 12rem;
   height: 100vh;
 
   -webkit-transition: all 1s ease-in-out;
@@ -112,7 +147,6 @@ hr {
 }
 .menu-button {
   width: 100%;
-  margin: 0px;
   text-align: center;
   background-color: rgb(0, 185, 25);
   background-image: linear-gradient();
@@ -122,6 +156,7 @@ hr {
   line-height: 2rem;
   border-radius: 3px;
   border: solid 1px greenyellow;
+  margin: 1rem 0px;
   z-index: inherit;
 }
 .main-button {
@@ -130,7 +165,8 @@ hr {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 1rem;
   border-radius: 3px;
-  border: solid 2px greenyellow
+  border: solid 2px greenyellow;
+  margin: .1rem auto 1.4rem;
 }
 
 
