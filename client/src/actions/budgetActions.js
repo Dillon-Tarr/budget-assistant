@@ -1,5 +1,26 @@
-import { OPEN_BUDGET } from './types';
+import { CREATE_BUDGET, OPEN_BUDGET } from './types';
 import axios from 'axios'
+
+export const createBudget = name => dispatch => {
+  const token = localStorage.getItem("JWT");
+  let config = {
+    method: 'post',
+    url: `http://localhost:5000/api/budgets/new-budget`,
+    headers: { 'x-auth-token': token },
+    data: { name: name }};
+  axios(config).then(res => {
+  config = {
+    method: 'get',
+    url: `http://localhost:5000/api/budgets/${res.data.budget._id}`,
+    headers: { 'x-auth-token': token }};
+  axios(config).then(res => 
+    dispatch({
+    type: CREATE_BUDGET,
+    payload: res.data.budget
+  }))
+  .catch(err => console.error(err));})
+  .catch(err => console.error(err));
+}
 
 export const openBudget = budgetId => dispatch => {
   const token = localStorage.getItem("JWT");

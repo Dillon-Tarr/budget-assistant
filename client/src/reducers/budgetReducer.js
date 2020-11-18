@@ -1,4 +1,4 @@
-import { LOG_OUT, OPEN_BUDGET } from '../actions/types'
+import { LOG_OUT, CREATE_BUDGET, OPEN_BUDGET } from '../actions/types'
 
 const initialState = {
   managers: null,
@@ -14,6 +14,7 @@ export default function userReducer(state = initialState, action){
   switch(action.type){
     case LOG_OUT:
       return initialState;
+    case CREATE_BUDGET:
     case OPEN_BUDGET:
       return action.payload;
     default:

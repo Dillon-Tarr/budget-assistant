@@ -130,20 +130,25 @@
         {
         "description": "Set up Budgets and Budget pages that populate budget information.",
         "isComplete": true
+        },
+        {
+        "description": "Show user upcoming outgo reminders.",
+        "isComplete": true
         }
       ]
     },
     {
-      "day": "Tuesday, November 17 && Wednesday, November 18",
+      "day": "Tuesday, November 17",
       "tasks": [
         {
-        "description": "Add instructional material about budgeting/money management.",
-        "isComplete": false
-        },
-        {
         "description": "Let user create a budget.",
-        "isComplete": false
-        },
+        "isComplete": true
+        }
+      ]
+    },
+    {
+      "day": "Wednesday, November 18",
+      "tasks": [
         {
         "description": "Let user add recurring income to a budget.",
         "isComplete": false
@@ -171,11 +176,12 @@
         {
         "description": "Let user modify income and outgo entries in a budget.",
         "isComplete": false
-        },
-        {
-        "description": "Show user upcoming outgo reminders.",
-        "isComplete": false
-        },
+        }
+      ]
+    },
+    {
+      "day": "Thursday, November 19",
+      "tasks": [
         {
         "description": "Let user set and view financial/general goals and optionally include an estimated completion date.",
         "isComplete": false
@@ -187,7 +193,12 @@
         {
         "description": "Let user undo marking financial/general goals as complete.",
         "isComplete": false
-        },
+        }
+      ]
+    },
+    {
+      "day": "Friday, November 20",
+      "tasks": [
         {
         "description": "Let user view all income and outgo between a start and end date.",
         "isComplete": false
@@ -197,8 +208,8 @@
         "isComplete": false
         },
         {
-          "description": "Let user view a breakdown of outgo by category.",
-          "isComplete": false
+        "description": "Let user view a breakdown of outgo by category.",
+        "isComplete": false
         },
         {
         "description": "Add suggested budget categories so the user can start a budget without having to manually type category names.",
@@ -211,7 +222,12 @@
         {
         "description": "Cause budgets to not allow editing if the user is only a viewer (not manager) of a budget.",
         "isComplete": false
-        },
+        }
+      ]
+    },
+    {
+      "day": "Saturday, November 21",
+      "tasks": [
         {
         "description": "Allow a budget viewer to submit a request for modification of a budget.",
         "isComplete": false
@@ -223,13 +239,7 @@
         {
         "description": "Allow a budget manager to delete budget modification requests.",
         "isComplete": false
-        }
-      ]
-    },
-    {
-      "day": "Thursday, November 19",
-      "tasks": [
-        
+        },
         {
         "description": "Set up recording of previous changes to a budget",
         "isComplete": false
@@ -241,34 +251,21 @@
       ]
     },
     {
-      "day": "Friday, November 20",
-      "tasks": [
-        {
-        "description": "Complete unfinished tasks if there are any.",
-        "isComplete": false
-        },
-        {
-        "description": "Deploy to an AWS hosted domain.",
-        "isComplete": false
-        },
-        {
-        "description": "Test the application with others.",
-        "isComplete": false
-        }
-      ]
-    },
-    {
-      "day": "Saturday, November 21",
-      "tasks": [
-        {
-        "description": "Continue testing with others.",
-        "isComplete": false
-        }
-      ]
-    },
-    {
       "day": "Sunday, November 22",
-      "tasks": []
+      "tasks": [
+        {
+        "description": "Add instructional material about budgeting/money management.",
+        "isComplete": false
+        },
+        {
+        "description": "Allow user to change account details.",
+        "isComplete": false
+        },
+        {
+        "description": "Deploy to an AWS hosted domain?",
+        "isComplete": false
+        }
+      ]
     },
     {
       "day": "Monday, November 23",

@@ -15,7 +15,13 @@ function Budget(props) {
   if (yearlyNetIncrease === 0) positiveOrNegative = "zero"; 
   if (yearlyNetIncrease < 0) positiveOrNegative = "negative"; 
 
-  return (
+  return (budget.income.length === 0 && budget.outgo.length === 0) ? ( 
+    <div className="budget">
+      <div className="budget-options">
+        <button className="main-button" onClick={() => props.goToPage("ModifyBudget")}>Add income/outgo</button><br/>
+      </div>
+    </div>
+    ) : (
     <div className="budget">
       <div className="averages-container">
         <div className="averages">
@@ -46,6 +52,12 @@ function Budget(props) {
             net increase: <span className={positiveOrNegative}>{yearlyNetIncrease.toFixed(2)}</span>
           </p>
         </div>
+      </div>
+      <br/>
+      <div className="budget-options">
+        <button className="main-button" onClick={() => props.goToPage("ModifyBudget")}>Modify budgeted income/outgo</button><br/>
+        {budget.outgo.length === 0 && (<><button className="main-button" onClick={() => props.goToPage("OutgoBreakdown")}>Outgo breakdown by category</button><br/></>)}
+        <button className="main-button" onClick={() => props.goToPage("FutureValueCalculator")}>Future value calculator</button>
       </div>
     </div>
   )

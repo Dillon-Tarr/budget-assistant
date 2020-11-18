@@ -22,7 +22,7 @@ router.post('/create-account', async (req, res) => {
       displayName: req.body.displayName,
       password: await bcrypt.hash(req.body.password, salt),
     };
-    if (req.body.emailAddress && req.body.emailAddress.length > 0){
+    if (req.body.emailAddress && req.body.emailAddress.length > 3){
       user = await User.findOne({ emailAddress: req.body.emailAddress });
       if (user) return res.status(400).send('Someone is already registered with that email address.');
       userInfo.emailAddress = req.body.emailAddress;

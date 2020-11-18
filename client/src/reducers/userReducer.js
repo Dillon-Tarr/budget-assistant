@@ -1,4 +1,4 @@
-import { LOG_IN, LOG_OUT } from '../actions/types'
+import { LOG_IN, LOG_OUT, CREATE_BUDGET } from '../actions/types'
 
 const initialState = {
   loginName: null,
@@ -16,6 +16,10 @@ export default function userReducer(state = initialState, action){
       return action.payload;
     case LOG_OUT:
       return initialState;
+    case CREATE_BUDGET:
+      const managedBudgets = [...state.managedBudgets];
+      managedBudgets.push({ _id: action.payload._id, name: action.payload.name });
+      return {...state, managedBudgets: managedBudgets};
     default:
       return state;
   }
