@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Budgets from './pages/Budgets';
 import Budget from './pages/Budget';
 import Header from './Header';
+import IncomeAndOutgo from './pages/IncomeAndOutgo';
 
 function Main(props) {
   const page = useSelector(state => state.view.page);
@@ -18,6 +19,8 @@ function Main(props) {
         return <Budgets/>;
       case "Budget":
         return <Budget/>;
+      case "IncomeAndOutgo":
+        return <IncomeAndOutgo/>;
       default:
         return <Home/>;
     }

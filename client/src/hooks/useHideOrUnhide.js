@@ -7,6 +7,12 @@ export default function useHideOrUnhide(namesAndHideStates){
   const hideOrUnhide = name => { // Switch from true (hidden) to false (NOT hidden) or vice versa, given the name of the HTML element.
     changeHideState(hideState => ({...hideState, [name]: !hideState[name] }));
   }
-
-  return { hideState, hideOrUnhide };
+  const unhide = name => { // Switch to false (NOT hidden), given the name of the HTML element.
+    changeHideState(hideState => ({...hideState, [name]: false }));
+  }
+  const hide = name => { // Switch to true (hidden), given the name of the HTML element.
+    changeHideState(hideState => ({...hideState, [name]: true }));
+  }
+  
+  return { hideState, hideOrUnhide, unhide, hide };
 }

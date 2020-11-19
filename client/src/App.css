@@ -46,6 +46,10 @@ input {
   font-size: .8rem;
   border-radius: 3px;
 }
+select {
+  font-size: .8rem;
+  border-radius: 3px;
+}
 h1 {
   text-align: center;
   max-width: 24rem;
@@ -94,6 +98,19 @@ hr {
   font-size: .75rem;
   display: flex;
   flex-flow: column wrap;
+}
+
+#all-income, #all-outgo {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+.income-or-outgo {
+  font-size: .9rem;
+  text-align: left;
+}
+.add-income-or-outgo {
+  line-height: 1.5rem;
 }
 
 .menu-toggle {

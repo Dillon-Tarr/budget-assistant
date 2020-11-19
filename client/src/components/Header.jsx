@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect, useSelector } from 'react-redux';
 
-import { generateWelcomeMessage } from '../helpers/message-generators';
+import { generateWelcomeMessage } from '../helpers/string-generators';
+import { goToPage } from '../actions/viewActions';
 
 import MenuToggle from './MenuToggle';
 
@@ -15,7 +17,8 @@ function Header(props) {
       case "Home":
         return (<p className="header-message">{generateWelcomeMessage(userDetails.displayName)}</p>);
       case "Budget":
-        return <p className="header-message">{budget.name}</p>;
+      case "IncomeAndOutgo":
+        return <p className="header-message" onClick={() => props.goToPage("Budget")}>{budget.name}</p>;
       default:
         return <p className="header-message">{generateWelcomeMessage(userDetails.displayName)}</p>;
     }
@@ -30,6 +33,14 @@ function Header(props) {
       <hr/>
     </>
   )
-} 
+}
 
-export default connect(null, null)(Header);
+const mapDispatchToProps = {
+  goToPage
+}
+
+Header.propTypes = {
+  goToPage: PropTypes.func.isRequired
+};
+
+export default connect(null, mapDispatchToProps)(Header);

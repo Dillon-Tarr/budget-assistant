@@ -1,5 +1,5 @@
 const { setDateToMidday, convertDaysOfWeekFromNameToNumber, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName, checkIfLeapYear } = require('./manipulate-dates');
-const { getOrdinalAbbreviationSuffix } = require('./manipulate-numbers');
+const { getOrdinalSuffixAbbreviation } = require('./manipulate-numbers');
 
 function getAllOccurrences(incomeOrOutgoObject){
   const occurrences = [];
@@ -123,7 +123,7 @@ function getReminders(budget){
     const dollarsPerOccurrence = budget.outgo[i].dollarsPerOccurrence.toString();
     const month = convertMonthFromNumberToName(nextOccurrence.getMonth());
     const day = nextOccurrence.getDate().toString();
-    const suffix = getOrdinalAbbreviationSuffix(day);
+    const suffix = getOrdinalSuffixAbbreviation(day);
     const year = nextOccurrence.getFullYear();
     reminders.push(`${budget.outgo[i].name} | $${dollarsPerOccurrence} on ${month} ${day}${suffix}, ${year}`);
   }
