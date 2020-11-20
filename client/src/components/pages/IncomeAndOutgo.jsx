@@ -11,6 +11,7 @@ function IncomeAndOutgo(props) {
   return (
     <div id="income-and-outgo">
       <Income/>
+      <hr/>
     </div>
   )
 }

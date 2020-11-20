@@ -11,7 +11,7 @@ function Budget(props) {
   return (budget.income.length === 0 && budget.outgo.length === 0) ? (
     <div className="budget">
       <div className="budget-options">
-        <button className="main-button" onClick={() => props.goToPage("IncomeAndOutgo")}>Add income/outgo</button><br/>
+        <button className="main-button" onClick={() => props.goToPage("IncomeAndOutgo")}>Add income and outgo</button><br/>
       </div>
     </div>
     ) : (

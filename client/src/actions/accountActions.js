@@ -26,8 +26,8 @@ export const createAccount = submission => dispatch => {
       type: LOG_IN,
       payload: res.data.userDetails
     })})
-    .catch(err => console.error(err));})
-    .catch(err => console.error(err));
+    .catch(err => { if (err.response) console.error(err.response.data); });})
+    .catch(err => { if (err.response) console.error(err.response.data); });
 }
 
 export const logIn = submission => dispatch => {
@@ -50,8 +50,8 @@ export const logIn = submission => dispatch => {
     type: LOG_IN,
     payload: res.data.userDetails
   }))
-  .catch(err => console.error(err));})
-  .catch(err => console.error(err));
+  .catch(err => { if (err.response) console.error(err.response.data); });})
+  .catch(err => { if (err.response) console.error(err.response.data); });
 }
 
 export const logOut = () => dispatch => {

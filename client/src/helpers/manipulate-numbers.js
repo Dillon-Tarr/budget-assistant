@@ -40,4 +40,12 @@ function getOrdinalSuffixAbbreviation(numberString){
   }
 }
 
-module.exports = { getOrdinalSuffixAbbreviation }
+function convertFromDayXToNumbers(dayXArray){ //converts something like ["day1", "day15"] to [1, 15]
+  const daysOfMonth = [];
+  for (let i = 0; i < dayXArray.length; i++){
+    daysOfMonth.push(parseInt(dayXArray[i].slice(3)));
+  }
+  return daysOfMonth;
+}
+
+module.exports = { getOrdinalSuffixAbbreviation, convertFromDayXToNumbers }

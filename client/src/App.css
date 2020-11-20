@@ -1,5 +1,5 @@
 html, body {
-  background-color: rgb(0, 0, 80);
+  background-color: rgb(0, 0, 40);
   width: 100%;
   height: 100vh;
   max-width: 100%;
@@ -26,6 +26,10 @@ html, body {
 }
 @media only screen and (min-width: 1200px) {
   html, body {font-size: 28px}
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
 }
 
 .positive {
@@ -108,13 +112,37 @@ hr {
 .income-or-outgo {
   font-size: .9rem;
   text-align: left;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0rem .3rem 1rem;
+}
+.income-or-outgo-buttons {
+  display: flex;
+  flex-flow: column nowrap;
+  line-height: .5rem;
+  justify-content: space-evenly;
+}
+.income-or-outgo-buttons button{
+  font-size: .8rem;
+  line-height: 1rem;
+  margin: 1rem .5rem 0px;
 }
 .add-income-or-outgo {
+  font-size: .8rem;
   line-height: 1.5rem;
+  max-width: 17rem;
+  margin-left: .3rem;
+  margin-right: .3rem;
+}
+.daysOfWeek, .daysOfMonth {
+  height: 1rem;
+  width: 1rem;
 }
 
 .menu-toggle {
-  background-color: rgb(0, 0, 80);
+  background-color: rgb(0, 0, 40);
   margin-right: .4rem;
   width: 2.4rem;
   height: 2.4rem;

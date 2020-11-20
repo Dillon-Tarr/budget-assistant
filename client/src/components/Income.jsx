@@ -11,10 +11,7 @@ function Income(props) {
   const budget = useSelector(state => state.budget);
 
   const renderIncome = () => {
-    if (budget.income.length === 0) return (<>
-      <p>None yet.</p>
-      <AddIncomeButton/>
-      </>)
+    if (budget.income.length === 0) return <p>None yet.</p>;
     const income = [];
     for (let i = 0; i < budget.income.length; i++) {
       const occurrenceString = getOccurrenceString(budget.income[i]);
@@ -25,7 +22,8 @@ function Income(props) {
         inclusiveEndDate = inclusiveEndDate.toDateString();
       }
       income.push(
-        <p className="income-or-outgo" key={budget.income[i]._id}>
+        <div className="income-or-outgo" key={budget.income[i]._id}>
+          <p>
           <u>{budget.income[i].name}</u><br/>
           {occurrenceString}<br/>
           {budget.income[i].isRecurring && (<>starting </>)}
@@ -33,6 +31,12 @@ function Income(props) {
           {startDate}
           {budget.income[i].isRecurring && (<>,<br/>
           ending {inclusiveEndDate}</>)}</p>
+          <div className="income-or-outgo-buttons">
+            <button className="main-button" /*onClick={() => modifyIncome(budget.income[i]._id)}*/>Modify</button><br/>
+            <button className="main-button" /*onClick={() => deleteIncome(budget.income[i]._id)}*/>Remove</button><br/>
+          </div>
+        </div>
+        
       )
     }
     return income;

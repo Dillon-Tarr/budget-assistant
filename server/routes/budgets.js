@@ -123,7 +123,7 @@ router.post('/:id/add-income', auth, checkTokenBlacklist, async (req, res) => {
       { new: true });
     sameBudget.save();
 
-    return res.send({ status: `${budget.name} updated successfully.`, newIncome: income[0] });
+    return res.send({ status: `${budget.name} updated successfully.`, newIncome: budget.income[budget.income.length - 1] });
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
@@ -215,7 +215,7 @@ router.post('/:id/add-outgo', auth, checkTokenBlacklist, async (req, res) => {
       { new: true });
     sameBudget.save();
 
-    return res.send({ status: `${budget.name} updated successfully.`, newOutgo: outgo[0] });
+    return res.send({ status: `${budget.name} updated successfully.`, newOutgo: budget.outgo[budget.outgo.length - 1] });
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
