@@ -124,7 +124,27 @@ hr {
   line-height: .5rem;
   justify-content: space-evenly;
 }
-.income-or-outgo-buttons button{
+.income-or-outgo-buttons button {
+  font-size: .8rem;
+  line-height: 1rem;
+  margin: 1rem .5rem 0px;
+}
+.goal {
+  font-size: .9rem;
+  text-align: left;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0rem .3rem 1rem;
+}
+.goal-buttons {
+  display: flex;
+  flex-flow: row nowrap;
+  line-height: .5rem;
+  justify-content: space-evenly;
+}
+.goal-buttons button {
   font-size: .8rem;
   line-height: 1rem;
   margin: 1rem .5rem 0px;

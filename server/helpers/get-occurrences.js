@@ -60,11 +60,10 @@ function getAllOccurrences(incomeOrOutgoObject){
         let dayOfWeekOfDay = day.getDay();
         while (day.getTime() <= inclusiveEndDate.getTime()){
           for (let i = 1; i <= 7; i++){
-            while (day.getTime() <= inclusiveEndDate.getTime()){
-              if (daysOfWeek.includes(dayOfWeekOfDay)) occurrences.push(day);
-              day = new Date(day.getTime() + 86400000);
-              dayOfWeekOfDay = day.getDay();
-            }
+            if (day.getTime() > inclusiveEndDate.getTime()) break;
+            if (daysOfWeek.includes(dayOfWeekOfDay)) occurrences.push(day);
+            day = new Date(day.getTime() + 86400000);
+            dayOfWeekOfDay = day.getDay();
           }
           if (multiplesOfPeriod > 1) {
             day = new Date(day.getTime() + ((multiplesOfPeriod - 1)*7*86400000));

@@ -145,7 +145,7 @@ function AddOutgoButton(props) {
           value={values.multiplesOfPeriod || ""} type="number" min="1" max="12" step="1" required/>
         </label><br/>
           {values.multiplesOfPeriod && values.referencePeriod === "week" && (<>
-          On which days of the week?<br/>
+          On which day(s) of the week?<br/>
           <label htmlFor="sunday"><input name="sunday" id="sunday" type="checkbox" value="Sunday" className="daysOfWeek"/>Sunday&nbsp;&nbsp;&nbsp;</label>
           <label htmlFor="monday"><input name="monday" id="monday" type="checkbox" value="Monday" className="daysOfWeek"/>Monday&nbsp;&nbsp;&nbsp;</label>
           <label htmlFor="tuesday"><input name="tuesday" id="tuesday" type="checkbox" value="Tuesday" className="daysOfWeek"/>Tuesday&nbsp;&nbsp;&nbsp;</label><br/>
@@ -155,7 +155,7 @@ function AddOutgoButton(props) {
           <label htmlFor="saturday"><input name="saturday" id="saturday" type="checkbox" value="Saturday" className="daysOfWeek"/>Saturday&nbsp;&nbsp;&nbsp;</label><br/>
           </>)}
           {values.multiplesOfPeriod && values.referencePeriod === "month" && (<>
-          On which days of the month?<br/>
+          On which day(s) of the month?<br/>
           <label htmlFor="day1"><input name="day1" id="day1" type="checkbox" value="day1" className="daysOfMonth"/>1&nbsp;&nbsp;</label>
           <label htmlFor="day2"><input name="day2" id="day2" type="checkbox" value="day2" className="daysOfMonth"/>2&nbsp;&nbsp;</label>
           <label htmlFor="day3"><input name="day3" id="day3" type="checkbox" value="day3" className="daysOfMonth"/>3&nbsp;&nbsp;</label>

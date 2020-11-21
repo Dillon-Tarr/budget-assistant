@@ -132,14 +132,18 @@ router.post('/log-out', auth, async (req, res) => {
   }
 });
 
-router.post('/new-goal', auth, checkTokenBlacklist, async (req, res) => {
+router.post('/add-goal', auth, checkTokenBlacklist, async (req, res) => {
   try {
     if (!req.body.text) return res.status(400).send(`You must include "text" (the text describing the goal) in the request body.`);
     const goal = {
-      text: req.body.text
+      text: req.body.text,
+      isComplete: false
     };
-    if (req.body.estimatedCompletionDate) goal.estimatedCompletionDate = req.body.estimatedCompletionDate;
     
+    if (req.body.estimatedCompletionDate) {
+      if (typeof req.body.estimatedCompletionDate !== "string" || req.body.estimatedCompletionDate.length < 13) return res.status(400).send('estimatedCompletionDate must be a string representing Unix time in milliseconds.');
+      goal.estimatedCompletionDate = setDateToMidday(parseInt(req.body.estimatedCompletionDate));
+    }
     const user = await User.findByIdAndUpdate(req.user._id,
     {
       $push: { goals: goal }
@@ -147,14 +151,14 @@ router.post('/new-goal', auth, checkTokenBlacklist, async (req, res) => {
     { new: true });
     user.save();
 
-    return res.send( { status: "Goal added successfully.", goal: goal } );
+    return res.send({ status: "Goal added successfully.", newGoal: user.goals[user.goals.length -1] });
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
   }
 });
 
-router.delete('/delete-goal', auth, checkTokenBlacklist, async (req, res) => {
+router.delete('/remove-goal', auth, checkTokenBlacklist, async (req, res) => {
   try {
     if (!req.body.goalId) return res.status(400).send(`You must include "goalId" (the _id of the goal to delete) in the request body.`);
     const user = await User.findByIdAndUpdate(req.user._id,
@@ -164,7 +168,7 @@ router.delete('/delete-goal', auth, checkTokenBlacklist, async (req, res) => {
       { new: true });
     user.save();
 
-    return res.send({ status: `Goal with _id ${req.body.goalId} deleted successfully.` });
+    return res.send({ status: `Goal with _id ${req.body.goalId} removed successfully.` });
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
@@ -201,7 +205,7 @@ router.put('/modify-goal', auth, checkTokenBlacklist, async (req, res) => {
       
     user.save();
 
-    return res.send({ status: `Goal with _id ${req.body.goalId} modified successfully.` });
+    return res.send({ status: `Goal with _id ${req.body.goalId} modified successfully.`, updatedGoal: user.goals[goalIndex] });
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);

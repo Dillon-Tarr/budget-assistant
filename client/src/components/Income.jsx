@@ -30,7 +30,7 @@ function Income(props) {
           {budget.income[i].isRecurring && (<>,<br/>
           ending {inclusiveEndDate}</>)}</p>
           <div className="income-or-outgo-buttons">
-            <button className="main-button" /*onClick={() => modifyIncome(budget.income[i]._id)}*/>Modify</button><br/>
+            {/*<button className="main-button" onClick={() => modifyIncome(budget.income[i]._id)}>Modify</button><br/>*/}
             <RemoveIncomeButton budgetId={budget._id} incomeId={budget.income[i]._id}/>
           </div>
         </div>

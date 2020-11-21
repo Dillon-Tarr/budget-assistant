@@ -41,7 +41,7 @@ function Outgo(props) {
           {budget.outgo[i].doRemind && muteDateIsInPast && (<>Reminding {budget.outgo[i].remindThisManyDaysBefore} days before<br/></>)}
           {budget.outgo[i].doRemind && !muteDateIsInPast && (<>Reminders muted until {muteRemindersUntil}</>)}</p>
           <div className="income-or-outgo-buttons">
-            <button className="main-button" /*onClick={() => modifyOutgo(budget.outgo[i]._id)}*/>Modify</button><br/>
+            {/*<button className="main-button" onClick={() => modifyOutgo(budget.outgo[i]._id)}>Modify</button><br/>*/}
             <RemoveOutgoButton budgetId={budget._id} outgoId={budget.outgo[i]._id}/>
           </div>
         </div>

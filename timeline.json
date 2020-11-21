@@ -187,15 +187,6 @@
         "isComplete": true
         },
         {
-        "description": "Let user modify income and outgo entries in a budget.",
-        "isComplete": false
-        }
-      ]
-    },
-    {
-      "day": "Sunday, November 22",
-      "tasks": [
-        {
         "description": "Let user set and view financial/general goals and optionally include an estimated completion date.",
         "isComplete": false
         },
@@ -206,7 +197,12 @@
         {
         "description": "Let user undo marking financial/general goals as complete.",
         "isComplete": false
-        },
+        }
+      ]
+    },
+    {
+      "day": "Sunday, November 22",
+      "tasks": [
         {
         "description": "Add instructional material about budgeting/money management.",
         "isComplete": false
@@ -267,6 +263,10 @@
         },
         {
         "description": "Deploy to an AWS hosted domain?",
+        "isComplete": false
+        },
+        {
+        "description": "Let user modify income and outgo entries in a budget.",
         "isComplete": false
         }
       ]
