@@ -217,6 +217,10 @@ hr {
   border: solid 2px greenyellow;
   margin: .75rem auto .75rem;
 }
+.remove-button {
+  background-color: rgb(180, 0, 0);
+  border-color: rgb(255, 76, 76)
+}
 
 #forgot-passphrase {
   display: none;

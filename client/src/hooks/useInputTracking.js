@@ -7,6 +7,7 @@ export default function useInputTracking(){
     event.persist();
     setValues(values => ({...values, [event.target.name]: event.target.value }));
   }
+  const resetInputTracking = () => setValues(values => ({}));
 
-  return { values, handleChange };
+  return { values, handleChange, resetInputTracking };
 }

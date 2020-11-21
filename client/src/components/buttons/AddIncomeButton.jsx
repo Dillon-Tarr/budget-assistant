@@ -13,10 +13,13 @@ import useHideOrUnhide from '../../hooks/useHideOrUnhide';
 import { addIncome } from '../../actions/budgetActions';
 
 function AddIncomeButton(props) {
+  const { hideState, hideOrUnhide, hide } = useHideOrUnhide({
+    addIncomeForm: true
+  });
   const budgetId = useSelector(state => state.budget._id);
   const [startDate, setStartDate] = useState(new Date());
   const [inclusiveEndDate, setInclusiveEndDate] = useState(new Date(startDate.getTime() + 157701600000));
-  const { values, handleChange } = useInputTracking();
+  const { values, handleChange, resetInputTracking } = useInputTracking();
   const handleAdd = () => {
     const allValues = {...values};
     allValues.startDate = startDate;
@@ -36,10 +39,9 @@ function AddIncomeButton(props) {
       }
     }
     props.addIncome(budgetId, allValues);
+    hide("addIncomeForm");
+    resetInputTracking();
   }
-  const { hideState, hideOrUnhide } = useHideOrUnhide({
-    addIncomeForm: true
-  });
   return (<>
     <button className="main-button" onClick={() => hideOrUnhide("addIncomeForm")}>Add income</button><br/>
     {!hideState.addIncomeForm && (
@@ -99,11 +101,11 @@ function AddIncomeButton(props) {
       {values.incomeName && values.dollarsPerOccurrence && values.isRecurring === "true" && (<>
       <label htmlFor="recurringType">What kind of pattern does it follow?<br/>
       A <i>normal</i> pattern like "Every Monday and Friday", "Once a  year", or "The 1st and 15th of every month"<br/>
-      <u>or</u> a <i>weird</i> pattern like "On the last Sunday of every month"?<br/>
+      <u>or</u> an <i>unusual</i> pattern like "On the last Sunday of every month"?<br/>
         <select name="recurringType" id="recurringType" onChange={handleChange} defaultValue={values.recurringType || "null"}>
           <option value="null"></option>
           <option value="normal">normal</option>
-          <option value="weird">weird</option>
+          <option value="unusual">unusual</option>
         </select>
       </label><br/>
       </>)}
@@ -168,7 +170,7 @@ function AddIncomeButton(props) {
           </>)}
         </>)}
       </>)}
-      {values.incomeName && values.dollarsPerOccurrence && values.isRecurring === "true" && values.recurringType === "weird" && (<>
+      {values.incomeName && values.dollarsPerOccurrence && values.isRecurring === "true" && values.recurringType === "unusual" && (<>
         <label htmlFor="weekOfMonth">When does the income occur?<br/>The&nbsp;
           <select name="weekOfMonth" id="weekOfMonth" onChange={handleChange} defaultValue={values.weekOfMonth || "null"}>
             <option value="null"></option>
@@ -199,7 +201,7 @@ function AddIncomeButton(props) {
         &&
         (values.recurringType === "normal" && values.referencePeriod && values.referencePeriod !== "null" && values.multiplesOfPeriod && values.multiplesOfPeriod !== "" && values.multiplesOfPeriod >= 1 && values.multiplesOfPeriod <= 12)
         ||
-        (values.recurringType === "weird" && values.weekOfMonth && values.weekOfMonth !== "null" && values.dayOfWeek && values.dayOfWeek !== "null")
+        (values.recurringType === "unusual" && values.weekOfMonth && values.weekOfMonth !== "null" && values.dayOfWeek && values.dayOfWeek !== "null")
       )) && <button className="main-button" onClick={() => handleAdd()}>Add</button>}
       <br/><br/><br/><br/>
     </div>

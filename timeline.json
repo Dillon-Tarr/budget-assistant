@@ -184,7 +184,7 @@
       "tasks": [
         {
         "description": "Let user remove income and outgo entries from a budget.",
-        "isComplete": false
+        "isComplete": true
         },
         {
         "description": "Let user modify income and outgo entries in a budget.",

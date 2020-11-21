@@ -3,6 +3,7 @@ import { connect, useSelector } from 'react-redux';
 import AddIncomeButton from './buttons/AddIncomeButton';
 
 import { getOccurrenceString } from '../helpers/string-generators';
+import RemoveIncomeButton from './buttons/RemoveIncomeButton';
 
 function Income(props) {
   const budget = useSelector(state => state.budget);
@@ -30,7 +31,7 @@ function Income(props) {
           ending {inclusiveEndDate}</>)}</p>
           <div className="income-or-outgo-buttons">
             <button className="main-button" /*onClick={() => modifyIncome(budget.income[i]._id)}*/>Modify</button><br/>
-            <button className="main-button" /*onClick={() => deleteIncome(budget.income[i]._id)}*/>Remove</button><br/>
+            <RemoveIncomeButton budgetId={budget._id} incomeId={budget.income[i]._id}/>
           </div>
         </div>
       )
@@ -43,7 +44,7 @@ function Income(props) {
       <h3>Budgeted income:</h3>
       <div>
         {renderIncome()}
-        <AddIncomeButton/>
+        <AddIncomeButton budgetId={budget._id}/>
       </div>
     </div>
   )

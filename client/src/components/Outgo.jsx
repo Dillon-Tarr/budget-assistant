@@ -4,6 +4,7 @@ import AddOutgoButton from './buttons/AddOutgoButton';
 
 import { getOccurrenceString } from '../helpers/string-generators';
 import { setDateToMidday } from '../helpers/manipulate-dates'
+import RemoveOutgoButton from './buttons/RemoveOutgoButton';
 
 
 function Outgo(props) {
@@ -41,7 +42,7 @@ function Outgo(props) {
           {budget.outgo[i].doRemind && !muteDateIsInPast && (<>Reminders muted until {muteRemindersUntil}</>)}</p>
           <div className="income-or-outgo-buttons">
             <button className="main-button" /*onClick={() => modifyOutgo(budget.outgo[i]._id)}*/>Modify</button><br/>
-            <button className="main-button" /*onClick={() => deleteOutgo(budget.outgo[i]._id)}*/>Remove</button><br/>
+            <RemoveOutgoButton budgetId={budget._id} outgoId={budget.outgo[i]._id}/>
           </div>
         </div>
       )
@@ -54,7 +55,7 @@ function Outgo(props) {
       <h3>Budgeted outgo:</h3>
       <div>
         {renderOutgo()}
-        <AddOutgoButton/>
+        <AddOutgoButton budgetId={budget._id}/>
       </div>
     </div>
   )

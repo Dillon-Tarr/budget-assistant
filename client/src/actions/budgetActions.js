@@ -1,4 +1,4 @@
-import { CREATE_BUDGET, OPEN_BUDGET, ADD_INCOME, ADD_OUTGO } from './types';
+import { CREATE_BUDGET, OPEN_BUDGET, ADD_INCOME, ADD_OUTGO, REMOVE_INCOME, REMOVE_OUTGO } from './types';
 import axios from 'axios'
 import { setDateToMidday } from '../helpers/manipulate-dates'
 import { convertFromDayXToNumbers } from '../helpers/manipulate-numbers'
@@ -61,7 +61,7 @@ export const addIncome = (budgetId, values) => dispatch => {
       else daysOfMonth = ["N/A"];
       weekOfMonthText = "N/A";
     }
-    else if (recurringType === "weird"){
+    else if (recurringType === "unusual"){
       referencePeriod = "N/A";
       multiplesOfPeriod = "N/A";
       weekOfMonthText = values.weekOfMonth;
@@ -135,7 +135,7 @@ export const addOutgo = (budgetId, values) => dispatch => {
       else daysOfMonth = ["N/A"];
       weekOfMonthText = "N/A";
     }
-    else if (recurringType === "weird"){
+    else if (recurringType === "unusual"){
       referencePeriod = "N/A";
       multiplesOfPeriod = "N/A";
       weekOfMonthText = values.weekOfMonth;
@@ -173,6 +173,38 @@ export const addOutgo = (budgetId, values) => dispatch => {
   axios(config).then(res => dispatch({
     type: ADD_OUTGO,
     payload: res.data.newOutgo
+  }))
+  .catch(err => { if (err.response) console.error(err.response.data); });
+}
+
+export const removeIncome = (budgetId, incomeId) => dispatch => {
+  const token = localStorage.getItem("JWT");
+  const config = {
+    method: 'delete',
+    url: `http://localhost:5000/api/budgets/${budgetId}/remove-income`,
+    headers: { 'x-auth-token': token },
+    data: {
+      incomeId: incomeId
+    }};
+  axios(config).then(res => dispatch({
+    type: REMOVE_INCOME,
+    payload: incomeId
+  }))
+  .catch(err => { if (err.response) console.error(err.response.data); });
+}
+
+export const removeOutgo = (budgetId, outgoId) => dispatch => {
+  const token = localStorage.getItem("JWT");
+  const config = {
+    method: 'delete',
+    url: `http://localhost:5000/api/budgets/${budgetId}/remove-outgo`,
+    headers: { 'x-auth-token': token },
+    data: {
+      outgoId: outgoId
+    }};
+  axios(config).then(res => dispatch({
+    type: REMOVE_OUTGO,
+    payload: outgoId
   }))
   .catch(err => { if (err.response) console.error(err.response.data); });
 }
