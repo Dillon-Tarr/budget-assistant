@@ -1,11 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect, useSelector } from 'react-redux';
 import AddIncomeButton from './buttons/AddIncomeButton';
 
 import { getOccurrenceString } from '../helpers/string-generators';
-
-import { goToPage } from '../actions/viewActions';
 
 function Income(props) {
   const budget = useSelector(state => state.budget);
@@ -36,7 +33,6 @@ function Income(props) {
             <button className="main-button" /*onClick={() => deleteIncome(budget.income[i]._id)}*/>Remove</button><br/>
           </div>
         </div>
-        
       )
     }
     return income;
@@ -53,12 +49,5 @@ function Income(props) {
   )
 }
 
-const mapDispatchToProps = {
-  goToPage
-}
 
-Income.propTypes = {
-  goToPage: PropTypes.func.isRequired
-};
-
-export default connect(null, mapDispatchToProps)(Income);
+export default connect()(Income);

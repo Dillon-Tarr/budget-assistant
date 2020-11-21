@@ -1,4 +1,4 @@
-const { setDateToMidday, convertDaysOfWeekFromNameToNumber, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName, checkIfLeapYear } = require('./manipulate-dates');
+const { setDateToMidday, convertDaysOfWeek, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName, checkIfLeapYear } = require('./manipulate-dates');
 const { getOrdinalSuffixAbbreviation } = require('./manipulate-numbers');
 
 function getAllOccurrences(incomeOrOutgoObject){
@@ -11,7 +11,7 @@ function getAllOccurrences(incomeOrOutgoObject){
   const inclusiveEndDate = setDateToMidday(incomeOrOutgoObject.inclusiveEndDate);
   if (incomeOrOutgoObject.weekOfMonthText !== "N/A" && incomeOrOutgoObject.daysOfWeek !== "N/A" && incomeOrOutgoObject.daysOfWeek.length === 1){ //type: occurring once per month on a certain day of week and week of month
     const weekOfMonth = incomeOrOutgoObject.weekOfMonthText;
-    const daysOfWeek = convertDaysOfWeekFromNameToNumber(incomeOrOutgoObject.daysOfWeek);
+    const daysOfWeek = convertDaysOfWeek(incomeOrOutgoObject.daysOfWeek);
     if (!daysOfWeek) return [`!!!ERROR!!! if (incomeOrOutgoObject.weekOfMonthText !== "N/A" && incomeOrOutgoObject.daysOfWeek !== "N/A" && incomeOrOutgoObject.daysOfWeek.length === 1) { daysOfWeek must include exactly one day of the week. } Example: ["Wednesday"]`];
     const dayOfWeek = daysOfWeek[0];
   
@@ -55,7 +55,7 @@ function getAllOccurrences(incomeOrOutgoObject){
         }
         break;
       case "week":
-        const daysOfWeek = convertDaysOfWeekFromNameToNumber(incomeOrOutgoObject.daysOfWeek);
+        const daysOfWeek = convertDaysOfWeek(incomeOrOutgoObject.daysOfWeek);
         if (!daysOfWeek) return [`!!!ERROR!!! The only values allowed in daysOfWeek (besides "N/A") are "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", and "Saturday".`];
         let dayOfWeekOfDay = day.getDay();
         while (day.getTime() <= inclusiveEndDate.getTime()){

@@ -129,12 +129,16 @@ hr {
   line-height: 1rem;
   margin: 1rem .5rem 0px;
 }
+.add-income-or-outgo-container {
+  margin-left: .3rem;
+  margin-right: .3rem;
+}
 .add-income-or-outgo {
   font-size: .8rem;
   line-height: 1.5rem;
   max-width: 17rem;
-  margin-left: .3rem;
-  margin-right: .3rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 .daysOfWeek, .daysOfMonth {
   height: 1rem;

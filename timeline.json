@@ -147,28 +147,41 @@
       ]
     },
     {
-      "day": "Wednesday, November 18",
+      "day": "Wednesday, November 18, Thursday, November 19, and Friday, November 20",
       "tasks": [
         {
         "description": "Let user add recurring income to a budget.",
-        "isComplete": false
+        "isComplete": true
         },
         {
         "description": "Let user add single-occurrence income to a budget.",
-        "isComplete": false
+        "isComplete": true
         },
         {
         "description": "Let user add recurring outgo to a budget.",
-        "isComplete": false
+        "isComplete": true
         },
         {
         "description": "Let user add single-occurrence outgo to a budget.",
-        "isComplete": false
+        "isComplete": true
         },
         {
         "description": "Let user view income and outgo added to a budget.",
-        "isComplete": false
+        "isComplete": true
         },
+        {
+        "description": "Add suggested budget categories so the user can start a budget without having to manually type category names.",
+        "isComplete": true
+        },
+        {
+        "description": "Set up recording of previous changes to a budget",
+        "isComplete": true
+        }
+      ]
+    },
+    {
+      "day": "Saturday, November 21",
+      "tasks": [
         {
         "description": "Let user remove income and outgo entries from a budget.",
         "isComplete": false
@@ -180,7 +193,7 @@
       ]
     },
     {
-      "day": "Thursday, November 19",
+      "day": "Sunday, November 22",
       "tasks": [
         {
         "description": "Let user set and view financial/general goals and optionally include an estimated completion date.",
@@ -193,12 +206,15 @@
         {
         "description": "Let user undo marking financial/general goals as complete.",
         "isComplete": false
-        }
-      ]
-    },
-    {
-      "day": "Friday, November 20",
-      "tasks": [
+        },
+        {
+        "description": "Add instructional material about budgeting/money management.",
+        "isComplete": false
+        },
+        {
+        "description": "Allow user to change account details.",
+        "isComplete": false
+        },
         {
         "description": "Let user view all income and outgo between a start and end date.",
         "isComplete": false
@@ -210,11 +226,21 @@
         {
         "description": "Let user view a breakdown of outgo by category.",
         "isComplete": false
-        },
+        }
+      ]
+    },
+    {
+      "day": "Monday, November 23",
+      "tasks": [
         {
-        "description": "Add suggested budget categories so the user can start a budget without having to manually type category names.",
+        "description": "Complete project by this day.",
         "isComplete": false
-        },
+        }
+      ]
+    },
+    {
+      "day": "Someday",
+      "tasks": [
         {
         "description": "Allow user to add other budget managers or budget viewers to a budget.",
         "isComplete": false
@@ -222,12 +248,7 @@
         {
         "description": "Cause budgets to not allow editing if the user is only a viewer (not manager) of a budget.",
         "isComplete": false
-        }
-      ]
-    },
-    {
-      "day": "Saturday, November 21",
-      "tasks": [
+        },
         {
         "description": "Allow a budget viewer to submit a request for modification of a budget.",
         "isComplete": false
@@ -241,37 +262,11 @@
         "isComplete": false
         },
         {
-        "description": "Set up recording of previous changes to a budget",
-        "isComplete": false
-        },
-        {
         "description": "Allow budget managers to view the list of previous changes to a budget",
-        "isComplete": false
-        }
-      ]
-    },
-    {
-      "day": "Sunday, November 22",
-      "tasks": [
-        {
-        "description": "Add instructional material about budgeting/money management.",
-        "isComplete": false
-        },
-        {
-        "description": "Allow user to change account details.",
         "isComplete": false
         },
         {
         "description": "Deploy to an AWS hosted domain?",
-        "isComplete": false
-        }
-      ]
-    },
-    {
-      "day": "Monday, November 23",
-      "tasks": [
-        {
-        "description": "Complete project by this day.",
         "isComplete": false
         }
       ]

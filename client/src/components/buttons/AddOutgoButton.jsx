@@ -10,9 +10,9 @@ import { convertDaysOfWeek } from "../../helpers/manipulate-dates"
 import useInputTracking from '../../hooks/useInputTracking';
 import useHideOrUnhide from '../../hooks/useHideOrUnhide';
 
-import { addIncome } from '../../actions/budgetActions';
+import { addOutgo } from '../../actions/budgetActions';
 
-function AddIncomeButton(props) {
+function AddOutgoButton(props) {
   const budgetId = useSelector(state => state.budget._id);
   const [startDate, setStartDate] = useState(new Date());
   const [inclusiveEndDate, setInclusiveEndDate] = useState(new Date(startDate.getTime() + 157701600000));
@@ -35,32 +35,53 @@ function AddIncomeButton(props) {
         if (daysOfMonth.length === 0) allValues.daysOfMonth.push(`day${startDate.getDate()}`);
       }
     }
-    props.addIncome(budgetId, allValues);
+    props.addOutgo(budgetId, allValues);
   }
   const { hideState, hideOrUnhide } = useHideOrUnhide({
-    addIncomeForm: true
+    addOutgoForm: true
   });
   return (<>
-    <button className="main-button" onClick={() => hideOrUnhide("addIncomeForm")}>Add income</button><br/>
-    {!hideState.addIncomeForm && (
+    <button className="main-button" onClick={() => hideOrUnhide("addOutgoForm")}>Add outgo</button><br/>
+    {!hideState.addOutgoForm && (
     <div className="add-income-or-outgo-container">
-    <div name="addIncomeForm" className="add-income-or-outgo">
-      <label htmlFor="incomeName">
-        Enter a name for the income:<br/>e.g. My paycheck<br/><input id="incomeName" onChange={handleChange} name="incomeName"
-        value={values.incomeName || ""} type="text" minLength="1" maxLength="32" size="26" required autoFocus/>
+    <div name="addOutgoForm" className="add-income-or-outgo">
+      <label htmlFor="outgoName">
+        Enter a name for the outgo:<br/>e.g. Water bill<br/><input id="outgoName" onChange={handleChange} name="outgoName"
+        value={values.outgoName || ""} type="text" minLength="1" maxLength="32" size="26" required autoFocus/>
       </label><br/>
       <label htmlFor="dollarsPerOccurrence">
         How many dollars per occurrence?<br/>$<input id="dollarsPerOccurrence" onChange={handleChange} name="dollarsPerOccurrence"
         value={values.dollarsPerOccurrence || ""} type="number" min="1" max="1000000000" step="1" required/>
       </label><br/>
-      <label htmlFor="isRecurring">Is this income recurring?<br/>
+      <label htmlFor="category">Category?<br/>
+        <select name="category" id="category" onChange={handleChange} defaultValue="null">
+          <option value="null"></option>
+          <option value="Food">Food</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Shelter">Shelter</option>
+          <option value="Household needs">Household needs</option>
+          <option value="Healthcare">Healthcare</option>
+          <option value="Utilities">Utilities</option>
+          <option value="Transportation">Transportation</option>
+          <option value="Debt">Debt</option>
+          <option value="Giving">Giving</option>
+          <option value="Insurance">Insurance</option>
+          <option value="Fun">Fun</option>
+          <option value="custom">custom category</option>
+        </select>
+      </label><br/>
+      {values.category === "custom" && (<><label htmlFor="customCategory">
+        Custom category name:<br/><input id="customCategory" onChange={handleChange} name="customCategory"
+        value={values.customCategory || ""} type="text" minLength="1" maxLength="32" size="26"/>
+      </label><br/></>)}
+      <label htmlFor="isRecurring">Is this outgo recurring?<br/>
         <select name="isRecurring" id="isRecurring" onChange={handleChange} defaultValue="null">
           <option value="null"></option>
           <option value="false">No, it just happens once.</option>
           <option value="true">Yes, it happens multiple times.</option>
         </select>
       </label><br/>
-      {values.incomeName && values.dollarsPerOccurrence && values.isRecurring === "false" && (<>
+      {values.outgoName && values.dollarsPerOccurrence && values.isRecurring === "false" && (<>
       When does it occur?
       <DatePicker selected={startDate}
       onChange={date => setStartDate(date)}
@@ -71,7 +92,7 @@ function AddIncomeButton(props) {
       showYearDropdown
       dropdownMode="select"/><br/>
       </>)}
-      {values.incomeName && values.dollarsPerOccurrence && values.isRecurring === "true" && (<>
+      {values.outgoName && values.dollarsPerOccurrence && values.isRecurring === "true" && (<>
       When does it start?
       <DatePicker selected={startDate}
       onChange={date => {
@@ -96,7 +117,7 @@ function AddIncomeButton(props) {
       showYearDropdown
       dropdownMode="select"/><br/>
       </>)}
-      {values.incomeName && values.dollarsPerOccurrence && values.isRecurring === "true" && (<>
+      {values.outgoName && values.dollarsPerOccurrence && values.isRecurring === "true" && (<>
       <label htmlFor="recurringType">What kind of pattern does it follow?<br/>
       A <i>normal</i> pattern like "Every Monday and Friday", "Once a  year", or "The 1st and 15th of every month"<br/>
       <u>or</u> a <i>weird</i> pattern like "On the last Sunday of every month"?<br/>
@@ -107,18 +128,18 @@ function AddIncomeButton(props) {
         </select>
       </label><br/>
       </>)}
-      {values.incomeName && values.dollarsPerOccurrence && values.isRecurring === "true" && values.recurringType === "normal" && (<>
+      {values.outgoName && values.dollarsPerOccurrence && values.isRecurring === "true" && values.recurringType === "normal" && (<>
       <label htmlFor="referencePeriod">What is the reference period?<br/>
         <select name="referencePeriod" id="referencePeriod" onChange={handleChange} defaultValue={values.referencePeriod || "null"}>
           <option value="null"></option>
-          <option value="week">week(s)</option>
           <option value="month">month(s)</option>
+          <option value="week">week(s)</option>
           <option value="year">year(s)</option>
           <option value="day">day(s)</option>
         </select>
       </label><br/>
         {values.referencePeriod && (<>
-        <label htmlFor="multiplesOfPeriod">Every how many {values.referencePeriod}(s) does this income occur? (max 12)<br/>
+        <label htmlFor="multiplesOfPeriod">Every how many {values.referencePeriod}(s) does this outgo occur? (max 12)<br/>
           <input name="multiplesOfPeriod" id="multiplesOfPeriod" onChange={handleChange}
           value={values.multiplesOfPeriod || ""} type="number" min="1" max="12" step="1" required/>
         </label><br/>
@@ -168,8 +189,8 @@ function AddIncomeButton(props) {
           </>)}
         </>)}
       </>)}
-      {values.incomeName && values.dollarsPerOccurrence && values.isRecurring === "true" && values.recurringType === "weird" && (<>
-        <label htmlFor="weekOfMonth">When does the income occur?<br/>The&nbsp;
+      {values.outgoName && values.dollarsPerOccurrence && values.isRecurring === "true" && values.recurringType === "weird" && (<>
+        <label htmlFor="weekOfMonth">When does the outgo occur?<br/>The&nbsp;
           <select name="weekOfMonth" id="weekOfMonth" onChange={handleChange} defaultValue={values.weekOfMonth || "null"}>
             <option value="null"></option>
             <option value="first">&nbsp;first</option>
@@ -192,7 +213,7 @@ function AddIncomeButton(props) {
           </select>
         </label> of every month.<br/>
       </>)}
-      {values.incomeName && values.incomeName.length >= 1 && values.dollarsPerOccurrence && values.dollarsPerOccurrence >= 1 && values.dollarsPerOccurrence <= 1000000000 &&
+      {values.outgoName && values.outgoName.length >= 1 && values.dollarsPerOccurrence && values.dollarsPerOccurrence >= 1 && values.dollarsPerOccurrence <= 1000000000 &&
       (values.isRecurring === "false"
       ||
       (values.isRecurring === "true"
@@ -200,19 +221,46 @@ function AddIncomeButton(props) {
         (values.recurringType === "normal" && values.referencePeriod && values.referencePeriod !== "null" && values.multiplesOfPeriod && values.multiplesOfPeriod !== "" && values.multiplesOfPeriod >= 1 && values.multiplesOfPeriod <= 12)
         ||
         (values.recurringType === "weird" && values.weekOfMonth && values.weekOfMonth !== "null" && values.dayOfWeek && values.dayOfWeek !== "null")
-      )) && <button className="main-button" onClick={() => handleAdd()}>Add</button>}
+      )) && (<>
+        <label htmlFor="doRemind">Would you like reminders for this outgo?<br/>
+          <select name="doRemind" id="doRemind" onChange={handleChange} defaultValue="null">
+            <option value="null"></option>
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </label><br/>
+      </>)}
+      {values.doRemind === "true" && (<>
+        <label htmlFor="remindThisManyDaysBefore">
+        How many days before?<br/><input id="remindThisManyDaysBefore" onChange={handleChange} name="remindThisManyDaysBefore"
+        value={values.remindThisManyDaysBefore || ""} type="number" min="1" max="365" step="1" required/>
+        </label><br/></>)}
+      {values.outgoName && values.outgoName.length >= 1 && values.dollarsPerOccurrence && values.dollarsPerOccurrence >= 1 && values.dollarsPerOccurrence <= 1000000000 &&
+      (values.isRecurring === "false"
+      ||
+      (values.isRecurring === "true"
+        &&
+        (values.recurringType === "normal" && values.referencePeriod && values.referencePeriod !== "null" && values.multiplesOfPeriod && values.multiplesOfPeriod !== "" && values.multiplesOfPeriod >= 1 && values.multiplesOfPeriod <= 12)
+        ||
+        (values.recurringType === "weird" && values.weekOfMonth && values.weekOfMonth !== "null" && values.dayOfWeek && values.dayOfWeek !== "null")
+      ))
+      &&
+      (values.doRemind === "false" || (values.doRemind === "true" && values.remindThisManyDaysBefore && values.remindThisManyDaysBefore >= 1 && values.remindThisManyDaysBefore <= 365))
+      && <button className="main-button" onClick={() => handleAdd()}>Add</button>}
       <br/><br/><br/><br/>
     </div>
     </div>)}
   </>)
 }
 
-const mapDispatchToProps = {
-  addIncome
+const mapDispatchToProps = dispatch => {
+  return {
+    addOutgo: (budgetId, allValues) => dispatch(addOutgo(budgetId, allValues))
+  }
 }
 
-AddIncomeButton.propTypes = {
-  addIncome: PropTypes.func.isRequired
+AddOutgoButton.propTypes = {
+  addOutgo: PropTypes.func.isRequired
 };
 
-export default connect(null, mapDispatchToProps)(AddIncomeButton);
+export default connect(null, mapDispatchToProps)(AddOutgoButton);

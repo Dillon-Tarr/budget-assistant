@@ -1,4 +1,4 @@
-import { LOG_OUT, CREATE_BUDGET, OPEN_BUDGET, ADD_INCOME } from '../actions/types'
+import { LOG_OUT, CREATE_BUDGET, OPEN_BUDGET, ADD_INCOME, ADD_OUTGO } from '../actions/types'
 
 const initialState = {
   managers: null,
@@ -18,9 +18,13 @@ export default function budgetReducer(state = initialState, action){
     case OPEN_BUDGET:
       return action.payload;
     case ADD_INCOME:
-      const income = {...state.income};
+      const income = [...state.income];
       income.push(action.payload);
       return {...state, income: income};
+    case ADD_OUTGO:
+      const outgo = [...state.outgo];
+      outgo.push(action.payload);
+      return {...state, outgo: outgo};
     default:
       return state;
   }

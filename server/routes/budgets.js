@@ -117,7 +117,6 @@ router.post('/:id/add-income', auth, checkTokenBlacklist, async (req, res) => {
       description: `"${budget.income[budget.income.length - 1].name}" income was added.`,
       referenceId: `${budget.income[budget.income.length - 1]._id}`
     }
-    
     const sameBudget = await Budget.findByIdAndUpdate(req.params.id,
       { $push: { changeHistory: change} },
       { new: true });
@@ -209,7 +208,6 @@ router.post('/:id/add-outgo', auth, checkTokenBlacklist, async (req, res) => {
       description: `"${budget.outgo[budget.outgo.length - 1].name}" outgo was added.`,
       referenceId: `${budget.outgo[budget.outgo.length - 1]._id}`
     }
-    
     const sameBudget = await Budget.findByIdAndUpdate(req.params.id,
       { $push: { changeHistory: change} },
       { new: true });
@@ -230,8 +228,20 @@ router.delete('/:id/remove-income', auth, checkTokenBlacklist, async (req, res) 
     const budget = await Budget.findById(req.params.id);
     const incomeIndex = budget.income.findIndex((income) => income._id == req.body.incomeId);
     if (incomeIndex === -1) return res.status(400).send(`Budget "${req.budget.loginName}" has no income to delete with _id "${req.body.incomeId}".`);
+    const incomeName = budget.income[incomeIndex].name;
     budget.income.splice(incomeIndex, 1);
     budget.save();
+
+    const change = {
+      user: req.user.loginName,
+      description: `"${incomeName}" income was removed.`,
+      referenceId: `${req.body.incomeId}`
+    }
+    const sameBudget = await Budget.findByIdAndUpdate(req.params.id,
+      { $push: { changeHistory: change} },
+      { new: true });
+    sameBudget.save();
+
     return res.send( `Income with _id ${req.body.incomeId} deleted successfully.` );
 
   } catch (ex) {
@@ -247,8 +257,20 @@ router.delete('/:id/remove-outgo', auth, checkTokenBlacklist, async (req, res) =
     const budget = await Budget.findById(req.params.id);
     const outgoIndex = budget.outgo.findIndex((outgo) => outgo._id == req.body.outgoId);
     if (outgoIndex === -1) return res.status(400).send(`Budget "${req.budget.loginName}" has no outgo to delete with _id "${req.body.outgoId}".`);
+    const outgoName = budget.outgo[outgoIndex].name;
     budget.outgo.splice(outgoIndex, 1);
     budget.save();
+
+    const change = {
+      user: req.user.loginName,
+      description: `"${outgoName}" outgo was removed.`,
+      referenceId: `${req.body.outgoId}`
+    }
+    const sameBudget = await Budget.findByIdAndUpdate(req.params.id,
+      { $push: { changeHistory: change} },
+      { new: true });
+    sameBudget.save();
+    
     return res.send( `Outgo with _id ${req.body.outgoId} deleted successfully.` );
 
   } catch (ex) {

@@ -4,7 +4,7 @@ function setDateToMidday(milliseconds){
   return newDate;
 }
 
-function convertDaysOfWeekFromNameToNumber(daysOfWeek){
+function convertDaysOfWeek(daysOfWeek){
   const convertedDaysOfWeek = [];
   for (let i = 0; i < daysOfWeek.length; i++){
     switch(daysOfWeek[i]){
@@ -127,4 +127,4 @@ function setAcceptableDaysOfMonth(numberOfDaysInMonth, weekOfMonth){
   }
 }
 
-module.exports = { setDateToMidday, convertDaysOfWeekFromNameToNumber, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName, checkIfLeapYear }
+module.exports = { setDateToMidday, convertDaysOfWeek, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName, checkIfLeapYear }

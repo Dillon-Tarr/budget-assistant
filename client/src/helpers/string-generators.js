@@ -114,6 +114,11 @@ export function getOccurrenceString(incomeOrOutgoObject){
       const suffix = getOrdinalSuffixAbbreviation(incomeOrOutgoObject.daysOfMonth[0]);
       occurrenceString += `${incomeOrOutgoObject.daysOfMonth[0]}${suffix} `;
     }
+    else if (incomeOrOutgoObject.daysOfMonth.length === 2) {
+      let suffix0 = getOrdinalSuffixAbbreviation(incomeOrOutgoObject.daysOfMonth[0]);
+      let suffix1 = getOrdinalSuffixAbbreviation(incomeOrOutgoObject.daysOfMonth[1]);
+      occurrenceString += `${incomeOrOutgoObject.daysOfMonth[0]}${suffix0} and ${incomeOrOutgoObject.daysOfMonth[1]}${suffix1} `;
+    }
     else {
       const lastDayIndex = incomeOrOutgoObject.daysOfMonth.length - 1;
       for (let i = 0; i < lastDayIndex; i++) {
@@ -124,7 +129,8 @@ export function getOccurrenceString(incomeOrOutgoObject){
       occurrenceString += `and ${incomeOrOutgoObject.daysOfMonth[lastDayIndex]}${suffix} `
     }
     occurrenceString += "of every ";
-    if (incomeOrOutgoObject.multiplesOfPeriod === "2") occurrenceString += "other ";
+    if (incomeOrOutgoObject.multiplesOfPeriod === "1") void(0);
+    else if (incomeOrOutgoObject.multiplesOfPeriod === "2") occurrenceString += "other ";
     else {
       const suffix = getOrdinalSuffixAbbreviation(parseInt(incomeOrOutgoObject.multiplesOfPeriod));
       occurrenceString += `${incomeOrOutgoObject.multiplesOfPeriod}${suffix} `;
@@ -135,6 +141,7 @@ export function getOccurrenceString(incomeOrOutgoObject){
     if (incomeOrOutgoObject.referencePeriod === "week"){
       occurrenceString += "on ";
       if (incomeOrOutgoObject.daysOfWeek.length === 1) occurrenceString += `${incomeOrOutgoObject.daysOfWeek[0]} `;
+      else if (incomeOrOutgoObject.daysOfWeek.length === 2) occurrenceString += `${incomeOrOutgoObject.daysOfWeek[0]} and ${incomeOrOutgoObject.daysOfWeek[1]} `;
       else {
         const lastDayIndex = incomeOrOutgoObject.daysOfWeek.length - 1;
         for (let i = 0; i < lastDayIndex; i++) {

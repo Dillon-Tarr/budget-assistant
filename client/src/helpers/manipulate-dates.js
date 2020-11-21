@@ -4,26 +4,50 @@ function setDateToMidday(milliseconds){
   return newDate;
 }
 
-function convertDaysOfWeekFromNameToNumber(daysOfWeek){
+function convertDaysOfWeek(daysOfWeek){
   const convertedDaysOfWeek = [];
-  for (let i = 0; i < daysOfWeek.length; i++){
-    switch(daysOfWeek[i]){
-      case "Sunday":
-        convertedDaysOfWeek.push(0); break;
-      case "Monday":
-        convertedDaysOfWeek.push(1); break;
-      case "Tuesday":
-        convertedDaysOfWeek.push(2); break;
-      case "Wednesday":
-        convertedDaysOfWeek.push(3); break;
-      case "Thursday":
-        convertedDaysOfWeek.push(4); break;
-      case "Friday":
-        convertedDaysOfWeek.push(5); break;
-      case "Saturday":
-        convertedDaysOfWeek.push(6); break;
-      default:
-        return undefined;
+  if (typeof daysOfWeek[0] === "number"){
+    for (let i = 0; i < daysOfWeek.length; i++){
+      switch(daysOfWeek[i]){
+        case 0:
+          convertedDaysOfWeek.push("Sunday"); break;
+        case 1:
+          convertedDaysOfWeek.push("Monday"); break;
+        case 2:
+          convertedDaysOfWeek.push("Tuesday"); break;
+        case 3:
+          convertedDaysOfWeek.push("Wednesday"); break;
+        case 4:
+          convertedDaysOfWeek.push("Thursday"); break;
+        case 5:
+          convertedDaysOfWeek.push("Friday"); break;
+        case 6:
+          convertedDaysOfWeek.push("Saturday"); break;
+        default:
+          return undefined;
+      }
+    }
+  }
+  else {
+    for (let i = 0; i < daysOfWeek.length; i++){
+      switch(daysOfWeek[i]){
+        case "Sunday":
+          convertedDaysOfWeek.push(0); break;
+        case "Monday":
+          convertedDaysOfWeek.push(1); break;
+        case "Tuesday":
+          convertedDaysOfWeek.push(2); break;
+        case "Wednesday":
+          convertedDaysOfWeek.push(3); break;
+        case "Thursday":
+          convertedDaysOfWeek.push(4); break;
+        case "Friday":
+          convertedDaysOfWeek.push(5); break;
+        case "Saturday":
+          convertedDaysOfWeek.push(6); break;
+        default:
+          return undefined;
+      }
     }
   }
   return convertedDaysOfWeek;
@@ -127,4 +151,4 @@ function setAcceptableDaysOfMonth(numberOfDaysInMonth, weekOfMonth){
   }
 }
 
-module.exports = { setDateToMidday, convertDaysOfWeekFromNameToNumber, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName, checkIfLeapYear }
+module.exports = { setDateToMidday, convertDaysOfWeek, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName, checkIfLeapYear }
