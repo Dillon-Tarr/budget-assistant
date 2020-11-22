@@ -196,16 +196,19 @@ router.put('/modify-goal', auth, checkTokenBlacklist, async (req, res) => {
       await User.findOneAndUpdate({ "_id": req.user._id, "goals._id": req.body.goalId },
         { $unset: { "goals.$.completedDate": "" } });
     }
-    if (req.body.estimatedCompletionDate && !isComplete) user.goals[goalIndex].estimatedCompletionDate = setDateToMidday(req.body.estimatedCompletionDate);
+    if (req.body.estimatedCompletionDate && !isComplete) user.goals[goalIndex].estimatedCompletionDate = setDateToMidday(parseInt(req.body.estimatedCompletionDate));
     if (req.body.estimatedCompletionDate === false){
       await User.findOneAndUpdate({ "_id": req.user._id, "goals._id": req.body.goalId },
       { $unset: { "goals.$.estimatedCompletionDate": "" } });
     }
-    if (req.body.completedDate && setDateToMidday(req.body.completedDate).getTime() <= setDateToMidday(Date.now()).getTime() && isComplete) user.goals[goalIndex].completedDate = setDateToMidday(req.body.completedDate);
-      
-    user.save();
+    if (req.body.completedDate && setDateToMidday(parseInt(req.body.completedDate)).getTime() <= setDateToMidday(Date.now()).getTime() && isComplete) {
+      user.goals[goalIndex].completedDate = setDateToMidday(parseInt(req.body.completedDate));
+    }
 
-    return res.send({ status: `Goal with _id ${req.body.goalId} modified successfully.`, updatedGoal: user.goals[goalIndex] });
+    await user.save();
+    const sameUser = await User.findById(req.user._id);
+
+    return res.send({ status: `Goal with _id ${req.body.goalId} modified successfully.`, updatedGoal: sameUser.goals[goalIndex] });
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);

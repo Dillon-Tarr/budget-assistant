@@ -41,7 +41,7 @@ function AddGoalButton(props) {
         <DatePicker selected={estimatedCompletionDate}
         onChange={date => setEstimatedCompletionDate(date)}
         minDate={new Date()}
-        maxDate={new Date(new Date().getTime() + 1262304000000)}
+        maxDate={new Date(Date.now() + 1262304000000)}
         showDisabledMonthNavigation
         showMonthDropdown
         showYearDropdown

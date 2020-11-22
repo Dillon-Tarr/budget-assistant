@@ -2,8 +2,9 @@ import React from 'react';
 import { connect, useSelector } from 'react-redux';
 
 import AddGoalButton from '../buttons/AddGoalButton';
-import RemoveGoalButton from '../buttons/RemoveGoalButton';
 import CompleteGoalButton from '../buttons/CompleteGoalButton';
+import ModifyGoalButton from '../buttons/ModifyGoalButton';
+import RemoveGoalButton from '../buttons/RemoveGoalButton';
 
 function Goals(props) {
   const userDetails = useSelector(state => state.userDetails);
@@ -21,6 +22,7 @@ function Goals(props) {
           {!userDetails.goals[i].isComplete && !userDetails.goals[i].estimatedCompletionDate && (<i>Incomplete</i>)}
           </p>
           <div className="goal-buttons">
+            <ModifyGoalButton goal={userDetails.goals[i]}/>
             <CompleteGoalButton goalId={userDetails.goals[i]._id} isComplete={userDetails.goals[i].isComplete}/>
             <RemoveGoalButton goalId={userDetails.goals[i]._id}/>
           </div>
