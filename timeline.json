@@ -188,7 +188,7 @@
         },
         {
         "description": "Let user set and view financial/general goals and optionally include an estimated completion date.",
-        "isComplete": false
+        "isComplete": true
         },
         {
         "description": "Let user mark financial/general goals as complete and manually modify the completion date if so desired.",

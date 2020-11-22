@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect, useSelector } from 'react-redux';
 
 import { goToPage } from '../../actions/viewActions';
+import AddGoalButton from '../buttons/AddGoalButton';
+import RemoveGoalButton from '../buttons/RemoveGoalButton';
 
 function Goals(props) {
   const userDetails = useSelector(state => state.userDetails);
@@ -16,11 +18,11 @@ function Goals(props) {
           <p><u>{userDetails.goals[i].text}</u><br/>
           {userDetails.goals[i].isComplete && !userDetails.goals[i].completedDate && (<i>Complete</i>)}
           {userDetails.goals[i].isComplete && userDetails.goals[i].completedDate && (<><i>Completed</i> {new Date(userDetails.goals[i].completedDate).toDateString()}</>)}
-          {!userDetails.goals[i].isComplete && !userDetails.goals[i].estimatedCompletionDate && (<><i>Estimated completion date:</i> {new Date(userDetails.goals[i].estimatedCompletionDate).toDateString()}</>)}
-          {!userDetails.goals[i].isComplete && userDetails.goals[i].estimatedCompletionDate && (<i>Incomplete</i>)}
+          {!userDetails.goals[i].isComplete && userDetails.goals[i].estimatedCompletionDate && (<><i>Estimated completion date:</i> {new Date(userDetails.goals[i].estimatedCompletionDate).toDateString()}</>)}
+          {!userDetails.goals[i].isComplete && !userDetails.goals[i].estimatedCompletionDate && (<i>Incomplete</i>)}
           </p>
           <div className="goal-buttons">
-            
+            <RemoveGoalButton goalId={userDetails.goals[i]._id}/>
           </div>
         </div>
       )
@@ -30,7 +32,8 @@ function Goals(props) {
   return (
     <div className="goals">
       <h3>Goals:</h3>
-      {renderGoals()}
+      {renderGoals()}<br/>
+      <AddGoalButton/><br/>
     </div>
     )
 }

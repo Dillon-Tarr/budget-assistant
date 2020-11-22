@@ -44,7 +44,7 @@ function AddOutgoButton(props) {
   return (<>
     <button className="main-button" onClick={() => hideOrUnhide("addOutgoForm")}>Add outgo</button><br/>
     {!hideState.addOutgoForm && (
-    <div className="add-income-or-outgo-container">
+    <div className="form-container">
     <div name="addOutgoForm" className="add-income-or-outgo">
       <label htmlFor="outgoName">
         Enter a name for the outgo:<br/>e.g. Water bill<br/><input id="outgoName" onChange={handleChange} name="outgoName"
@@ -87,7 +87,7 @@ function AddOutgoButton(props) {
       <DatePicker selected={startDate}
       onChange={date => setStartDate(date)}
       minDate={new Date()}
-      maxDate={new Date(startDate.getTime() + 1262304000000)}
+      maxDate={new Date(new Date().getTime() + 1262304000000)}
       showDisabledMonthNavigation
       showMonthDropdown
       showYearDropdown

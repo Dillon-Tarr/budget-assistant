@@ -55,7 +55,7 @@ function Outgo(props) {
       <h3>Budgeted outgo:</h3>
       <div>
         {renderOutgo()}
-        <AddOutgoButton budgetId={budget._id}/>
+        <AddOutgoButton budgetId={budget._id}/><br/>
       </div>
     </div>
   )

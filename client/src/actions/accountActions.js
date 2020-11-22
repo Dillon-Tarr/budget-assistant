@@ -55,7 +55,7 @@ export const logIn = submission => dispatch => {
 }
 
 export const logOut = () => dispatch => {
-  $(".menu").css('right', 'initial');
+  $(".menu").css('display', 'none');
   $("main").css('filter', 'brightness(100%)');
   const token = localStorage.getItem("JWT");
   const config = {

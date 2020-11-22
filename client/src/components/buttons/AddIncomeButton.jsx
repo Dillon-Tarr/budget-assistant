@@ -45,7 +45,7 @@ function AddIncomeButton(props) {
   return (<>
     <button className="main-button" onClick={() => hideOrUnhide("addIncomeForm")}>Add income</button><br/>
     {!hideState.addIncomeForm && (
-    <div className="add-income-or-outgo-container">
+    <div className="form-container">
     <div name="addIncomeForm" className="add-income-or-outgo">
       <label htmlFor="incomeName">
         Enter a name for the income:<br/>e.g. My paycheck<br/><input id="incomeName" onChange={handleChange} name="incomeName"
@@ -67,7 +67,7 @@ function AddIncomeButton(props) {
       <DatePicker selected={startDate}
       onChange={date => setStartDate(date)}
       minDate={new Date()}
-      maxDate={new Date(startDate.getTime() + 1262304000000)}
+      maxDate={new Date(new Date().getTime() + 1262304000000)}
       showDisabledMonthNavigation
       showMonthDropdown
       showYearDropdown

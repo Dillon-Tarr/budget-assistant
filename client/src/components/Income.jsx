@@ -44,7 +44,7 @@ function Income(props) {
       <h3>Budgeted income:</h3>
       <div>
         {renderIncome()}
-        <AddIncomeButton budgetId={budget._id}/>
+        <AddIncomeButton budgetId={budget._id}/><br/>
       </div>
     </div>
   )
