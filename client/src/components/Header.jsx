@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, useSelector } from 'react-redux';
 
 import { generateWelcomeMessage } from '../helpers/string-generators';
+import { goToPage } from '../actions/viewActions';
 import { openBudget } from '../actions/budgetActions';
 
 import MenuToggle from './MenuToggle';
@@ -20,7 +21,7 @@ function Header(props) {
       case "IncomeAndOutgo":
         return <p className="header-message" onClick={() => props.openBudget(budget._id)}>{budget.name}</p>;
       default:
-        return <p className="header-message">{generateWelcomeMessage(userDetails.displayName)}</p>;
+        return <p className="header-message" onClick={() => props.goToPage("Home")}>Budget Assistant</p>;
     }
   }
   
@@ -36,10 +37,12 @@ function Header(props) {
 }
 
 const mapDispatchToProps = {
+  goToPage,
   openBudget
 }
 
 Header.propTypes = {
+  goToPage: PropTypes.func.isRequired,
   openBudget: PropTypes.func.isRequired
 };
 

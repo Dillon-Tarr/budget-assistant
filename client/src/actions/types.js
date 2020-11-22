@@ -14,6 +14,5 @@ export const MODIFY_INCOME = 'MODIFY_INCOME';
 export const MODIFY_OUTGO = 'MODIFY_OUTGO';
 
 export const ADD_GOAL = 'ADD_GOAL';
-export const COMPLETE_GOAL = 'COMPLETE_GOAL';
 export const REMOVE_GOAL = 'REMOVE_GOAL';
 export const MODIFY_GOAL = 'MODIFY_OUTGO';

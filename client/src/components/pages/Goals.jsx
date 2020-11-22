@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect, useSelector } from 'react-redux';
 
-import { goToPage } from '../../actions/viewActions';
 import AddGoalButton from '../buttons/AddGoalButton';
 import RemoveGoalButton from '../buttons/RemoveGoalButton';
+import CompleteGoalButton from '../buttons/CompleteGoalButton';
 
 function Goals(props) {
   const userDetails = useSelector(state => state.userDetails);
@@ -22,6 +21,7 @@ function Goals(props) {
           {!userDetails.goals[i].isComplete && !userDetails.goals[i].estimatedCompletionDate && (<i>Incomplete</i>)}
           </p>
           <div className="goal-buttons">
+            <CompleteGoalButton goalId={userDetails.goals[i]._id} isComplete={userDetails.goals[i].isComplete}/>
             <RemoveGoalButton goalId={userDetails.goals[i]._id}/>
           </div>
         </div>
@@ -38,12 +38,4 @@ function Goals(props) {
     )
 }
 
-const mapDispatchToProps = {
-  goToPage
-}
-
-Goals.propTypes = {
-  goToPage: PropTypes.func.isRequired
-};
-
-export default connect(null, mapDispatchToProps)(Goals);
+export default connect()(Goals);

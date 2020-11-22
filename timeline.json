@@ -196,7 +196,7 @@
         },
         {
         "description": "Let user undo marking financial/general goals as complete.",
-        "isComplete": false
+        "isComplete": true
         }
       ]
     },

@@ -1,4 +1,4 @@
-import { ADD_GOAL, COMPLETE_GOAL, REMOVE_GOAL, MODIFY_GOAL } from './types';
+import { ADD_GOAL, REMOVE_GOAL, MODIFY_GOAL } from './types';
 import axios from 'axios'
 import { setDateToMidday } from '../helpers/manipulate-dates'
 
@@ -18,6 +18,26 @@ export const addGoal = (text, estimatedCompletionDate) => dispatch => {
   .catch(err => { if (err.response) console.error(err.response.data); });
 }
 
+export const completeGoal = (goalId, isComplete) => dispatch => {
+  const token = localStorage.getItem("JWT");
+  const config = {
+    method: 'put',
+    url: `http://localhost:5000/api/users/modify-goal`,
+    headers: { 'x-auth-token': token },
+    data: {
+      goalId: goalId,
+      isComplete: !isComplete
+    }};
+  axios(config).then(res => dispatch({
+    type: MODIFY_GOAL,
+    payload: {
+      goalId: goalId,
+      updatedGoal: res.data.updatedGoal
+    }
+  }))
+  .catch(err => { if (err.response) console.error(err.response.data); });
+}
+
 export const removeGoal = (goalId) => dispatch => {
   const token = localStorage.getItem("JWT");
   const config = {
@@ -33,3 +53,4 @@ export const removeGoal = (goalId) => dispatch => {
   }))
   .catch(err => { if (err.response) console.error(err.response.data); });
 }
+

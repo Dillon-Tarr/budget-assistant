@@ -1,4 +1,4 @@
-import { LOG_IN, LOG_OUT, CREATE_BUDGET, ADD_GOAL, COMPLETE_GOAL, REMOVE_GOAL, MODIFY_GOAL } from '../actions/types'
+import { LOG_IN, LOG_OUT, CREATE_BUDGET, ADD_GOAL, REMOVE_GOAL, MODIFY_GOAL } from '../actions/types'
 
 const initialState = {
   loginName: null,
@@ -27,6 +27,13 @@ export default function userReducer(state = initialState, action){
     }
     case REMOVE_GOAL: {
       const goals = state.goals.filter((goal) => goal._id !== action.payload);
+      return {...state, goals: goals};
+    }
+    case MODIFY_GOAL: {
+      const goals = state.goals.map((goal, i) => {
+        if (goal._id === action.payload.goalId) return action.payload.updatedGoal;
+        else return goal;
+      });
       return {...state, goals: goals};
     }
     default:
