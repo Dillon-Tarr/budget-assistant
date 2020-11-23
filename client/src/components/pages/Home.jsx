@@ -8,6 +8,7 @@ import useHideOrUnhide from '../../hooks/useHideOrUnhide';
 
 import { goToPage } from '../../actions/viewActions';
 import { createBudget } from '../../actions/budgetActions';
+import ReminderButton from '../buttons/ReminderButton';
 
 function Home(props) {
   const userDetails = useSelector(state => state.userDetails);
@@ -20,15 +21,19 @@ function Home(props) {
     enterBudgetName: true
   });
   const renderReminders = () => {
-    const reminders = [];
+    const reminders = [<span key="reminderInstructions" style={{fontSize: ".7rem"}}>Select a reminder to mute until the next occurrence or to stop all reminders for that outgo.<br/></span>];
     for (let i = 0; i < userDetails.outgoReminders.length; i++){
-      reminders.push(
-        <p className="reminder" key={`reminder${i}`}>
-          {userDetails.outgoReminders[i]}
-        </p>
-        );
+      reminders.push(<span key={`reminder${i}`}>
+        <ReminderButton
+          text={userDetails.outgoReminders[i].text}
+          budgetId={userDetails.outgoReminders[i].budgetId}
+          outgoId={userDetails.outgoReminders[i].outgoId}
+          nextOccurrence={userDetails.outgoReminders[i].nextOccurrence}
+          reminderIndex={i}
+        /><br/>
+      </span>);
     }
-    if (reminders.length === 0) return <p>None right now.</p>
+    if (reminders.length === 1) return <p>None right now.</p>
     return reminders;
   }
 
@@ -40,12 +45,13 @@ function Home(props) {
       <div name="enterBudgetName">
         <label htmlFor="budgetName">
         Enter a name for your budget.<br/>e.g. {userDetails.displayName}'s Budget<br/><input id="budgetName" onChange={handleChange} name="budgetName"
-        value={values.budgetName || ""} type="text" minLength="1" maxLength="32" size="30" required autoFocus/>
+        value={values.budgetName || ""} type="text" minLength="1" maxLength="32" size="30" required autoFocus
+        onKeyPress={event => {if (event.key === 'Enter') handleSubmit()}}/>
         </label>
         <button className="main-button" onClick={handleSubmit}>Create</button>
         <p className="invalid-input"></p><br/>
       </div>)}
-      <button className="main-button">Learning about budgeting</button>
+      <button className="main-button" onClick={() => props.goToPage("Learn")}>Learning about budgeting</button>
     </div>
     </>) : (<>
     <div className="home">
@@ -56,7 +62,7 @@ function Home(props) {
         <button className="main-button" onClick={() => props.goToPage("Learn")}>Learn</button>
       </div>
       <div className="reminders">
-        <p>Outgo reminders:</p>
+        <p>Outgo reminders:<br/></p>
         {renderReminders()}
       </div>
     </div>

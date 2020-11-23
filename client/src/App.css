@@ -96,6 +96,11 @@ th, td {
   font-size: .6rem;
 }
 
+.home {
+  text-align: center;
+  max-width: 24rem;
+  margin: 0rem auto
+}
 main {
   width: 100%;
   height: 100vh;
@@ -338,5 +343,11 @@ hr {
 }
 
 .reminder {
-  font-size: .9rem;
+  font-size: .8rem;
+}
+.reminderOptions {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-items: center;
 }

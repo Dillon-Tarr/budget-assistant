@@ -124,7 +124,13 @@ function getReminders(budget){
     const day = nextOccurrence.getDate().toString();
     const suffix = getOrdinalSuffixAbbreviation(day);
     const year = nextOccurrence.getFullYear();
-    reminders.push(`${budget.outgo[i].name} | $${dollarsPerOccurrence} on ${month} ${day}${suffix}, ${year}`);
+    reminders.push({
+      budgetId: budget._id,
+      outgoId: budget.outgo[i]._id,
+      nextOccurrence: nextOccurrence,
+      text: `${budget.outgo[i].name} | $${dollarsPerOccurrence} on ${month} ${day}${suffix}, ${year}`
+    });
+    console.log(reminders);
   }
   return reminders;
 }

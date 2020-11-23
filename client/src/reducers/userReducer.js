@@ -1,4 +1,4 @@
-import { LOG_IN, LOG_OUT, CREATE_BUDGET, ADD_GOAL, REMOVE_GOAL, MODIFY_GOAL } from '../actions/types'
+import { LOG_IN, LOG_OUT, REMOVE_REMINDER, CREATE_BUDGET, ADD_GOAL, REMOVE_GOAL, MODIFY_GOAL } from '../actions/types'
 
 const initialState = {
   loginName: null,
@@ -16,6 +16,10 @@ export default function userReducer(state = initialState, action){
       return action.payload;
     case LOG_OUT:
       return initialState;
+    case REMOVE_REMINDER:
+      const outgoReminders = [...state.outgoReminders];
+      outgoReminders.splice(action.payload, 1);
+      return {...state, outgoReminders: outgoReminders};
     case CREATE_BUDGET:
       const managedBudgets = [...state.managedBudgets];
       managedBudgets.push({ _id: action.payload._id, name: action.payload.name });

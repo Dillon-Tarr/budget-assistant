@@ -1,4 +1,4 @@
-import { CREATE_BUDGET, OPEN_BUDGET, ADD_INCOME, ADD_OUTGO, REMOVE_INCOME, REMOVE_OUTGO } from './types';
+import { CREATE_BUDGET, OPEN_BUDGET, ADD_INCOME, ADD_OUTGO, REMOVE_INCOME, REMOVE_OUTGO, REMOVE_REMINDER } from './types';
 import axios from 'axios'
 import { setDateToMidday } from '../helpers/manipulate-dates'
 import { convertFromDayXToNumbers } from '../helpers/manipulate-numbers'
@@ -186,7 +186,7 @@ export const removeIncome = (budgetId, incomeId) => dispatch => {
     data: {
       incomeId: incomeId
     }};
-  axios(config).then(res => dispatch({
+  axios(config).then(() => dispatch({
     type: REMOVE_INCOME,
     payload: incomeId
   }))
@@ -202,9 +202,44 @@ export const removeOutgo = (budgetId, outgoId) => dispatch => {
     data: {
       outgoId: outgoId
     }};
-  axios(config).then(res => dispatch({
+  axios(config).then(() => dispatch({
     type: REMOVE_OUTGO,
     payload: outgoId
+  }))
+  .catch(err => { if (err.response) console.error(err.response.data); });
+}
+
+export const muteReminder = (budgetId, outgoId, nextOccurrence, reminderIndex) => dispatch => {
+  const muteRemindersUntil = (setDateToMidday(nextOccurrence).getTime() + 86400000).toString();
+  const token = localStorage.getItem("JWT");
+  const config = {
+    method: 'put',
+    url: `http://localhost:5000/api/budgets/${budgetId}/modify-outgo`,
+    headers: { 'x-auth-token': token },
+    data: {
+      outgoId: outgoId,
+      muteRemindersUntil: muteRemindersUntil
+    }};
+  axios(config).then(() => dispatch({
+    type: REMOVE_REMINDER,
+    payload: reminderIndex
+  }))
+  .catch(err => { if (err.response) console.error(err.response.data); });
+}
+
+export const stopReminding = (budgetId, outgoId, reminderIndex) => dispatch => {
+  const token = localStorage.getItem("JWT");
+  const config = {
+    method: 'put',
+    url: `http://localhost:5000/api/budgets/${budgetId}/modify-outgo`,
+    headers: { 'x-auth-token': token },
+    data: {
+      outgoId: outgoId,
+      doRemind: false
+    }};
+  axios(config).then(() => dispatch({
+    type: REMOVE_REMINDER,
+    payload: reminderIndex
   }))
   .catch(err => { if (err.response) console.error(err.response.data); });
 }

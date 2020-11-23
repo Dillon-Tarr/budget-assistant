@@ -208,18 +208,6 @@
         "isComplete": true
         },
         {
-        "description": "Allow user to change account details.",
-        "isComplete": false
-        },
-        {
-        "description": "Let user view all income and outgo between a start and end date.",
-        "isComplete": false
-        },
-        {
-        "description": "Let user see a simulation of the number of dollars left on an end date (considering planned income and outgo between now and then) given a start date and a start amount.",
-        "isComplete": false
-        },
-        {
         "description": "Let user view a breakdown of outgo by category.",
         "isComplete": true
         }
@@ -229,7 +217,19 @@
       "day": "Monday, November 23",
       "tasks": [
         {
-        "description": "Complete project by this day.",
+        "description": "Let user view all income and outgo between a start and end date.",
+        "isComplete": true
+        },
+        {
+        "description": "Let user see a simulation of the number of dollars left on an end date (considering planned income and outgo between now and then) given a start date and a start amount.",
+        "isComplete": true
+        },
+        {
+        "description": "Let user mute a single reminder or all reminders in a series.",
+        "isComplete": true
+        },
+        {
+        "description": "Allow user to change account details.",
         "isComplete": false
         }
       ]

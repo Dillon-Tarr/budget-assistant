@@ -16,7 +16,7 @@ function FutureValueCalculator(props) {
   const [startDate, setStartDate] = useState(new Date());
   const [inclusiveEndDate, setInclusiveEndDate] = useState(new Date(startDate.getTime() + 2592000000));
   const dataBetweenDates = getDataBetweenDates(orderedIncomeAndOutgo, startDate, inclusiveEndDate);
-  const { hideState, hideOrUnhide, hide } = useHideOrUnhide({
+  const { hideState, hideOrUnhide } = useHideOrUnhide({
     incomeAndOutgoTable: true
   });
   const { values, handleChange } = useInputTracking({
@@ -85,7 +85,6 @@ function FutureValueCalculator(props) {
       </table>
       <br/><br/>
       </>)}
-      
     </div>
     )
 }

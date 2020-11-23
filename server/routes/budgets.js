@@ -297,16 +297,16 @@ router.put('/:id/modify-income', auth, checkTokenBlacklist, async (req, res) => 
       budget.income[incomeIndex].dollarsPerOccurrence = parseFloat(req.body.dollarsPerOccurrence.toFixed(2));
     }
     
-    if (req.body.isRecurring === false) {
+    if (req.body.isRecurring === false || (!req.body.isRecurring && budget.income[incomeIndex].isRecurring === false)){
       budget.income[incomeIndex].isRecurring = false;
-      budget.income[incomeIndex].inclusiveEndDate = new Date(parseInt(req.body.startDate));
+      budget.income[incomeIndex].inclusiveEndDate = new Date(budget.income[incomeIndex].startDate);
       budget.income[incomeIndex].referencePeriod = "N/A";
       budget.income[incomeIndex].multiplesOfPeriod = "N/A";
       budget.income[incomeIndex].weekOfMonthText = "N/A";
       budget.income[incomeIndex].daysOfWeek = ["N/A"];
       budget.income[incomeIndex].daysOfMonth = ["N/A"];
     }
-    else { // req.body.isRecurring === true
+    else {
       if (budget.income[incomeIndex].isRecurring === false) { // was not recurring before
         if (!(req.body.inclusiveEndDate && req.body.referencePeriod && req.body.multiplesOfPeriod && req.body.weekOfMonthText && req.body.daysOfWeek && req.body.daysOfMonth)) return res.status(400).send('If changing isRecurring to true... inclusiveEndDate, referencePeriod, multiplesOfPeriod, weekOfMonthText, daysOfWeek, and daysOfMonth must be supplied in the request body. For properties that do not apply to the recurring event, supply the value "N/A" (for strings) or ["N/A"] (for arrays).');
         if (typeof req.body.inclusiveEndDate !== "string" || req.body.inclusiveEndDate.length < 13) return res.status(400).send('inclusiveEndDate must be a string representing Unix time in milliseconds.');
@@ -391,16 +391,16 @@ router.put('/:id/modify-outgo', auth, checkTokenBlacklist, async (req, res) => {
       budget.outgo[outgoIndex].dollarsPerOccurrence = parseFloat(req.body.dollarsPerOccurrence.toFixed(2));
     }
     
-    if (req.body.isRecurring === false) {
+    if (req.body.isRecurring === false || (!req.body.isRecurring && budget.outgo[outgoIndex].isRecurring === false)){
       budget.outgo[outgoIndex].isRecurring = false;
-      budget.outgo[outgoIndex].inclusiveEndDate = new Date(parseInt(req.body.startDate));
+      budget.outgo[outgoIndex].inclusiveEndDate = new Date(budget.outgo[outgoIndex].startDate);
       budget.outgo[outgoIndex].referencePeriod = "N/A";
       budget.outgo[outgoIndex].multiplesOfPeriod = "N/A";
       budget.outgo[outgoIndex].weekOfMonthText = "N/A";
       budget.outgo[outgoIndex].daysOfWeek = ["N/A"];
       budget.outgo[outgoIndex].daysOfMonth = ["N/A"];
     }
-    else { // req.body.isRecurring === true
+    else {
       if (budget.outgo[outgoIndex].isRecurring === false) { // was not recurring before
         if (!(req.body.inclusiveEndDate && req.body.referencePeriod && req.body.multiplesOfPeriod && req.body.weekOfMonthText && req.body.daysOfWeek && req.body.daysOfMonth)) return res.status(400).send('If changing isRecurring to true... inclusiveEndDate, referencePeriod, multiplesOfPeriod, weekOfMonthText, daysOfWeek, and daysOfMonth must be supplied in the request body. For properties that do not apply to the recurring event, supply the value "N/A" (for strings) or ["N/A"] (for arrays).');
         if (typeof req.body.inclusiveEndDate !== "string" || req.body.inclusiveEndDate.length < 13) return res.status(400).send('inclusiveEndDate must be a string representing Unix time in milliseconds.');
@@ -455,7 +455,7 @@ router.put('/:id/modify-outgo', auth, checkTokenBlacklist, async (req, res) => {
       budget.outgo[outgoIndex].remindThisManyDaysBefore = "N/A";
       budget.outgo[outgoIndex].muteRemindersUntil = new Date(1577836800000);
     }
-    else { // req.body.doRemind === true
+    else {
       if (budget.outgo[outgoIndex].doRemind === false) { // was not reminding before
         if (!(req.body.remindThisManyDaysBefore && (req.body.muteRemindersUntil || req.body.muteRemindersUntil === false))) return res.status(400).send('If doRemind is changed to true... remindThisManyDaysBefore and muteRemindersUntil must be included in the request body.');
         if (typeof req.body.remindThisManyDaysBefore !== "string") return res.status(400).send('remindThisManyDaysBefore must be a string.');
@@ -466,7 +466,22 @@ router.put('/:id/modify-outgo', auth, checkTokenBlacklist, async (req, res) => {
           budget.outgo[outgoIndex].muteRemindersUntil = new Date(1577836800000);
         }
         else {
-          budget.outgo[outgoIndex].muteRemindersUntil = req.body.muteRemindersUntil;
+          budget.outgo[outgoIndex].muteRemindersUntil = new Date(parseInt(req.body.muteRemindersUntil));
+        }
+      }
+      else if (budget.outgo[outgoIndex].doRemind === true) { // already was reminding
+        if (req.body.remindThisManyDaysBefore){
+          if (typeof req.body.remindThisManyDaysBefore !== "string") return res.status(400).send('remindThisManyDaysBefore must be a string.');
+          budget.outgo[outgoIndex].remindThisManyDaysBefore = req.body.remindThisManyDaysBefore;
+        }
+        if (req.body.muteRemindersUntil){
+          if (!(typeof req.body.muteRemindersUntil === "boolean" && req.body.muteRemindersUntil === false) && !(typeof req.body.muteRemindersUntil === "string" && req.body.muteRemindersUntil.length >= 13)) return res.status(400).send(`muteRemindersUntil must be the Boolean 'false' or a string representing Unix time in milliseconds.`);
+          else if (req.body.muteRemindersUntil == false) {
+            budget.outgo[outgoIndex].muteRemindersUntil = new Date(1577836800000);
+          }
+          else {
+            budget.outgo[outgoIndex].muteRemindersUntil = new Date(parseInt(req.body.muteRemindersUntil));
+          }
         }
       }
     }

@@ -10,8 +10,9 @@ export const ADD_INCOME = 'ADD_INCOME';
 export const ADD_OUTGO = 'ADD_OUTGO';
 export const REMOVE_INCOME = 'REMOVE_INCOME';
 export const REMOVE_OUTGO = 'REMOVE_OUTGO';
-export const MODIFY_INCOME = 'MODIFY_INCOME';
-export const MODIFY_OUTGO = 'MODIFY_OUTGO';
+//export const MODIFY_INCOME = 'MODIFY_INCOME';
+//export const MODIFY_OUTGO = 'MODIFY_OUTGO';
+export const REMOVE_REMINDER = 'REMOVE_REMINDER';
 
 export const ADD_GOAL = 'ADD_GOAL';
 export const REMOVE_GOAL = 'REMOVE_GOAL';
