@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector, connect } from 'react-redux';
 
 import { logOut } from '../actions/accountActions';
-import { goToPage, openMenu, closeMenu } from '../actions/viewActions';
+import { goToPage, goHome, openMenu, closeMenu } from '../actions/viewActions';
 
 function Menu(props) {
   const menuIsOpen = useSelector(state => state.view.menuIsOpen);
@@ -24,7 +24,7 @@ function Menu(props) {
     <div className="menu-container">
       <nav className="menu" ref={menuRef}>
         <div className="menu-close-container"><button className="menu-close" onClick={props.closeMenu}>✕</button></div>
-        <button className="home menu-button" onClick={() => props.goToPage("Home")}>Home</button>
+        <button className="home menu-button" onClick={() => props.goHome()}>Home</button>
         <button className="home menu-button" onClick={() => props.goToPage("Budgets")}>Budgets</button>
         <button className="home menu-button" onClick={() => props.goToPage("Goals")}>Goals</button>
         <button className="home menu-button" onClick={() => props.goToPage("Learn")}>Learn</button>
@@ -37,6 +37,7 @@ function Menu(props) {
 const mapDispatchToProps = {
   logOut,
   goToPage,
+  goHome,
   openMenu,
   closeMenu
 }
@@ -44,6 +45,7 @@ const mapDispatchToProps = {
 Menu.propTypes = {
   logOut: PropTypes.func.isRequired,
   goToPage: PropTypes.func.isRequired,
+  goHome: PropTypes.func.isRequired,
   openMenu: PropTypes.func.isRequired,
   closeMenu: PropTypes.func.isRequired
 };

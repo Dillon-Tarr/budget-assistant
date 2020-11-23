@@ -1,4 +1,4 @@
-import { LOG_IN, LOG_OUT, REMOVE_REMINDER, CREATE_BUDGET, ADD_GOAL, REMOVE_GOAL, MODIFY_GOAL } from '../actions/types'
+import { LOG_IN, GO_HOME, LOG_OUT, REMOVE_REMINDER, CREATE_BUDGET, ADD_GOAL, REMOVE_GOAL, MODIFY_GOAL } from '../actions/types'
 
 const initialState = {
   loginName: null,
@@ -13,6 +13,7 @@ const initialState = {
 export default function userReducer(state = initialState, action){
   switch(action.type){
     case LOG_IN:
+    case GO_HOME:
       return action.payload;
     case LOG_OUT:
       return initialState;

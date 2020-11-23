@@ -64,7 +64,5 @@ export const logOut = () => dispatch => {
     headers: { 'x-auth-token': token }};
   axios(config).catch(err => console.error(err))
   .then(() => {
-    dispatch({
-    type: LOG_OUT
-  })});
+    dispatch({ type: LOG_OUT })});
 }

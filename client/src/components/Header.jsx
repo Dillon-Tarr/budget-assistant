@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, useSelector } from 'react-redux';
 
 import { generateWelcomeMessage } from '../helpers/string-generators';
-import { goToPage } from '../actions/viewActions';
+import { goToPage, goHome } from '../actions/viewActions';
 import { openBudget } from '../actions/budgetActions';
 
 import MenuToggle from './MenuToggle';
@@ -24,7 +24,7 @@ function Header(props) {
       case "FutureValueCalculator":
         return <p className="clickable header-message" onClick={() => props.goToPage("Budget")}>{budget.name}</p>;
       default:
-        return <p className="clickable header-message" onClick={() => props.goToPage("Home")}>Budget Assistant</p>;
+        return <p className="clickable header-message" onClick={() => props.goHome()}>Budget Assistant</p>;
     }
   }
   
@@ -41,11 +41,13 @@ function Header(props) {
 
 const mapDispatchToProps = {
   goToPage,
+  goHome,
   openBudget
 }
 
 Header.propTypes = {
   goToPage: PropTypes.func.isRequired,
+  goHome: PropTypes.func.isRequired,
   openBudget: PropTypes.func.isRequired
 };
 
