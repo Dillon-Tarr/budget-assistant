@@ -1,4 +1,4 @@
-const { setDateToMidday, convertDaysOfWeek, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName, checkIfLeapYear } = require('./manipulate-dates');
+const { setDateToMidday, convertDaysOfWeek, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, checkIfLeapYear } = require('./manipulate-dates');
 
 function getAllOccurrences(incomeOrOutgoObject){
   const occurrences = [];
@@ -109,4 +109,56 @@ function getAllOccurrences(incomeOrOutgoObject){
   }
 }
 
-module.exports = { getAllOccurrences };
+function getOutgoBreakdownData(outgo, referencePeriod, multiplesOfPeriod, includeOneTimeExpenses, includeInfrequentExpenses){
+  multiplesOfPeriod = parseInt(multiplesOfPeriod);
+  const timeframe = getTimeframe(referencePeriod, multiplesOfPeriod);
+  const today = setDateToMidday(Date.now());
+  const checkUntilThisManyMilliseconds = setDateToMidday(Date.now() + timeframe).getTime();
+  includeInfrequentExpenses = includeInfrequentExpenses === "true"; // can be included while one time expenses are not included
+  includeOneTimeExpenses = includeOneTimeExpenses === "true" && includeInfrequentExpenses; // can only be included if infrequent expenses are included
+  const data = [];
+  if (!includeInfrequentExpenses){
+    outgo = outgo.filter(outgoObject => {
+      if (outgoObject.occurrences.length < 2) return false;
+      const timeBetweenOccurrences = getTimeBetweenOccurrences(outgoObject.occurrences[0], outgoObject.occurrences[1]);
+      return timeBetweenOccurrences <= timeframe;
+    });
+  }
+  else if (includeInfrequentExpenses && !includeOneTimeExpenses) {
+    outgo = outgo.filter(outgoObject => {
+      return outgoObject.occurrences.length >= 2;
+    });
+  }
+  for (let i = 0; i < outgo.length; i++){
+    let numberOfOccurrencesInTimeframe = 0;
+    const nextOccurrenceIndex = outgo[i].occurrences.findIndex(date => new Date(date).getTime() >= today.getTime());
+    for (let o = nextOccurrenceIndex; o < outgo[i].occurrences.length - nextOccurrenceIndex; o++){
+      if (setDateToMidday(outgo[i].occurrences[o]).getTime() > checkUntilThisManyMilliseconds) break;
+      else numberOfOccurrencesInTimeframe++;
+    }
+    const entryIndex = data.findIndex(entry => entry[0] === outgo[i].category);
+    if (entryIndex === -1) data.push([outgo[i].category, numberOfOccurrencesInTimeframe*outgo[i].dollarsPerOccurrence]);
+    else data[entryIndex][1] += numberOfOccurrencesInTimeframe*outgo[i].dollarsPerOccurrence;
+  }
+
+  return data;
+}
+
+function getTimeframe(referencePeriod, multiplesOfPeriod){
+  switch(referencePeriod){
+    case "month":
+      return 31*multiplesOfPeriod*86400000;
+    case "week":
+      return 7*multiplesOfPeriod*86400000;
+    case "year":
+      return 365*multiplesOfPeriod*86400000;
+    default:
+      return 31*multiplesOfPeriod*86400000;
+  }
+}
+
+function getTimeBetweenOccurrences(occurrence1, occurrence2){
+  return Math.abs(new Date(occurrence2).getTime() - new Date(occurrence1).getTime());
+}
+
+module.exports = { getAllOccurrences, getOutgoBreakdownData };

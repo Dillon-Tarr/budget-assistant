@@ -18,6 +18,7 @@ function Header(props) {
       case "Home":
         return (<p className="header-message">{generateWelcomeMessage(userDetails.displayName)}</p>);
       case "Budget":
+        return <p className="header-message">{budget.name}</p>;
       case "IncomeAndOutgo":
         return <p className="header-message" onClick={() => props.openBudget(budget._id)}>{budget.name}</p>;
       default:

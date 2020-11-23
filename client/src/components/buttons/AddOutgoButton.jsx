@@ -17,7 +17,7 @@ function AddOutgoButton(props) {
     addOutgoForm: true
   });
   const [startDate, setStartDate] = useState(new Date());
-  const [inclusiveEndDate, setInclusiveEndDate] = useState(new Date(startDate.getTime() + 157701600000));
+  const [inclusiveEndDate, setInclusiveEndDate] = useState(new Date(startDate.getTime() + 378691200000));
   const { values, handleChange, resetInputTracking } = useInputTracking();
   const handleAdd = () => {
     const allValues = {...values};

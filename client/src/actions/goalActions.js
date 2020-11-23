@@ -51,7 +51,6 @@ export const modifyGoal = (goal, values) => dispatch => {
     if (values.notSure) data.estimatedCompletionDate = false;
     else if (values.estimatedCompletionDate) data.estimatedCompletionDate = setDateToMidday(values.estimatedCompletionDate.getTime()).getTime().toString();
   }
-  console.log(data);
   const token = localStorage.getItem("JWT");
   const config = {
     method: 'put',

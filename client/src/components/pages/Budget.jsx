@@ -4,6 +4,7 @@ import { connect, useSelector } from 'react-redux';
 
 import { goToPage } from '../../actions/viewActions';
 import Averages from '../Averages';
+import OutgoBreakdownButton from '../buttons/OutgoBreakdownButton';
 
 function Budget(props) {
   const budget = useSelector(state => state.budget);
@@ -19,9 +20,9 @@ function Budget(props) {
       <Averages/>
       <br/>
       <div className="budget-options">
+        {budget.outgo.length > 0 && <OutgoBreakdownButton outgo={budget.outgo}/>}
+        <button className="main-button" onClick={() => props.goToPage("FutureValueCalculator")}>Future value calculator</button><br/>
         <button className="main-button" onClick={() => props.goToPage("IncomeAndOutgo")}>View/modify budgeted income/outgo</button><br/>
-        {budget.outgo.length > 0 && (<><button className="main-button" onClick={() => props.goToPage("OutgoBreakdown")}>Outgo breakdown by category</button><br/></>)}
-        <button className="main-button" onClick={() => props.goToPage("FutureValueCalculator")}>Future value calculator</button>
       </div>
     </div>
   )

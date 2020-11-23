@@ -221,7 +221,7 @@
         },
         {
         "description": "Let user view a breakdown of outgo by category.",
-        "isComplete": false
+        "isComplete": true
         }
       ]
     },
