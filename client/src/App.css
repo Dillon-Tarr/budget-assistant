@@ -15,14 +15,17 @@ html, body {
 .body::-webkit-scrollbar {
   display: none;
 }
+@media only screen and (min-width: 375px) {
+  html, body {font-size: 20.2px}
+}
 @media only screen and (min-width: 576px) {
-  html, body {font-size: 20.5px}
+  html, body {font-size: 21.4px}
 }
 @media only screen and (min-width: 768px) {
-  html, body {font-size: 22px}
+  html, body {font-size: 22.6px}
 }
 @media only screen and (min-width: 992px) {
-  html, body {font-size: 23.5px}
+  html, body {font-size: 23.8px}
 }
 @media only screen and (min-width: 1200px) {
   html, body {font-size: 25px}
@@ -84,6 +87,13 @@ p {
 .learn a {
   font-size: 1rem;
   line-height: 1.8rem;
+}
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+th, td {
+  font-size: .6rem;
 }
 
 main {

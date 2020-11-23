@@ -151,4 +151,13 @@ function setAcceptableDaysOfMonth(numberOfDaysInMonth, weekOfMonth){
   }
 }
 
-module.exports = { setDateToMidday, convertDaysOfWeek, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName, checkIfLeapYear }
+function getShortenedDateString(date){
+  let dateString = date.toDateString();
+  const last3 = `'${dateString.slice(-2)}`
+  dateString = dateString.slice(4);
+  dateString = dateString.slice(0, -4);
+  dateString += last3;
+  return dateString;
+}
+
+module.exports = { setDateToMidday, convertDaysOfWeek, getNumberOfDaysInMonth, setAcceptableDaysOfMonth, convertMonthFromNumberToName, checkIfLeapYear, getShortenedDateString }

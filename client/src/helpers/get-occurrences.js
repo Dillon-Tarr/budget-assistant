@@ -161,4 +161,48 @@ function getTimeBetweenOccurrences(occurrence1, occurrence2){
   return Math.abs(new Date(occurrence2).getTime() - new Date(occurrence1).getTime());
 }
 
-module.exports = { getAllOccurrences, getOutgoBreakdownData };
+function getOrderedIncomeAndOutgo(income, outgo){
+  let orderedIncomeAndOutgo = [];
+  for (let i = 0; i < income.length; i++) {
+    for (let j = 0; j < income[i].occurrences.length; j++){
+      orderedIncomeAndOutgo.push({
+        name: income[i].name,
+        type: "income",
+        amount: income[i].dollarsPerOccurrence,
+        ms: setDateToMidday(income[i].occurrences[j]).getTime()
+      });
+    }
+  }
+  for (let i = 0; i < outgo.length; i++) {
+    for (let j = 0; j < outgo[i].occurrences.length; j++){
+      orderedIncomeAndOutgo.push({
+        name: outgo[i].name,
+        type: "outgo",
+        category: outgo[i].category,
+        amount: outgo[i].dollarsPerOccurrence,
+        ms: setDateToMidday(outgo[i].occurrences[j]).getTime()
+      });
+    }
+  }
+  orderedIncomeAndOutgo.sort((a, b) => a.ms - b.ms);
+  return orderedIncomeAndOutgo;
+}
+
+function getDataBetweenDates(orderedIncomeAndOutgo, startDate, endDate){
+  const startIndex = orderedIncomeAndOutgo.findIndex(el => el.ms >= setDateToMidday(startDate).getTime());
+  orderedIncomeAndOutgo.splice(0, startIndex);
+  const oneAfterEndIndex = orderedIncomeAndOutgo.findIndex(el => el.ms > setDateToMidday(endDate).getTime());
+  orderedIncomeAndOutgo.splice(oneAfterEndIndex);
+  let netIncrease = 0;
+  orderedIncomeAndOutgo.forEach(occurrence => {
+    occurrence.type === "income" ? netIncrease += occurrence.amount : netIncrease -= occurrence.amount;
+  });
+  const dataBetweenDates = {
+    incomeAndOutgo: orderedIncomeAndOutgo,
+    netIncrease: netIncrease
+  };
+  return dataBetweenDates;
+}
+
+
+module.exports = { getAllOccurrences, getOutgoBreakdownData, getOrderedIncomeAndOutgo, getDataBetweenDates };

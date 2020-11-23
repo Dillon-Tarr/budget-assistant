@@ -21,6 +21,8 @@ function Header(props) {
         return <p className="default-cursor header-message">{budget.name}</p>;
       case "IncomeAndOutgo":
         return <p className="clickable header-message" onClick={() => props.openBudget(budget._id)}>{budget.name}</p>;
+      case "FutureValueCalculator":
+        return <p className="clickable header-message" onClick={() => props.goToPage("Budget")}>{budget.name}</p>;
       default:
         return <p className="clickable header-message" onClick={() => props.goToPage("Home")}>Budget Assistant</p>;
     }

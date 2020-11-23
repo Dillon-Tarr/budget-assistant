@@ -234,7 +234,7 @@ function AddOutgoButton(props) {
       {values.doRemind === "true" && (<>
         <label htmlFor="remindThisManyDaysBefore">
         How many days before?<br/><input id="remindThisManyDaysBefore" onChange={handleChange} name="remindThisManyDaysBefore"
-        value={values.remindThisManyDaysBefore || ""} type="number" min="1" max="365" step="1" required/>
+        value={values.remindThisManyDaysBefore || ""} type="number" min="0" max="365" step="1" required/>
         </label><br/></>)}
       {values.outgoName && values.outgoName.length >= 1 && values.dollarsPerOccurrence && values.dollarsPerOccurrence >= 1 && values.dollarsPerOccurrence <= 1000000000 &&
       (values.isRecurring === "false"
@@ -246,7 +246,7 @@ function AddOutgoButton(props) {
         (values.recurringType === "unusual" && values.weekOfMonth && values.weekOfMonth !== "null" && values.dayOfWeek && values.dayOfWeek !== "null")
       ))
       &&
-      (values.doRemind === "false" || (values.doRemind === "true" && values.remindThisManyDaysBefore && values.remindThisManyDaysBefore >= 1 && values.remindThisManyDaysBefore <= 365))
+      (values.doRemind === "false" || (values.doRemind === "true" && values.remindThisManyDaysBefore && values.remindThisManyDaysBefore >= 0 && values.remindThisManyDaysBefore <= 365))
       && <button className="main-button" onClick={() => handleAdd()}>Add</button>}
       <br/><br/><br/><br/>
     </div>

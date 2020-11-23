@@ -10,6 +10,7 @@ import Header from './Header';
 import IncomeAndOutgo from './pages/IncomeAndOutgo';
 import Goals from './pages/Goals';
 import Learn from './pages/Learn';
+import FutureValueCalculator from './pages/FutureValueCalculator';
 
 function Main(props) {
   const page = useSelector(state => state.view.page);
@@ -26,7 +27,7 @@ function Main(props) {
       case "IncomeAndOutgo":
         return <IncomeAndOutgo/>;
       case "FutureValueCalculator":
-        return <Home/>;
+        return <FutureValueCalculator/>
       case "Goals":
         return <Goals/>;
       default:
