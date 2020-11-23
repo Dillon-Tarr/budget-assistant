@@ -22,7 +22,7 @@ function Budget(props) {
       <div className="budget-options">
         {budget.outgo.length > 0 && <OutgoBreakdownButton outgo={budget.outgo}/>}
         <button className="main-button" onClick={() => props.goToPage("FutureValueCalculator")}>Future value calculator</button><br/>
-        <button className="main-button" onClick={() => props.goToPage("IncomeAndOutgo")}>View/modify budgeted income/outgo</button><br/>
+        <button className="main-button" onClick={() => props.goToPage("IncomeAndOutgo")}>View/modify budgeted income/outgo</button><br/><br/>
       </div>
     </div>
   )

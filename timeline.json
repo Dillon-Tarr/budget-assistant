@@ -205,7 +205,7 @@
       "tasks": [
         {
         "description": "Add instructional material about budgeting/money management.",
-        "isComplete": false
+        "isComplete": true
         },
         {
         "description": "Allow user to change account details.",

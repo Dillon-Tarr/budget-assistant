@@ -16,13 +16,13 @@ function Header(props) {
   const renderHeaderMessage = page => {
     switch(page){
       case "Home":
-        return (<p className="header-message">{generateWelcomeMessage(userDetails.displayName)}</p>);
+        return (<p className="default-cursor header-message">{generateWelcomeMessage(userDetails.displayName)}</p>);
       case "Budget":
-        return <p className="header-message">{budget.name}</p>;
+        return <p className="default-cursor header-message">{budget.name}</p>;
       case "IncomeAndOutgo":
-        return <p className="header-message" onClick={() => props.openBudget(budget._id)}>{budget.name}</p>;
+        return <p className="clickable header-message" onClick={() => props.openBudget(budget._id)}>{budget.name}</p>;
       default:
-        return <p className="header-message" onClick={() => props.goToPage("Home")}>Budget Assistant</p>;
+        return <p className="clickable header-message" onClick={() => props.goToPage("Home")}>Budget Assistant</p>;
     }
   }
   

@@ -45,7 +45,6 @@ function OutgoBreakdownButton(props) {
       }
     },
     tooltip: {
-      color: '#FF0000',
       showColorCode: true
     },
     chartArea: {
@@ -96,7 +95,7 @@ function OutgoBreakdownButton(props) {
         </select>
       </label><br/></>)}
       </div>
-    <button className="main-button" onClick={() => hide("outgoBreakdown")}>Close</button><br/><br/>
+    <button className="main-button" onClick={() => hide("outgoBreakdown")}>Close</button><br/>
   </div>
   )}
     
