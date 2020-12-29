@@ -15,7 +15,7 @@ router.post('/create-account', async (req, res) => {
     if (!(req.body.loginName && req.body.displayName && req.body.password)) return res.status(400).send('loginName, displayName, and password must be supplied in the request body.');
 
     let user = await User.findOne({ loginName: req.body.loginName });
-    if (user) return res.status(400).send('Someone is already registered with that loginName.');
+    if (user) return res.status(400).send('Someone is already registered with that Login name.');
     const salt = await bcrypt.genSalt(10);
     const userInfo = {
       loginName: req.body.loginName,
@@ -24,7 +24,7 @@ router.post('/create-account', async (req, res) => {
     };
     if (req.body.emailAddress && req.body.emailAddress.length > 3){
       user = await User.findOne({ emailAddress: req.body.emailAddress });
-      if (user) return res.status(400).send('Someone is already registered with that email address.');
+      if (user) return res.status(400).send('Someone is already registered with that Email address.');
       userInfo.emailAddress = req.body.emailAddress;
     }
 
@@ -219,7 +219,7 @@ router.put('/update-login-name', auth, checkTokenBlacklist, async (req, res) => 
   try {
   if (!req.body.loginName) return res.status(400).send(`You must include "loginName" (the new loginName) in the request body.`);
   const loginNameTaken = await User.findOne({ loginName: req.body.loginName });
-  if (loginNameTaken) return res.status(400).send('Someone is already registered with that loginName.');
+  if (loginNameTaken) return res.status(400).send('Someone is already registered with that Login name.');
   
   const user = await User.findByIdAndUpdate(req.user._id,
     { loginName: req.body.loginName },
@@ -333,7 +333,7 @@ router.put('/update-email-address', auth, checkTokenBlacklist, async (req, res) 
   try {
   if (!req.body.emailAddress) return res.status(400).send(`You must include "emailAddress" (the new email address) in the request body.`);
   const emailAddressTaken = await User.findOne({ emailAddress: req.body.emailAddress });
-  if (emailAddressTaken) return res.status(400).send('Someone is already registered with that email address.');
+  if (emailAddressTaken) return res.status(400).send('Someone is already registered with that Email address.');
 
   const user = await User.findByIdAndUpdate(req.user._id,
     { emailAddress: req.body.emailAddress },

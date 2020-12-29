@@ -1,5 +1,9 @@
 export const LOG_IN = 'LOG_IN';
 export const LOG_OUT = 'LOG_OUT';
+export const UPDATE_LOGIN_NAME = 'UPDATE_LOGIN_NAME';
+export const UPDATE_DISPLAY_NAME = 'UPDATE_DISPLAY_NAME';
+export const UPDATE_EMAIL_ADDRESS = 'UPDATE_EMAIL_ADDRESS';
+
 export const GO_TO_PAGE = 'GO_TO_PAGE';
 export const GO_HOME = 'GO_HOME';
 export const OPEN_MENU = 'OPEN_MENU';

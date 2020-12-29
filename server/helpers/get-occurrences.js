@@ -130,7 +130,6 @@ function getReminders(budget){
       nextOccurrence: nextOccurrence,
       text: `${budget.outgo[i].name} | $${dollarsPerOccurrence} on ${month} ${day}${suffix}, ${year}`
     });
-    console.log(reminders);
   }
   return reminders;
 }

@@ -8,9 +8,8 @@ import { createAccount } from '../../actions/accountActions'
 import { goToPage } from '../../actions/viewActions'
 import Title from '../Title';
 
-function CreateAccount(props) {
+function Account(props) {
   const { values, handleChange } = useInputTracking();
-
   const handleSubmit = () => {
     if (!values.loginName) $("#bad-attempt").html("Login name is required.").css('display', 'inline');
     else if (values.loginName.length < 3) $("#bad-attempt").html("Login name must be 3-24 charactes long.").css('display', 'inline');
@@ -20,22 +19,18 @@ function CreateAccount(props) {
     else if (values.password1.length < 8) $("#bad-attempt").html("Passphrase is too short.").css('display', 'inline');
     else if(values.password1 !== values.password2) $("#bad-attempt").html("Passphrase mismatch").css('display', 'inline');
     else {
-      (async () => {
-        if (!values.emailAddress) values.emailAddress = "";
-        const error = await props.createAccount(values);
-        if (error) {
-          console.log(error);
-          $("#bad-attempt").html(error).css('display', 'inline');
-        }
-      })();
-    } 
+      if (!values.emailAddress) values.emailAddress = "";
+      const error = props.createAccount(values);
+      if (error) {
+        console.log(error);
+        $("#bad-attempt").html(error).css('display', 'inline');
+      }
+    }
   }
-
 
   return (
     <>
-    <Title/>
-    <h2>Create account:</h2>
+    <h2>Current account details:</h2>
     <form>
       <label htmlFor="loginName">
         Login name: <span style={{opacity: "80%"}}>3-24 characters</span><br/><input id="loginName" name="loginName" onChange={handleChange} 
@@ -73,9 +68,9 @@ const mapDispatchToProps = {
   goToPage
 }
 
-CreateAccount.propTypes = {
+Account.propTypes = {
   createAccount: PropTypes.func.isRequired,
   goToPage: PropTypes.func.isRequired
 };
 
-export default connect(null, mapDispatchToProps)(CreateAccount);
+export default connect(null, mapDispatchToProps)(Account);

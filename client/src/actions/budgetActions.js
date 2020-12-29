@@ -7,13 +7,13 @@ export const createBudget = name => dispatch => {
   const token = localStorage.getItem("JWT");
   let config = {
     method: 'post',
-    url: `http://localhost:5000/api/budgets/new-budget`,
+    url: `http://18.222.205.110/api/budgets/new-budget`,
     headers: { 'x-auth-token': token },
     data: { name: name }};
   axios(config).then(res => {
   config = {
     method: 'get',
-    url: `http://localhost:5000/api/budgets/${res.data.budget._id}`,
+    url: `http://18.222.205.110/api/budgets/${res.data.budget._id}`,
     headers: { 'x-auth-token': token }};
   axios(config).then(res => 
     dispatch({
@@ -28,7 +28,7 @@ export const openBudget = budgetId => dispatch => {
   const token = localStorage.getItem("JWT");
   const config = {
     method: 'get',
-    url: `http://localhost:5000/api/budgets/${budgetId}`,
+    url: `http://18.222.205.110/api/budgets/${budgetId}`,
     headers: { 'x-auth-token': token }};
   axios(config).then(res => 
     dispatch({
@@ -79,7 +79,7 @@ export const addIncome = (budgetId, values) => dispatch => {
   const token = localStorage.getItem("JWT");
   const config = {
     method: 'post',
-    url: `http://localhost:5000/api/budgets/${budgetId}/add-income`,
+    url: `http://18.222.205.110/api/budgets/${budgetId}/add-income`,
     headers: { 'x-auth-token': token },
     data: {
       name: name,
@@ -153,7 +153,7 @@ export const addOutgo = (budgetId, values) => dispatch => {
   const token = localStorage.getItem("JWT");
   const config = {
     method: 'post',
-    url: `http://localhost:5000/api/budgets/${budgetId}/add-outgo`,
+    url: `http://18.222.205.110/api/budgets/${budgetId}/add-outgo`,
     headers: { 'x-auth-token': token },
     data: {
       name: name,
@@ -181,7 +181,7 @@ export const removeIncome = (budgetId, incomeId) => dispatch => {
   const token = localStorage.getItem("JWT");
   const config = {
     method: 'delete',
-    url: `http://localhost:5000/api/budgets/${budgetId}/remove-income`,
+    url: `http://18.222.205.110/api/budgets/${budgetId}/remove-income`,
     headers: { 'x-auth-token': token },
     data: {
       incomeId: incomeId
@@ -197,7 +197,7 @@ export const removeOutgo = (budgetId, outgoId) => dispatch => {
   const token = localStorage.getItem("JWT");
   const config = {
     method: 'delete',
-    url: `http://localhost:5000/api/budgets/${budgetId}/remove-outgo`,
+    url: `http://18.222.205.110/api/budgets/${budgetId}/remove-outgo`,
     headers: { 'x-auth-token': token },
     data: {
       outgoId: outgoId
@@ -214,7 +214,7 @@ export const muteReminder = (budgetId, outgoId, nextOccurrence, reminderIndex) =
   const token = localStorage.getItem("JWT");
   const config = {
     method: 'put',
-    url: `http://localhost:5000/api/budgets/${budgetId}/modify-outgo`,
+    url: `http://18.222.205.110/api/budgets/${budgetId}/modify-outgo`,
     headers: { 'x-auth-token': token },
     data: {
       outgoId: outgoId,
@@ -231,7 +231,7 @@ export const stopReminding = (budgetId, outgoId, reminderIndex) => dispatch => {
   const token = localStorage.getItem("JWT");
   const config = {
     method: 'put',
-    url: `http://localhost:5000/api/budgets/${budgetId}/modify-outgo`,
+    url: `http://18.222.205.110/api/budgets/${budgetId}/modify-outgo`,
     headers: { 'x-auth-token': token },
     data: {
       outgoId: outgoId,

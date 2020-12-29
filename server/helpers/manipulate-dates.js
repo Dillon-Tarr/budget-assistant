@@ -96,6 +96,7 @@ function getNumberOfDaysInMonth(date){
 }
 
 function checkIfLeapYear(year){
+  if (typeof year === "string") year = parseInt(year);
   return year % 100 === 0 ? year % 400 === 0 : year % 4 === 0;
 }
 
