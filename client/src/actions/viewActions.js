@@ -17,7 +17,7 @@ export const goHome = () => dispatch => {
   const token = localStorage.getItem("JWT");
   const config = {
     method: 'get',
-    url: 'http://18.222.205.110/api/users/user-details',
+    url: 'https://18.222.205.110/api/users/user-details',
     headers: { 'x-auth-token': token }};
   axios(config).then(res => {
     dispatch({

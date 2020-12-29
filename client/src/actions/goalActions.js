@@ -8,7 +8,7 @@ export const addGoal = (text, estimatedCompletionDate) => dispatch => {
   const token = localStorage.getItem("JWT");
   const config = {
     method: 'post',
-    url: `http://18.222.205.110/api/users/add-goal`,
+    url: `https://18.222.205.110/api/users/add-goal`,
     headers: { 'x-auth-token': token },
     data: data};
   axios(config).then(res => dispatch({
@@ -22,7 +22,7 @@ export const completeGoal = (goalId, isComplete) => dispatch => {
   const token = localStorage.getItem("JWT");
   const config = {
     method: 'put',
-    url: `http://18.222.205.110/api/users/modify-goal`,
+    url: `https://18.222.205.110/api/users/modify-goal`,
     headers: { 'x-auth-token': token },
     data: {
       goalId: goalId,
@@ -54,7 +54,7 @@ export const modifyGoal = (goal, values) => dispatch => {
   const token = localStorage.getItem("JWT");
   const config = {
     method: 'put',
-    url: `http://18.222.205.110/api/users/modify-goal`,
+    url: `https://18.222.205.110/api/users/modify-goal`,
     headers: { 'x-auth-token': token },
     data: data};
   axios(config).then(res => dispatch({
@@ -71,7 +71,7 @@ export const removeGoal = (goalId) => dispatch => {
   const token = localStorage.getItem("JWT");
   const config = {
     method: 'delete',
-    url: `http://18.222.205.110/api/users/remove-goal`,
+    url: `https://18.222.205.110/api/users/remove-goal`,
     headers: { 'x-auth-token': token },
     data: {
       goalId: goalId
